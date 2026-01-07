@@ -94,30 +94,32 @@ class _ContentTile extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
-          ),
-        ),
-        child: Align(
-          alignment: Alignment.bottomLeft,
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
-              label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-              ),
+      child: Stack(
+        children: [
+          Positioned(
+            top: 10,
+            left: 10,
+            child: Row(
+              children: [
+                Icon(Icons.music_note, color: Colors.white),
+                Text('15 music', style: TextStyle(color: Colors.white) ),
+              ],
             ),
           ),
-        ),
-      ),
+          Positioned(
+            bottom: 10,
+            left: 10,
+            child: Column(
+              mainAxisAlignment: .end,
+              crossAxisAlignment: .start,
+              children: [
+                Text('Lorem ipsum dolor', style: TextStyle(color: Colors.white),),
+                Text('Top Album', style: TextStyle(color: Colors.white)),
+              ],
+            ),
+          )
+        ],
+      )
     );
   }
 }
