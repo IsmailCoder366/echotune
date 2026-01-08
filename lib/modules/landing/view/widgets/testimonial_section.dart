@@ -55,7 +55,7 @@ class _TestimonialCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CircleAvatar(backgroundColor: Colors.blueGrey, radius: 20),
+              const CircleAvatar(backgroundImage: AssetImage('assets/images/customer.jpg')),
               const SizedBox(width: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

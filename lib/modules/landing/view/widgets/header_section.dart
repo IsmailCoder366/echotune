@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_colors.dart';
+
 class HeroHeader extends StatelessWidget {
   const HeroHeader({super.key});
 
@@ -48,15 +50,37 @@ class HeroHeader extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: "Search",
-                    filled: true,
-                    fillColor: Colors.white,
-                    suffixIcon: const Icon(Icons.search, color: Colors.orange),
-                    border: OutlineInputBorder(
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 500),
+                  child: Container(
+                    height: 54,
+                    padding: const EdgeInsets.only(left: 20, right: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
+                    ),
+                    child: Row(
+                      children: [
+                        const Expanded(
+                          child: TextField(
+                            style: TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
+                              hintText: "Search Songs",
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(color: Colors.black, fontSize: 14),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 42,
+                          height: 42,
+                          decoration: const BoxDecoration(
+                            color: AppColors.primaryColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.search, color: Colors.black, size: 22),
+                        ),
+                      ],
                     ),
                   ),
                 ),
