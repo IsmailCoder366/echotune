@@ -22,9 +22,8 @@ class LandingView extends StatelessWidget {
         child: Column(
           children: [
             const HeroHeader(),
-
             const FeaturedSection(),
-            // const TrustLogoGrid(),
+            const TrustLogoGrid(),
             // const ManagementFeatureSection(),
             // const TestimonialSection(),
             // const CustomFooter(),

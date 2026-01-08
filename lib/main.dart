@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 822), // change based on your base design
+      designSize: const Size(375, 822),
       minTextAdapt: true,
       splitScreenMode: true,
 
@@ -24,9 +24,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'EchoTune',
 
-          /// --------------------------
-          /// Named Routing with GetX
-          /// --------------------------
           initialRoute: '/landing',
 
           getPages: [
@@ -34,18 +31,40 @@ class MyApp extends StatelessWidget {
               name: '/landing',
               page: () => const LandingView(),
             ),
-            // add more routes here
-            // GetPage(name: '/login', page: () => const LoginView()),
           ],
 
           /// --------------------------
-          /// Theme + Font Family
+          /// Theme + Two Google Fonts
           /// --------------------------
-            theme: ThemeData(
-              textTheme: GoogleFonts.poppinsTextTheme(
-                Theme.of(context).textTheme,
+          theme: ThemeData(
+            // Default app font → Poppins
+            textTheme: GoogleFonts.poppinsTextTheme(
+              Theme.of(context).textTheme,
+            ).copyWith(
+              // Headlines → Montserrat
+              headlineLarge: GoogleFonts.montserrat(
+                fontSize: 32.sp,
+                fontWeight: FontWeight.w700,
               ),
+              headlineMedium: GoogleFonts.montserrat(
+                fontSize: 26.sp,
+                fontWeight: FontWeight.w700,
+              ),
+              headlineSmall: GoogleFonts.montserrat(
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w600,
+              ),
+
+              // Titles (cards, buttons, etc.)
+              titleMedium: GoogleFonts.montserrat(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
+              ),
+
+              // Body remains Poppins (already set above)
             ),
+          ),
+
           home: child,
         );
       },

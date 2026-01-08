@@ -39,7 +39,7 @@ class FeaturedSection extends StatelessWidget {
             // 3. TABBAR VIEW
             // Set height to precisely fit the GridView content
             SizedBox(
-              height: 400, // Slightly reduced to keep it compact
+              height: 420, // Slightly reduced to keep it compact
               child: TabBarView(
                 // physics: const BouncingScrollPhysics(), // Optional: for smoother feel
                 children: [
