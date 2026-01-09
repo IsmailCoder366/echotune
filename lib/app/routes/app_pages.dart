@@ -1,32 +1,28 @@
+import 'package:echotune/modules/auth/view/create_account.dart';
+import 'package:echotune/modules/auth/view/forgot_password_screen.dart';
+import 'package:echotune/modules/auth/view/otp_verification_view.dart';
+import 'package:echotune/modules/user/view/user_home_screen.dart';
 import 'package:get/get.dart';
 import 'app_routes.dart';
-
 import '../../modules/landing/view/landing_view.dart';
 import '../../modules/auth/view/login_view.dart';
-
-import '../../modules/user/view/explore_view.dart';
-import '../../modules/user/view/profile_view.dart';
 import '../../modules/creator/view/creator_dashboard_view.dart';
-import '../../modules/creator/view/upload_view.dart';
 
 class AppPages {
   static final pages = [
 
-    GetPage(
-      name: Routes.landing,
-      page: () => const LandingView(),
-    ),
+    /// LANDING PAGE FLOW
+    GetPage(name: Routes.landing, page: () => const LandingView()),
 
-    // GetPage(
-    //   name: Routes.login,
-    //   page: () => const LoginView(),
-    // ),
-    //
-    // // USER FLOW
-    // GetPage(
-    //   name: Routes.userHome,
-    //   page: () => const UserHomeView(),
-    // ),
+    /// AUTH FLOW
+    GetPage(name: Routes.login, page: () => const LoginScreen()),
+    GetPage(name: Routes.createAccount, page: () => const CreateAccountScreen()),
+    GetPage(name: Routes.forgotPassword, page: () => const ForgotPasswordView()),
+    GetPage(name: Routes.otpScreen, page: () => const OtpVerificationView()),
+
+    /// USER FLOW
+    GetPage(name: Routes.userHome, page: () => const UserHomeScreen()),
+    GetPage(name: Routes.creatorHome, page: () => const CreatorDashboardView()),
     //
     // GetPage(
     //   name: Routes.explore,

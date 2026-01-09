@@ -1,8 +1,12 @@
+import 'package:echotune/modules/auth/view/login_view.dart';
 import 'package:echotune/modules/landing/view/landing_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'app/routes/app_pages.dart';
+import 'app/routes/app_routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,15 +27,8 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'EchoTune',
-
-          initialRoute: '/landing',
-
-          getPages: [
-            GetPage(
-              name: '/landing',
-              page: () => const LandingView(),
-            ),
-          ],
+          initialRoute: Routes.landing,
+          getPages: AppPages.pages,
 
           /// --------------------------
           /// Theme + Two Google Fonts
@@ -40,29 +37,7 @@ class MyApp extends StatelessWidget {
             // Default app font → Poppins
             textTheme: GoogleFonts.poppinsTextTheme(
               Theme.of(context).textTheme,
-            ).copyWith(
-              // Headlines → Montserrat
-              headlineLarge: GoogleFonts.montserrat(
-                fontSize: 32.sp,
-                fontWeight: FontWeight.w700,
-              ),
-              headlineMedium: GoogleFonts.montserrat(
-                fontSize: 26.sp,
-                fontWeight: FontWeight.w700,
-              ),
-              headlineSmall: GoogleFonts.montserrat(
-                fontSize: 22.sp,
-                fontWeight: FontWeight.w600,
-              ),
-
-              // Titles (cards, buttons, etc.)
-              titleMedium: GoogleFonts.montserrat(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
-
-              // Body remains Poppins (already set above)
-            ),
+            )
           ),
 
           home: child,

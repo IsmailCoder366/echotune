@@ -5,13 +5,16 @@ abstract class Routes {
 
   // Auth
   static const login = '/login';
+  static const createAccount = '/createAccount';
+  static const forgotPassword = '/forgotPassowrd';
+  static const otpScreen = '/otpScreen';
 
   // User
-  static const userHome = '/user-home';
+  static const userHome = '/userHome';
   static const explore = '/explore';
   static const profile = '/profile';
 
   // Creator
-  static const creatorHome = '/creator-home';
+  static const creatorHome = '/creatorHome';
   static const upload = '/upload';
 }

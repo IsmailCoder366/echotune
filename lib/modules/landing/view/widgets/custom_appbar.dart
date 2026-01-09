@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -57,7 +58,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 16, top: 12, bottom: 12),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              // Navigates to the route name you defined in your GetMaterialApp
+              Get.toNamed('/login');
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
