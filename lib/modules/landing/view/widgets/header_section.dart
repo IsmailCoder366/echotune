@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../controller/hero_indicator_controller.dart';
 
 class HeroHeader extends StatelessWidget {
   const HeroHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    final controller = Get.put(HeroIndicatorController());
     const double overlapOffset = 60.0;
 
     return Container(
@@ -49,6 +48,57 @@ class HeroHeader extends StatelessWidget {
                       fontWeight: FontWeight.w700
                   ),
                 ),
+                const SizedBox(height: 10),
+
+                // THE MANUAL SCROLLABLE TEXT
+                SizedBox(
+                  height: 80, // Height to fit the 3 lines of text
+                  child: PageView.builder(
+                    controller: controller.pageController,
+                    onPageChanged: controller.onPageChanged,
+                    itemCount: controller.totalSlides,
+                    itemBuilder: (context, index) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'Integer auctor cum urna malesuada. Venenatis magna sed tempor feugiat varius. Et tempus posuere consequat nulla convallis',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 13,
+                              height: 1.5,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                // MANUAL INDICATOR (Length 4)
+                Obx(() => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(controller.totalSlides, (index) {
+                    bool isActive = controller.currentIndex.value == index;
+                    return GestureDetector(
+                      onTap: () => controller.jumpToPage(index),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        height: 8,
+                        width: isActive ? 26 : 10, // Pill shape logic
+                        decoration: BoxDecoration(
+                          color: isActive ?  AppColors.primaryColor : Colors.white24,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    );
+                  }),
+                )),
+
                 const SizedBox(height: 20),
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 500),
