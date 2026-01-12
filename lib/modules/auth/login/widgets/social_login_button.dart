@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class SocialAuthButton extends StatelessWidget {
   final String text;
-  final IconData icon;
+  final String image;
   final VoidCallback onTap;
 
   const SocialAuthButton({
     super.key,
     required this.text,
-    required this.icon,
+    required this.image,
     required this.onTap,
   });
 
@@ -26,7 +26,10 @@ class SocialAuthButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 32, color: Colors.black),
+            Image(
+                height: 20,
+                width: 20,
+                image: AssetImage(image)),
             const SizedBox(width: 8),
             Text(
               text,

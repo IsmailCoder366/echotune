@@ -1,4 +1,5 @@
 import 'package:echotune/core/constants/app_colors.dart';
+import 'package:echotune/modules/auth/create_account/widgets/auth_footer_link.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -62,7 +63,7 @@ class LoginScreen extends StatelessWidget {
               isPassword: true,
               onChanged: (val) => controller.password.value = val,
             ),
-
+            const SizedBox(height: 30),
             Obx(
               () => PrimaryAuthButton(
                 text: "Login",
@@ -70,12 +71,20 @@ class LoginScreen extends StatelessWidget {
                 onPressed: () => controller.handleLogin(),
               ),
             ),
-
+            const SizedBox(height: 30),
             SocialAuthButton(
               text: "Continue with Google",
-              icon: Icons.g_mobiledata,
+              image: 'assets/icons/google.png',
               onTap: () => controller.isLoggingIn(),
             ),
+
+            const SizedBox(height: 20),
+            const Center(child: Text("Or", style: TextStyle(color: Colors.grey))),
+            const SizedBox(height: 20),
+
+            AuthFooterLink(leadText: 'Not a member? ', linkText: 'Signup', onTap: () => Get.toNamed(Routes.createAccount)),
+
+            const SizedBox(height: 20),
           ],
         ),
       ),
