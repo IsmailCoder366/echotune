@@ -7,6 +7,7 @@ A new Flutter project.
 ![App Screenshot](assets/images/landing_page.png)
 ![App Screenshot](assets/auth_images/password_changed.png)
 ![App Screenshot](assets/auth_images/reset_password.png)
+![App Screenshot](assets/auth_images/verify_email.png)
 
 This project is a starting point for a Flutter application.
 
