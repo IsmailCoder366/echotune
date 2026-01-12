@@ -5,6 +5,14 @@ A new Flutter project.
 ## Getting Started
 
 ![App Screenshot](assets/images/landing_page.png)
+![App Screenshot](assets/auth_images/Screenshot (351).png)
+![App Screenshot](assets/auth_images/Screenshot (350).png)
+![App Screenshot](assets/auth_images/Screenshot (352).png)
+![App Screenshot](assets/auth_images/Screenshot (353).png)
+![App Screenshot](assets/auth_images/Screenshot (354).png)
+![App Screenshot](assets/auth_images/Screenshot (355).png)
+![App Screenshot](assets/auth_images/Screenshot (356).png)
+![App Screenshot](assets/auth_images/Screenshot (357).png)
 
 This project is a starting point for a Flutter application.
 
