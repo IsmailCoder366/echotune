@@ -16,7 +16,7 @@ class HeroHeader extends StatelessWidget {
 
       // This margin is the "Magic Fix".
       // It pushes the next widget down so it doesn't collide with the cards.
-      margin: const EdgeInsets.only(bottom: overlapOffset + 20),
+      margin: const EdgeInsets.only(bottom: overlapOffset + 40),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -32,7 +32,7 @@ class HeroHeader extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/colourfull_image.png'),
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
                 colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
               ),
             ),
