@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../../app/routes/app_routes.dart';
 import '../view/otp_verification_view.dart';
 
@@ -20,13 +21,12 @@ class CreateAccountController extends GetxController {
   void handleSubmit() async {
     isSubmitting.value = true;
 
-    // simulate delay (API call later)
-    await Future.delayed(const Duration(seconds: 1));
 
     // simple navigation logic (no validation)
     if (selectedType.value == 'User') {
-      Get.offAllNamed(Routes.otpScreen);
-    } else {
+      Get.offAllNamed(Routes.userHome);
+    }
+    else{
       Get.offAllNamed(Routes.creatorHome);
     }
 

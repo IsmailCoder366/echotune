@@ -8,6 +8,11 @@ abstract class Routes {
   static const createAccount = '/createAccount';
   static const forgotPassword = '/forgotPassowrd';
   static const otpScreen = '/otpScreen';
+  static const resetPasswordScreen = '/resetPassword';
+  static const passwordChanged = '/passwordChanged';
+
+  // Auth Check
+  static const authCheck = '/auth-check-view';
 
   // User
   static const userHome = '/userHome';

@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 
+import '../../../app/routes/app_routes.dart';
+
 class OtpVerificationController extends GetxController {
   var email = "".obs;
   var isVerifying = false.obs;
 
-  // single variable to store full OTP from pin_code_fields
   var otp = "".obs;
 
   void setEmail(String value) {
@@ -12,12 +13,7 @@ class OtpVerificationController extends GetxController {
   }
 
   /// Verify OTP
-  void verifyCode() async {
-    if (otp.value.length < 4) {
-      Get.snackbar("Error", "Please enter a 4-digit code");
-      return;
-    }
-
+  Future<void> verifyCode() async {
     isVerifying.value = true;
 
     // simulate API call
@@ -25,7 +21,7 @@ class OtpVerificationController extends GetxController {
 
     isVerifying.value = false;
 
-    // TODO: call your API here or navigate to Reset Password screen
-    Get.snackbar("Success", "OTP Verified: ${otp.value}");
+    // 👉 after success, go to reset password screen
+    Get.offNamed(Routes.resetPasswordScreen);
   }
 }
