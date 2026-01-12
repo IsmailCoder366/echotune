@@ -1,4 +1,4 @@
-import 'package:echotune/modules/auth/view/login_view.dart';
+import 'package:echotune/modules/auth/login/view/login_view.dart';
 import 'package:echotune/modules/landing/view/landing_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../../app/routes/app_routes.dart';
+import '../../../../app/routes/app_routes.dart';
 
 class OtpVerificationController extends GetxController {
   var email = "".obs;

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import '../../../app/routes/app_routes.dart';
-import '../view/otp_verification_view.dart';
+import '../../../../app/routes/app_routes.dart';
+import '../../otp_verification/view/otp_verification_view.dart';
 
 class CreateAccountController extends GetxController {
   // Observables for state management
