@@ -41,7 +41,7 @@ void showProfileBottomSheet() {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
           ),
           Text(
-            controller.userName,
+            controller.userName.value,
             style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
