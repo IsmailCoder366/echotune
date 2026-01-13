@@ -55,13 +55,24 @@ class LoginScreen extends StatelessWidget {
               hint: "Email",
               onChanged: (val) => controller.email.value = val,
             ),
-
             const SizedBox(height: 20),
 
             AuthTextField(
               hint: "Password",
               isPassword: true,
               onChanged: (val) => controller.password.value = val,
+            ),
+            const SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: .end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.forgotPassword);
+                  },
+                  child: Text('Forgot Password?', style: TextStyle(color: Colors.black, decoration: TextDecoration.underline),),
+                ),
+              ],
             ),
             const SizedBox(height: 30),
             Obx(
@@ -79,10 +90,16 @@ class LoginScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
-            const Center(child: Text("Or", style: TextStyle(color: Colors.grey))),
+            const Center(
+              child: Text("Or", style: TextStyle(color: Colors.grey)),
+            ),
             const SizedBox(height: 20),
 
-            AuthFooterLink(leadText: 'Not a member? ', linkText: 'Signup', onTap: () => Get.toNamed(Routes.createAccount)),
+            AuthFooterLink(
+              leadText: 'Not a member? ',
+              linkText: 'Signup',
+              onTap: () => Get.toNamed(Routes.createAccount),
+            ),
 
             const SizedBox(height: 20),
           ],
