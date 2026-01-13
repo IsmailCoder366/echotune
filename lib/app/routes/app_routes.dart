@@ -16,6 +16,7 @@ abstract class Routes {
 
   // User
   static const userHome = '/userHome';
+  static const userPurchases = '/userPurchase';
   static const explore = '/explore';
   static const profile = '/profile';
 

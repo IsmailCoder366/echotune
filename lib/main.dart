@@ -8,10 +8,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'app/routes/app_pages.dart';
 import 'app/routes/app_routes.dart';
+import 'core/services/auth_services.dart';
 
 void main() async{
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Register AuthService globally
+  Get.put(AuthService(), permanent: true);
   runApp(const MyApp());
 }
 

@@ -6,10 +6,9 @@ import '../../../landing/view/widgets/custom_appbar.dart';
 import '../../../landing/view/widgets/features_section.dart';
 import '../../../landing/view/widgets/header_section.dart';
 import '../../profile/bottom_view/bottom_sheet_view.dart';
-import '../controller/home_controller.dart';
 
 class UserHomeScreen extends StatelessWidget {
-  final HomeController controller = Get.put(HomeController());
+
 
   @override
   Widget build(BuildContext context) {

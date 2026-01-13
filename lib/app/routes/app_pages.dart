@@ -3,6 +3,7 @@ import 'package:echotune/modules/auth/create_account/view/create_account.dart';
 import 'package:echotune/modules/auth/forgot_password/view/forgot_password_screen.dart';
 import 'package:echotune/modules/auth/otp_verification/view/otp_verification_view.dart';
 import 'package:echotune/modules/auth_check/view/auth_check_view.dart';
+import 'package:echotune/modules/user/purchases/view/purchases_view.dart';
 import 'package:get/get.dart';
 import '../../modules/auth/password_changed/view/password_changed_view.dart';
 import '../../modules/user/home_screen/view/home_screen.dart';
@@ -30,7 +31,7 @@ class AppPages {
 
     /// USER FLOW
     GetPage(name: Routes.userHome, page: () =>  UserHomeScreen()),
-    GetPage(name: Routes.creatorHome, page: () => const CreatorDashboardView()),
+    GetPage(name: Routes.userPurchases, page: () => PurchasesView()),
     //
     // GetPage(
     //   name: Routes.explore,
