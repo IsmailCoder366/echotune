@@ -30,7 +30,7 @@ class PlayingOverlay extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(4),
-                      child: Image.asset('assets/images/video_preview.png', fit: BoxFit.cover),
+                      child: Image.asset('assets/images/ilbum1.jpg', fit: BoxFit.cover),
                     ),
                     const Icon(Icons.play_arrow, color: Colors.white, size: 60),
                     // Close button in top right corner

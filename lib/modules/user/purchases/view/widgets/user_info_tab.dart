@@ -20,12 +20,14 @@ class UserInfoTab extends StatelessWidget {
           const SizedBox(height: 20),
           const Text('Bank Account', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           _buildInputField("Account Number", "Enter Account"),
+          _buildInputField("Confirm Account Number", "Confirm Enter Account"),
           _buildInputField("IFSC Code", "Enter IFSC Number"),
+          SizedBox(height: 30),
+          UpdataButton()
         ],
       ),
     );
   }
-
   Widget _buildProfileUploadSection() {
     return Row(
       children: [
@@ -66,5 +68,23 @@ class UserInfoTab extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class UpdataButton extends StatelessWidget {
+  const UpdataButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(onPressed: (){}, child: Container(
+        height: 50,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(10)
+        ),
+        child: Center(child: Text('Update', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)))));
   }
 }

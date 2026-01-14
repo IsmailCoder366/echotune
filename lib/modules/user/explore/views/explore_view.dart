@@ -14,7 +14,7 @@ class ExploreView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: _buildExploreAppBar(),
+      appBar: _buildExploreApp(),
       // Use Stack to layer the PlayingOverlay over the main content
       body: Stack(
         children: [
@@ -90,7 +90,7 @@ class ExploreView extends StatelessWidget {
           _buildExploreGrid(),
           const SizedBox(height: 30),
           _buildSectionHeader("Content"),
-          const SizedBox(height: 10),
+
           _buildExploreGrid(),
         ],
       ),
@@ -122,21 +122,35 @@ class ExploreView extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildExploreAppBar() {
+  PreferredSizeWidget _buildExploreApp() {
     return AppBar(
-      backgroundColor: const Color(0xFF1A1A1A), // Dark Header
+      backgroundColor: const Color(0xFF1A1A1A),
       elevation: 0,
-      title: const Text("ECHOTUNE", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
+      leadingWidth: 140,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text("ECHOTUNE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
+            Text("YOUR SOUND, YOUR WORLD", style: TextStyle(color: Colors.white, fontSize: 8)),
+          ],
+        ),
+      ),
       actions: [
         OutlinedButton(
           onPressed: () {},
-          style: OutlinedButton.styleFrom(side: const BorderSide(color: Colors.white)),
-          child: const Text("Report Content Piracy", style: TextStyle(color: Colors.white, fontSize: 10)),
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(color: Colors.white),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+          ),
+          child: const Text("Report Content Privacy", style: TextStyle(color: Colors.white, fontSize: 10)),
         ),
         const SizedBox(width: 10),
         const Icon(Icons.shopping_cart_outlined, color: Colors.white),
         const SizedBox(width: 10),
-        const CircleAvatar(radius: 15),
+        const CircleAvatar(radius: 15, backgroundImage: AssetImage('assets/images/profile.png')),
         const SizedBox(width: 16),
       ],
     );

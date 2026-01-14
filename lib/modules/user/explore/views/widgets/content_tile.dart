@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class MusicListTile extends StatelessWidget {
+class ContentTile extends StatelessWidget {
   final String title;
   final String artist;
   final VoidCallback onPlayTap; // Specific callback for the play button
   final bool isFavorite; // Added to match the UI state in screenshots
 
-  const MusicListTile({
+  const ContentTile({
     super.key,
     required this.title,
     required this.artist,

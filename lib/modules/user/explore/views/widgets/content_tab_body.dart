@@ -1,3 +1,4 @@
+import 'package:echotune/modules/user/explore/views/widgets/content_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/explore_controller.dart';
@@ -25,7 +26,7 @@ class ContentTabBody extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 100), // Space for bottom player
               separatorBuilder: (context, index) => const Divider(height: 1, color: Colors.black12),
               itemBuilder: (context, index) {
-                return  MusicListTile(
+                return  ContentTile(
                   title: "Lorem Ipsum Dolor Sit",
                   artist: "by Lorem",
                   // 1. Change 'onTap' to 'onPlayTap'
