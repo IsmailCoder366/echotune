@@ -24,7 +24,7 @@ class ExploreGridItem extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -34,7 +34,7 @@ class ExploreGridItem extends StatelessWidget {
                 Text("15 music", style: TextStyle(color: Colors.white, fontSize: 10)),
               ],
             ),
-            const SizedBox(height: 15),
+            Spacer(),
             const Text("Lorem Ipsum Dolor", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
             const Text("Top Album", style: TextStyle(color: Colors.white70, fontSize: 10)),
           ],
