@@ -6,6 +6,7 @@ import '../../../landing/view/widgets/custom_appbar.dart';
 import '../../../landing/view/widgets/features_section.dart';
 import '../../../landing/view/widgets/header_section.dart';
 import '../../profile/bottom_view/bottom_sheet_view.dart';
+import '../widgets/custom_appbar.dart';
 
 class UserHomeScreen extends StatelessWidget {
 
@@ -14,7 +15,7 @@ class UserHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true, // Key property for hero backgrounds
-      appBar: const CustomAppBar(),
+      appBar: const CustomHomeAppBar(),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(

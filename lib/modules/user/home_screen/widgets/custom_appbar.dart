@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import '../../../../core/services/auth_services.dart';
 import '../../profile/bottom_view/bottom_sheet_view.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   // Adding a boolean flag is the simplest way to override behavior per screen
   final bool isLandingPage;
 
-  const CustomAppBar({super.key, this.isLandingPage = true});
+  const CustomHomeAppBar({super.key, this.isLandingPage = true});
 
   @override
   Size get preferredSize => const Size.fromHeight(70);
@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final authService = Get.find<AuthService>();
 
     return AppBar(
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
       title: _buildLogo(),
@@ -55,7 +55,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 16, top: 12, bottom: 12),
       child: ElevatedButton(
-        onPressed: () => Get.toNamed('/login'),
+        onPressed: () {},
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
