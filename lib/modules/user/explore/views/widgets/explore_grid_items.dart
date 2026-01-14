@@ -9,7 +9,7 @@ class ExploreGridItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         image: const DecorationImage(
-          image: AssetImage('assets/images/music_bg.png'), // Use your placeholder image
+          image: AssetImage('assets/images/ilbum1.jpg'), // Use your placeholder image
           fit: BoxFit.cover,
         ),
       ),

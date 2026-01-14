@@ -84,11 +84,13 @@ class ExploreView extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           _buildSectionHeader("Music"),
+          const SizedBox(height: 10),
           _buildExploreGrid(),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           _buildSectionHeader("Content"),
+          const SizedBox(height: 10),
           _buildExploreGrid(),
         ],
       ),
@@ -99,8 +101,8 @@ class ExploreView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey)),
-        const Text("Explore All", style: TextStyle(color: Colors.grey, fontSize: 12)),
+        Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+        const Text("Explore All", style: TextStyle(color: Colors.black, fontSize: 12)),
       ],
     );
   }
