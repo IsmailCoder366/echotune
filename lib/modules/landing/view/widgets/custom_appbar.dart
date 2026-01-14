@@ -57,7 +57,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         Text(
           "YOUR SOUND YOUR WORLD",
           style:
-          TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 6),
+          TextStyle(color: Colors.white, fontSize: 6),
         ),
       ],
     );

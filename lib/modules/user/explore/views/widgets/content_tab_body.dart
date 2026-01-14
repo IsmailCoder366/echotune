@@ -2,11 +2,13 @@ import 'package:echotune/modules/user/explore/views/widgets/content_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/explore_controller.dart';
-import 'music_list_tile.dart';
+
 
 class ContentTabBody extends StatelessWidget {
   // Get.find retrieves the existing ExploreController instance
   final ExploreController controller = Get.find<ExploreController>();
+
+   ContentTabBody({super.key});
 
   @override
   Widget build(BuildContext context) {

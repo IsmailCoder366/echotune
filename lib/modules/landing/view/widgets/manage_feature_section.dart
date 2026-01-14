@@ -56,7 +56,7 @@ class _ManagementFeatureSectionState extends State<ManagementFeatureSection> {
             "Lorem ipsum dolor sit amet consectetur.\nVestibulum arcu egestas duis amet non eget.",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.6),
+              color: Colors.white,
               fontSize: 14,
             ),
           ),
@@ -138,7 +138,7 @@ class _ManagementFeatureSectionState extends State<ManagementFeatureSection> {
                     Text(
                       description,
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white,
                         fontSize: 14,
                         height: 1.5,
                       ),

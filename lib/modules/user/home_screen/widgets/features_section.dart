@@ -130,9 +130,9 @@ class _ContentTile extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.black.withOpacity(0.2),
+              Colors.black,
               Colors.transparent,
-              Colors.black.withOpacity(0.8),
+              Colors.black
             ],
           ),
         ),

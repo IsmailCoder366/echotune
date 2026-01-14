@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class UserInfoTab extends StatelessWidget {
+  const UserInfoTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

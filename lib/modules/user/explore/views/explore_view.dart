@@ -10,6 +10,8 @@ import '../controllers/explore_controller.dart';
 class ExploreView extends StatelessWidget {
   final ExploreController controller = Get.put(ExploreController());
 
+   ExploreView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

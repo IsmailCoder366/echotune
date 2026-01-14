@@ -21,10 +21,9 @@ class LoginController extends GetxController {
 
     // 2. Logic to navigate to the correct Home Screen
     if (selectedType.value == 'User') {
-      print("Navigating to User Home...");
+
       Get.offAllNamed(Routes.userHome);
     } else {
-      print("Navigating to Creator Home...");
       // Ensure Routes.creatorHome is uncommented in your AppPages
       Get.offAllNamed(Routes.creatorHome);
     }

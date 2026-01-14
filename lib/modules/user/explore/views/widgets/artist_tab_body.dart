@@ -6,6 +6,8 @@ import 'explore_grid_items.dart';
 class ArtistTabBody extends StatelessWidget {
   final ExploreController controller = Get.find<ExploreController>();
 
+   ArtistTabBody({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

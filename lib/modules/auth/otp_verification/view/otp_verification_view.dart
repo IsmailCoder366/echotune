@@ -56,7 +56,6 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
               onCompleted: (value) {
                 // optional: automatically verify when complete
                 controller.otp.value = value;
-                print("OTP Entered: $value");
               },
               pinTheme: PinTheme(
                 shape: PinCodeFieldShape.box,

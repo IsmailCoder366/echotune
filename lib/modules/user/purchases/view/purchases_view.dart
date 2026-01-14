@@ -8,6 +8,8 @@ import 'widgets/user_info_tab.dart';
 class PurchasesView extends StatelessWidget {
   final PurchasesController controller = Get.put(PurchasesController());
 
+   PurchasesView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

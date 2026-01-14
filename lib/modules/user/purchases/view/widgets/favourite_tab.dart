@@ -5,7 +5,7 @@ import '../../controllers/purchases_controller.dart';
 
 class FavouritesTab extends StatelessWidget {
   final PurchasesController controller;
-  const FavouritesTab({required this.controller});
+  const FavouritesTab({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class FavouritesTab extends StatelessWidget {
         child: ListView.separated(
           padding: const EdgeInsets.only(top: 20),
           itemCount: controller.favoriteItems.length,
-          separatorBuilder: (_, __) => const Divider(height: 1),
+          separatorBuilder: (_, _) => const Divider(height: 1),
           itemBuilder: (context, index) => _buildFavTile(controller.favoriteItems[index]),
         ),
       );

@@ -47,7 +47,7 @@ class _TestimonialCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade100),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5))
+          BoxShadow(color: Colors.black, blurRadius: 10, offset: const Offset(0, 5))
         ],
       ),
       child: Column(

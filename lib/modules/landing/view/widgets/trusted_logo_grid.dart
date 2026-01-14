@@ -44,9 +44,6 @@ class _LogoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-
-      child: Image.asset(image),
-    );
+    return Image.asset(image);
   }
 }

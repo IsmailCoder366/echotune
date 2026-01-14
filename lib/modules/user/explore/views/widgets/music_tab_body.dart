@@ -6,6 +6,8 @@ import 'music_list_tile.dart';
 class MusicTabBody extends StatelessWidget {
   final ExploreController controller = Get.find<ExploreController>();
 
+   MusicTabBody({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(

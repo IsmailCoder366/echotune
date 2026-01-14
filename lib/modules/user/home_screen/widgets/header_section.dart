@@ -177,7 +177,6 @@ class _UserTypeCard extends StatelessWidget {
   final IconData icon;
 
   const _UserTypeCard({
-    super.key,
     required this.title,
     required this.icon,
     required this.subtitle,
@@ -193,7 +192,7 @@ class _UserTypeCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black,
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),

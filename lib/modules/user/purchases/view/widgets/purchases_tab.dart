@@ -5,7 +5,7 @@ import '../../controllers/purchases_controller.dart';
 
 class PurchasesTab extends StatelessWidget {
   final PurchasesController controller;
-  const PurchasesTab({required this.controller});
+  const PurchasesTab({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class PurchasesTab extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemCount: controller.purchaseItems.length,
-              separatorBuilder: (_, __) => const Divider(height: 1),
+              separatorBuilder: (_, _) => const Divider(height: 1),
               itemBuilder: (context, index) => _buildMusicTile("Lorem Ipsum Dolor Sit"),
             ),
           ),

@@ -11,7 +11,6 @@ import '../../modules/user/home_screen/view/home_screen.dart';
 import 'app_routes.dart';
 import '../../modules/landing/view/landing_view.dart';
 import '../../modules/auth/login/view/login_view.dart';
-import '../../modules/creator/view/creator_dashboard_view.dart';
 
 class AppPages {
   static final pages = [

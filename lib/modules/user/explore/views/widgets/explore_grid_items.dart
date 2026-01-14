@@ -19,7 +19,7 @@ class ExploreGridItem extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.transparent, Colors.black.withOpacity(0.8)],
+            colors: [Colors.transparent, Colors.black],
           ),
         ),
         padding: const EdgeInsets.all(10),

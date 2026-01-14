@@ -1,4 +1,3 @@
-import 'package:echotune/core/constants/app_colors.dart';
 import 'package:echotune/modules/auth/create_account/widgets/auth_footer_link.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

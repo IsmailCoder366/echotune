@@ -5,6 +5,8 @@ import '../../controllers/explore_controller.dart';
 class PlayingOverlay extends StatelessWidget {
   final ExploreController controller = Get.find<ExploreController>();
 
+   PlayingOverlay({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -12,7 +14,7 @@ class PlayingOverlay extends StatelessWidget {
 
       return Container(
         // Semi-transparent background to dim the list behind it
-        color: Colors.black.withOpacity(0.3),
+        color: Colors.black,
         child: Center(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),

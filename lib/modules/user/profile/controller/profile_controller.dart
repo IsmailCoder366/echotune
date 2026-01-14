@@ -47,7 +47,5 @@ class ProfileController extends GetxController {
     if (Get.isBottomSheetOpen ?? false) {
       Get.back();
     }
-    // Implement your Auth logic here
-    print("User logged out successfully");
   }
 }

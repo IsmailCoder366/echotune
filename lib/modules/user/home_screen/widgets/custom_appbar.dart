@@ -46,7 +46,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const Text("ECHOTUNE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 15)),
-        Text("YOUR SOUND YOUR WORLD", style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 6)),
+        Text("YOUR SOUND YOUR WORLD", style: TextStyle(color: Colors.white, fontSize: 6)),
       ],
     );
   }

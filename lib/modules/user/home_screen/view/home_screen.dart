@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-
-import '../../../landing/view/widgets/custom_appbar.dart';
 import '../../../landing/view/widgets/features_section.dart';
 import '../../../landing/view/widgets/header_section.dart';
 import '../../profile/bottom_view/bottom_sheet_view.dart';
 import '../widgets/custom_appbar.dart';
 
 class UserHomeScreen extends StatelessWidget {
+  const UserHomeScreen({super.key});
+
 
 
   @override

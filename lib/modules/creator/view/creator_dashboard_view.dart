@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class CreatorDashboardView extends StatelessWidget {
   const CreatorDashboardView({super.key});
