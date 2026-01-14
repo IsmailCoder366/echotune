@@ -20,6 +20,7 @@ abstract class Routes {
   static const explore = '/explore';
   static const profile = '/profile';
 
+
   // Creator
   static const creatorHome = '/creatorHome';
   static const upload = '/upload';
