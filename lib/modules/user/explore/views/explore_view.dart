@@ -1,4 +1,8 @@
+import 'package:echotune/modules/user/explore/views/widgets/artist_tab_body.dart';
+import 'package:echotune/modules/user/explore/views/widgets/content_tab_body.dart';
 import 'package:echotune/modules/user/explore/views/widgets/explore_grid_items.dart';
+import 'package:echotune/modules/user/explore/views/widgets/music_tab_body.dart';
+import 'package:echotune/modules/user/explore/views/widgets/playing_overlay.dart'; // New Overlay
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/explore_controller.dart';
@@ -11,20 +15,30 @@ class ExploreView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _buildExploreAppBar(),
-      body: Column(
+      // Use Stack to layer the PlayingOverlay over the main content
+      body: Stack(
         children: [
-          _buildExploreTabBar(),
-          Expanded(
-            child: TabBarView(
-              controller: controller.exploreTabController,
-              children: [
-                _buildAllTabContent(), // Tab 0: All
-                const Center(child: Text("Music Tab")),
-                const Center(child: Text("Content Tab")),
-                const Center(child: Text("Artist Tab")),
-              ],
-            ),
+          Column(
+            children: [
+              _buildExploreTabBar(),
+              Expanded(
+                child: TabBarView(
+                  controller: controller.exploreTabController,
+                  children: [
+                    _buildAllTabContent(),
+                    MusicTabBody(),
+                    ContentTabBody(),
+                    ArtistTabBody(),
+                  ],
+                ),
+              ),
+              // Persistent Bottom Bar shown in Music/Content tabs
+              // _buildbottomPlayerBar(),
+            ],
           ),
+
+          // Video Player Overlay that appears when a track is selected
+          PlayingOverlay(),
         ],
       ),
     );
@@ -32,11 +46,13 @@ class ExploreView extends StatelessWidget {
 
   Widget _buildExploreTabBar() {
     return Container(
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade200))),
+      decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.grey.shade200))
+      ),
       child: TabBar(
         controller: controller.exploreTabController,
         isScrollable: false,
-        indicatorColor: const Color(0xFFE5B25D), // Gold Indicator
+        indicatorColor: const Color(0xFFE5B25D), // Gold
         labelColor: const Color(0xFFE5B25D),
         unselectedLabelColor: Colors.grey,
         tabs: const [
@@ -61,7 +77,7 @@ class ExploreView extends StatelessWidget {
               const Text("Explore", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
               Row(
                 children: [
-                  const Icon(Icons.tune), // Filter icon
+                  const Icon(Icons.tune), // Filter
                   const SizedBox(width: 15),
                   const Icon(Icons.search),
                 ],
@@ -106,8 +122,9 @@ class ExploreView extends StatelessWidget {
 
   PreferredSizeWidget _buildExploreAppBar() {
     return AppBar(
-      backgroundColor: const Color(0xFF1A1A1A),
-      title: const Text("ECHOTUNE", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+      backgroundColor: const Color(0xFF1A1A1A), // Dark Header
+      elevation: 0,
+      title: const Text("ECHOTUNE", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
       actions: [
         OutlinedButton(
           onPressed: () {},
@@ -115,7 +132,7 @@ class ExploreView extends StatelessWidget {
           child: const Text("Report Content Piracy", style: TextStyle(color: Colors.white, fontSize: 10)),
         ),
         const SizedBox(width: 10),
-        const Icon(Icons.shopping_cart_outlined),
+        const Icon(Icons.shopping_cart_outlined, color: Colors.white),
         const SizedBox(width: 10),
         const CircleAvatar(radius: 15),
         const SizedBox(width: 16),
