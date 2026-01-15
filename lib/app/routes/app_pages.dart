@@ -6,6 +6,7 @@ import 'package:echotune/modules/auth_check/view/auth_check_view.dart';
 import 'package:echotune/modules/user/purchases/view/purchases_view.dart';
 import 'package:get/get.dart';
 import '../../modules/auth/password_changed/view/password_changed_view.dart';
+import '../../modules/creator/creator_dashboard/view/creator_dashboard_view.dart';
 import '../../modules/user/explore/views/explore_view.dart';
 import '../../modules/user/home_screen/view/home_screen.dart';
 import 'app_routes.dart';
@@ -43,11 +44,11 @@ class AppPages {
     //   page: () => const ProfileView(),
     // ),
     //
-    // // CREATOR FLOW
-    // GetPage(
-    //   name: Routes.creatorHome,
-    //   page: () => const CreatorDashboardView(),
-    // ),
+    // CREATOR FLOW
+    GetPage(
+      name: Routes.creatorHome,
+      page: () =>  AdminDashboardView(),
+    ),
     //
     // GetPage(
     //   name: Routes.upload,

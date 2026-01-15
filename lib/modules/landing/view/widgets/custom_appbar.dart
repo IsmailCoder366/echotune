@@ -4,7 +4,7 @@ import '../../../../core/services/auth_services.dart';
 import '../../../user/profile/bottom_view/bottom_sheet_view.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isLandingPage; // true = landing page, false = home or others
+  final bool isLandingPage; // true = landing page, false = creator_dashboard or others
 
   const CustomAppBar({super.key, this.isLandingPage = true});
 
