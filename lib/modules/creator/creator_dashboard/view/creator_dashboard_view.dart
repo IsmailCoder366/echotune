@@ -15,7 +15,9 @@ class AdminDashboardView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFF1A1A1A),
         title: Text("ECHOTUNE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-        actions: [Icon(Icons.settings, color: Colors.white), SizedBox(width: 10), CircleAvatar(radius: 15), SizedBox(width: 15)],
+        actions: [Icon(Icons.settings_outlined, color: Colors.white), SizedBox(width: 10), CircleAvatar(radius: 15,
+        backgroundImage: AssetImage('assets/images/profile.png'),
+        ), SizedBox(width: 15)],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
@@ -27,7 +29,7 @@ class AdminDashboardView extends StatelessWidget {
               children: [
                 Expanded(child: ActionUploadCard(
                     title: "Upload your music",
-                    bgColor: Color(0xFFEEF2FF),
+                    bgColor: Color(0xFFE7EEFF),
                     icon: Icons.music_note,
                     iconColor: Colors.blue,
                     onUpload: controller.onUploadMusic
@@ -52,43 +54,95 @@ class AdminDashboardView extends StatelessWidget {
   }
 
   Widget _buildProfileHeader() {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
+          child: ListTile(
+            leading: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                  color: Color(0xFFE7EEFF),
+                  borderRadius: BorderRadius.circular(50)
+              ),
+              child: Icon(Icons.music_note_outlined, color: Color(0xFF769EFF),),
+            ),
+            title: Text('Lorem Ibsum', style: TextStyle(fontWeight: FontWeight.bold),),
+            subtitle: Text('Lorem ipsum dolor sit amet consect amet'),
+            trailing: Icon(Icons.arrow_forward_ios),
+          ),
+        ),
+        SizedBox(height: 10),
+        Container(
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(radius: 25, backgroundImage: AssetImage('assets/profile.png')),
-              SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+
+
+              Row(
                 children: [
-                  Text("Welcome to Copyva", style: TextStyle(color: Colors.grey, fontSize: 12)),
-                  Text("Thamas varghese", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                  CircleAvatar(radius: 25, backgroundImage: AssetImage('assets/images/profile.png')),
+                  SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Welcome to Copyva", style: TextStyle(fontSize: 12)),
+                      Text("Thamas varghese", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  musicState("Music Uploaded", controller.musicUploaded),
+                  contentState("Content Uploaded", controller.contentUploaded),
                 ],
               )
             ],
           ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildStat("Music Uploaded", controller.musicUploaded),
-              _buildStat("Content Uploaded", controller.contentUploaded),
-            ],
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildStat(String label, RxInt value) {
+  Widget musicState(String label, RxInt value) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start, // Fixed enum reference
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(color: Colors.grey, fontSize: 12)),
-        Obx(() => Text("${value.value}", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blue))),
+        Text(label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,)),
+        Obx(() => Text(
+          "${value.value}",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            // If musicUploaded is true, use Blue. Otherwise, use Orange.
+            color:Colors.blue
+          ),
+        )),
+      ],
+    );
+  }
+  Widget contentState(String label, RxInt value) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start, // Fixed enum reference
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,)),
+        Obx(() => Text(
+          "${value.value}",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            // If musicUploaded is true, use Blue. Otherwise, use Orange.
+            color: Color(0xFFFFB894),
+          ),
+        )),
       ],
     );
   }

@@ -33,13 +33,18 @@ class ActionUploadCard extends StatelessWidget {
           SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
+            child: TextButton(
+
               onPressed: onUpload,
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF1A1A1A),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
-              ),
-              child: Text("Upload", style: TextStyle(color: Colors.white)),
+              
+              child: Container(
+                  height: 50,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Center(child: Text("Upload", style: TextStyle(color: Colors.white)))),
             ),
           )
         ],
