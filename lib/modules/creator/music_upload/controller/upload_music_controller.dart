@@ -8,6 +8,10 @@ class MusicUploadController extends GetxController {
   var currentStep = 0.obs;
   var completedSteps = <int>[].obs;
 
+  // --- Pricing Sub-Step Logic ---
+  // 1: License Selection (Image 1286), 2: Specific Details (Image 1287)
+  var pricingSubStep = 1.obs;
+
   // --- Step 1: Song Information ---
   var musicCategory = 'Song'.obs;
   var copyrightOwner = ''.obs;
@@ -24,8 +28,9 @@ class MusicUploadController extends GetxController {
   var wynkLink = ''.obs;
   var appleMusicLink = ''.obs;
 
-
+  // --- Step 3: Pricing Selections ---
   var selectedLicense = 'Public places'.obs;
+  var selectedPublicPlaceDetail = 'Background'.obs;
 
   final List<String> licenseOptions = [
     'Public places',
@@ -34,7 +39,9 @@ class MusicUploadController extends GetxController {
     'Specific / Custom licences'
   ];
 
-  // Map the license name to a specific sub-index for the counter
+  final List<String> publicPlaceDetails = ['Background', 'Live performance'];
+
+  // Getter to handle the "Step X/4" text based on license selection
   int get licenseSubStep {
     switch (selectedLicense.value) {
       case 'Public places': return 1;
@@ -47,44 +54,53 @@ class MusicUploadController extends GetxController {
 
   void updateLicense(String value) {
     selectedLicense.value = value;
-    // This ensures the UI reflecting "Step X/4" updates immediately
   }
 
   /// Core logic for "Submit" or "Next" buttons
   void handleNextStep() {
-    // Mark current step as complete before moving forward
-    if (!completedSteps.contains(currentStep.value)) {
-      completedSteps.add(currentStep.value);
-    }
-
-    // Proper sequence logic
+    // Stage 0: Song Information
     if (currentStep.value == 0) {
-      currentStep.value = 1; // Move to Song Links
-    } else if (currentStep.value == 1) {
-      currentStep.value = 2; // Move to Pricing (This was the missing link)
-    } else if (currentStep.value == 2) {
-      // Logic for after Pricing (e.g., final submission or next step)
-
+      if (!completedSteps.contains(0)) completedSteps.add(0);
+      currentStep.value = 1;
+    }
+    // Stage 1: Song Links
+    else if (currentStep.value == 1) {
+      if (!completedSteps.contains(1)) completedSteps.add(1);
+      currentStep.value = 2; // Moves to Pricing
+      pricingSubStep.value = 1; // Ensure we start at the License picker
+    }
+    // Stage 2: Pricing
+    else if (currentStep.value == 2) {
+      // If we are on the License Picker and "Public Places" is selected, move to Details
+      if (pricingSubStep.value == 1 && selectedLicense.value == 'Public places') {
+        pricingSubStep.value = 2;
+      } else {
+        // Otherwise, mark Pricing as done and move to Stage 3 (Source)
+        if (!completedSteps.contains(2)) completedSteps.add(2);
+        currentStep.value = 3;
+      }
     }
   }
 
   void previousStep() {
-    if (currentStep.value > 0) {
+    // If we are inside the nested Pricing Detail screen, go back to License Picker
+    if (currentStep.value == 2 && pricingSubStep.value == 2) {
+      pricingSubStep.value = 1;
+    }
+    // Otherwise, handle standard stepper back navigation
+    else if (currentStep.value > 0) {
       currentStep.value--;
-      // Optional: Remove green status when going back to edit
       completedSteps.remove(currentStep.value);
     }
   }
 
   void submitFinalData() {
-    // Add your API call or final summary logic here
     Get.snackbar("Success", "Music uploaded successfully!");
   }
 
   @override
   void onInit() {
     super.onInit();
-    // Show the "Note" bottom sheet on first load
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showPriceNote();
     });

@@ -10,7 +10,6 @@ class MusicUploadView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // It's better to use Get.find if it's already initialized, or Get.put here
     final controller = Get.put(MusicUploadController());
 
     return Scaffold(
@@ -33,24 +32,19 @@ class MusicUploadView extends StatelessWidget {
       ),
       body: Obx(() => Column(
         children: [
-          // FIX 1: Make header scrollable to prevent overflow
           _buildStepperHeader(controller),
-
           Expanded(
-            child: SingleChildScrollView( // FIX 2: Wrap content to prevent vertical overflow
+            child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: _buildCurrentForm(controller),
             ),
           ),
-
-          // Action Button Section
           _buildBottomActions(controller),
         ],
       )),
     );
   }
 
-  // Helper to switch forms based on state
   Widget _buildCurrentForm(MusicUploadController controller) {
     switch (controller.currentStep.value) {
       case 0:
@@ -64,8 +58,7 @@ class MusicUploadView extends StatelessWidget {
     }
   }
 
-  // --- UI Sections ---
-
+  // --- Step 1: Song Information ---
   Widget _buildSongInformationForm(MusicUploadController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,6 +94,7 @@ class MusicUploadView extends StatelessWidget {
     );
   }
 
+  // --- Step 2: Song Links ---
   Widget _buildSongLinksForm(MusicUploadController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +111,7 @@ class MusicUploadView extends StatelessWidget {
     );
   }
 
-  // License form view
+  // --- Step 3: Pricing (With Sub-Step logic for Image 1286 & 1287) ---
   Widget _buildPricingForm(MusicUploadController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,39 +119,47 @@ class MusicUploadView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Pricing",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            // DYNAMIC STEP COUNTER
-            Obx(() => Text(
-              "Step ${controller.licenseSubStep}/4",
+            const Text("Pricing", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            // Counter now reflects internal pricing progress
+            Text(
+              "Step ${controller.pricingSubStep.value}/4",
               style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
-            )),
+            ),
           ],
         ),
         const SizedBox(height: 8),
-        const Text("License for the song that you selected",
-            style: TextStyle(color: Colors.grey)),
+        // Dynamic subtitle logic
+        Text(
+          controller.pricingSubStep.value == 1
+              ? "License for the song that you selected"
+              : "License to use music in ${controller.selectedLicense.value.toLowerCase()} as",
+          style: const TextStyle(color: Colors.grey),
+        ),
         const SizedBox(height: 20),
 
-        // Reactive Radio List
-        Obx(() => Column(
-          children: controller.licenseOptions.map((option) => LicenseOptionTile(
+        // Content Switcher
+        if (controller.pricingSubStep.value == 1)
+          ...controller.licenseOptions.map((option) => LicenseOptionTile(
             title: option,
             groupValue: controller.selectedLicense.value,
             onChanged: (val) => controller.updateLicense(val!),
-          )).toList(),
-        )),
+          ))
+        else
+          ...controller.publicPlaceDetails.map((detail) => LicenseOptionTile(
+            title: detail,
+            groupValue: controller.selectedPublicPlaceDetail.value,
+            onChanged: (val) => controller.selectedPublicPlaceDetail.value = val!,
+          )),
       ],
     );
   }
 
   // --- Stepper UI ---
-
   Widget _buildStepperHeader(MusicUploadController controller) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: SingleChildScrollView( // FIX 1: This prevents the horizontal overflow
+      child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
@@ -186,7 +188,7 @@ class MusicUploadView extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min, // Fix: Use min size in scrollable row
+        mainAxisSize: MainAxisSize.min,
         children: [
           isCompleted
               ? const Icon(Icons.check_circle, color: Colors.green, size: 18)
@@ -197,11 +199,10 @@ class MusicUploadView extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Text(
-              label,
-              style: TextStyle(
-                  color: isCompleted ? Colors.green : (isActive ? Colors.white : Colors.grey),
-                  fontSize: 12
-              )
+            label,
+            style: TextStyle(
+                color: isCompleted ? Colors.green : (isActive ? Colors.white : Colors.grey),
+                fontSize: 12),
           ),
         ],
       ),
@@ -219,10 +220,12 @@ class MusicUploadView extends StatelessWidget {
               child: OutlinedButton(
                 onPressed: () => controller.previousStep(),
                 style: OutlinedButton.styleFrom(
+                  backgroundColor: Colors.grey.shade100,
+                  side: BorderSide.none,
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text("Back", style: TextStyle(color: Colors.black)),
+                child: const Text("Back", style: TextStyle(color: Colors.grey)),
               ),
             ),
           if (controller.currentStep.value > 0) const SizedBox(width: 12),
@@ -236,7 +239,8 @@ class MusicUploadView extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
               child: Text(
-                controller.currentStep.value == 2 ? "Finish" : "Next",
+                // Button shows "Finish" only at the very end of the main flow
+                controller.currentStep.value == 3 ? "Finish" : "Next",
                 style: const TextStyle(color: Colors.white),
               ),
             ),
