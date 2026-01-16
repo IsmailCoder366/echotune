@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/helper_ui.dart';
-import '../widgets/line_chart_sample.dart';
+import 'helper_ui.dart';
+import 'line_chart_sample.dart';
 
 Widget buildAnalyticsSection() {
   return Container(
