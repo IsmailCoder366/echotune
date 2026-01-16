@@ -24,14 +24,31 @@ class MusicUploadController extends GetxController {
   var wynkLink = ''.obs;
   var appleMusicLink = ''.obs;
 
-  // --- Step 3: Pricing ---
+
   var selectedLicense = 'Public places'.obs;
+
   final List<String> licenseOptions = [
     'Public places',
     'Commercial / Business purpose',
     'Metaverse',
     'Specific / Custom licences'
   ];
+
+  // Map the license name to a specific sub-index for the counter
+  int get licenseSubStep {
+    switch (selectedLicense.value) {
+      case 'Public places': return 1;
+      case 'Commercial / Business purpose': return 2;
+      case 'Metaverse': return 3;
+      case 'Specific / Custom licences': return 4;
+      default: return 1;
+    }
+  }
+
+  void updateLicense(String value) {
+    selectedLicense.value = value;
+    // This ensures the UI reflecting "Step X/4" updates immediately
+  }
 
   /// Core logic for "Submit" or "Next" buttons
   void handleNextStep() {

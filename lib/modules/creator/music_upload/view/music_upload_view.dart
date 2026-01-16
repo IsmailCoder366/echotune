@@ -1,7 +1,6 @@
 import 'package:echotune/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../controller/upload_music_controller.dart';
 import '../widgets/custom_fields.dart';
 import '../widgets/license_option_tile.dart';
@@ -118,6 +117,7 @@ class MusicUploadView extends StatelessWidget {
     );
   }
 
+  // License form view
   Widget _buildPricingForm(MusicUploadController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,17 +125,27 @@ class MusicUploadView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Pricing", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Text("Step ${controller.currentStep.value + 1}/4", style: const TextStyle(color: Colors.grey)),
+            const Text("Pricing",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            // DYNAMIC STEP COUNTER
+            Obx(() => Text(
+              "Step ${controller.licenseSubStep}/4",
+              style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
+            )),
           ],
         ),
         const SizedBox(height: 8),
-        const Text("License for the song that you selected", style: TextStyle(color: Colors.grey)),
+        const Text("License for the song that you selected",
+            style: TextStyle(color: Colors.grey)),
         const SizedBox(height: 20),
-        ...controller.licenseOptions.map((option) => LicenseOptionTile(
-          title: option,
-          groupValue: controller.selectedLicense.value,
-          onChanged: (val) => controller.selectedLicense.value = val!,
+
+        // Reactive Radio List
+        Obx(() => Column(
+          children: controller.licenseOptions.map((option) => LicenseOptionTile(
+            title: option,
+            groupValue: controller.selectedLicense.value,
+            onChanged: (val) => controller.updateLicense(val!),
+          )).toList(),
         )),
       ],
     );
@@ -158,7 +168,7 @@ class MusicUploadView extends StatelessWidget {
             const SizedBox(width: 12),
             _stepBubble("3", "Pricing", 2, controller),
             const SizedBox(width: 12),
-            _stepBubble("4", "Source", 3, controller),
+            _stepBubble("4", "Agreement", 3, controller),
           ],
         ),
       ),
