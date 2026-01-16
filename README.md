@@ -12,6 +12,10 @@ A new Flutter project.
 ![App Screenshot](assets/readme_images/user_login.png)
 ![App Screenshot](assets/readme_images/owner_login.png)
 ![App Screenshot](assets/readme_images/admin_dashboard.png)
+![App Screenshot](assets/readme_images/price_step_screen.png)
+![App Screenshot](assets/readme_images/song_info_screen_bottomsheet.png)
+![App Screenshot](assets/readme_images/song_info_screen.png)
+![App Screenshot](assets/readme_images/song_link_screen.png)
 
 This project is a starting point for a Flutter application.
 
