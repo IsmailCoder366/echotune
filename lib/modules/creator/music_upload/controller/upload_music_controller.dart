@@ -4,15 +4,18 @@ import '../widgets/custom_fields.dart';
 
 class MusicUploadController extends GetxController {
   // --- Navigation & Stepper State ---
-  // 0: Info, 1: Links, 2: Pricing, 3: Source
   var currentStep = 0.obs;
-  var completedSteps = <int>[].obs;
+  var completedSteps = <int>[].obs; // Stores indexes of finished steps
 
   // --- Pricing Sub-Step Logic ---
-  // 1: License Selection (Image 1286), 2: Specific Details (Image 1287)
   var pricingSubStep = 1.obs;
 
-  // --- Step 1: Song Information ---
+  // Selections
+  var selectedLicense = 'Public places'.obs;
+  var selectedUsage = 'Background'.obs;
+  var selectedPlaceCategory = 'Clubs, pubs & night clubs'.obs;
+
+  // --- Step 1: Song Information Data ---
   var musicCategory = 'Song'.obs;
   var copyrightOwner = ''.obs;
   var musicLink = ''.obs;
@@ -20,7 +23,7 @@ class MusicUploadController extends GetxController {
   var musicName = ''.obs;
   var artistName = ''.obs;
 
-  // --- Step 2: Song Links ---
+  // --- Step 2: Song Links Data ---
   var spotifyLink = ''.obs;
   var youtubeLink = ''.obs;
   var gaanaLink = ''.obs;
@@ -28,68 +31,67 @@ class MusicUploadController extends GetxController {
   var wynkLink = ''.obs;
   var appleMusicLink = ''.obs;
 
-  // --- Step 3: Pricing Selections ---
-  var selectedLicense = 'Public places'.obs;
-  var selectedPublicPlaceDetail = 'Background'.obs;
-
   final List<String> licenseOptions = [
     'Public places',
     'Commercial / Business purpose',
     'Metaverse',
     'Specific / Custom licences'
   ];
-
   final List<String> publicPlaceDetails = ['Background', 'Live performance'];
+  final List<String> placeCategories = [
+    'Clubs, pubs & night clubs',
+    'Restaurants, dining rooms, bars, lounges, coffee houses, etc',
+    'Multiplex & shopping center, arcades, IT parks, etc',
+    'Lodges, guest houses, vacation homes, resorts, etc',
+    'Banquet halls & auditoriums, sports, service oriented premises, waiting transport services',
+  ];
 
-  // Getter to handle the "Step X/4" text based on license selection
-  int get licenseSubStep {
-    switch (selectedLicense.value) {
-      case 'Public places': return 1;
-      case 'Commercial / Business purpose': return 2;
-      case 'Metaverse': return 3;
-      case 'Specific / Custom licences': return 4;
-      default: return 1;
-    }
-  }
+  // Logic for "Step X/4" text
+  int get licenseSubStep => pricingSubStep.value;
 
   void updateLicense(String value) {
     selectedLicense.value = value;
   }
 
-  /// Core logic for "Submit" or "Next" buttons
+  /// Helper to handle green completion status
+  void _markStepAsComplete(int index) {
+    if (!completedSteps.contains(index)) {
+      completedSteps.add(index);
+    }
+  }
+
+  /// Core logic for "Next" button with completion tracking
   void handleNextStep() {
-    // Stage 0: Song Information
     if (currentStep.value == 0) {
-      if (!completedSteps.contains(0)) completedSteps.add(0);
+      _markStepAsComplete(0); // Mark Info as Green
       currentStep.value = 1;
     }
-    // Stage 1: Song Links
     else if (currentStep.value == 1) {
-      if (!completedSteps.contains(1)) completedSteps.add(1);
-      currentStep.value = 2; // Moves to Pricing
-      pricingSubStep.value = 1; // Ensure we start at the License picker
+      _markStepAsComplete(1); // Mark Links as Green
+      currentStep.value = 2;
+      pricingSubStep.value = 1;
     }
-    // Stage 2: Pricing
     else if (currentStep.value == 2) {
-      // If we are on the License Picker and "Public Places" is selected, move to Details
-      if (pricingSubStep.value == 1 && selectedLicense.value == 'Public places') {
+      // Internal Pricing Logic
+      if (pricingSubStep.value == 1) {
         pricingSubStep.value = 2;
+      } else if (pricingSubStep.value == 2) {
+        pricingSubStep.value = 3;
       } else {
-        // Otherwise, mark Pricing as done and move to Stage 3 (Source)
-        if (!completedSteps.contains(2)) completedSteps.add(2);
+        // Only mark Pricing as Green when all sub-steps are done
+        _markStepAsComplete(2);
         currentStep.value = 3;
       }
     }
   }
 
   void previousStep() {
-    // If we are inside the nested Pricing Detail screen, go back to License Picker
-    if (currentStep.value == 2 && pricingSubStep.value == 2) {
-      pricingSubStep.value = 1;
+    if (currentStep.value == 2 && pricingSubStep.value > 1) {
+      pricingSubStep.value--;
     }
-    // Otherwise, handle standard stepper back navigation
     else if (currentStep.value > 0) {
       currentStep.value--;
+      // Remove green status when going back to edit a step
       completedSteps.remove(currentStep.value);
     }
   }

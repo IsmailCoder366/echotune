@@ -2,9 +2,9 @@ import 'package:echotune/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/upload_music_controller.dart';
+import '../widgets/categore_selection_tile.dart';
 import '../widgets/custom_fields.dart';
 import '../widgets/license_option_tile.dart';
-
 class MusicUploadView extends StatelessWidget {
   const MusicUploadView({super.key});
 
@@ -111,47 +111,51 @@ class MusicUploadView extends StatelessWidget {
     );
   }
 
-  // --- Step 3: Pricing (With Sub-Step logic for Image 1286 & 1287) ---
+  // --- Step 3: Pricing
   Widget _buildPricingForm(MusicUploadController controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Pricing", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            // Counter now reflects internal pricing progress
-            Text(
-              "Step ${controller.pricingSubStep.value}/4",
-              style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        // Dynamic subtitle logic
-        Text(
-          controller.pricingSubStep.value == 1
-              ? "License for the song that you selected"
-              : "License to use music in ${controller.selectedLicense.value.toLowerCase()} as",
-          style: const TextStyle(color: Colors.grey),
-        ),
-        const SizedBox(height: 20),
+    return Obx(() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text("Pricing",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text("Step ${controller.pricingSubStep.value}/4",
+                  style: const TextStyle(color: Colors.grey)),
+            ],
+          ),
+          const SizedBox(height: 16),
 
-        // Content Switcher
-        if (controller.pricingSubStep.value == 1)
-          ...controller.licenseOptions.map((option) => LicenseOptionTile(
-            title: option,
-            groupValue: controller.selectedLicense.value,
-            onChanged: (val) => controller.updateLicense(val!),
-          ))
-        else
-          ...controller.publicPlaceDetails.map((detail) => LicenseOptionTile(
-            title: detail,
-            groupValue: controller.selectedPublicPlaceDetail.value,
-            onChanged: (val) => controller.selectedPublicPlaceDetail.value = val!,
-          )),
-      ],
-    );
+          // Header Text changes based on sub-step
+          Text(
+            controller.pricingSubStep.value == 3
+                ? "What kind of public place(s) can your music be used at the background?"
+                : "License to use music in ${controller.selectedLicense.value.toLowerCase()} as",
+            style: const TextStyle(fontSize: 15, color: Colors.black87),
+          ),
+          const SizedBox(height: 20),
+
+          // Sub-step 3: Category Picker
+          if (controller.pricingSubStep.value == 3)
+            ...controller.placeCategories.map((category) => CategorySelectionTile(
+              title: category,
+              groupValue: controller.selectedPlaceCategory.value,
+              onChanged: (val) => controller.selectedPlaceCategory.value = val!,
+              onActionPressed: () {
+                // Logic to open price entry for this category
+              },
+            ))
+          // Sub-step 2: Usage Picker (Background / Live)
+          else if (controller.pricingSubStep.value == 2)
+            _buildUsagePicker(controller)
+          // Sub-step 1: License Type Picker
+          else
+            _buildLicenseTypePicker(controller),
+        ],
+      );
+    });
   }
 
   // --- Stepper UI ---
@@ -235,7 +239,7 @@ class MusicUploadView extends StatelessWidget {
               onPressed: () => controller.handleNextStep(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
-                padding: const EdgeInsets.symmetric(vertical: 22),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
               child: Text(
@@ -249,4 +253,24 @@ class MusicUploadView extends StatelessWidget {
       ),
     );
   }
+}
+// --- Sub-step 1: Main License Options ---
+Widget _buildLicenseTypePicker(MusicUploadController controller) {
+  return Column(
+    children: controller.licenseOptions.map((option) => LicenseOptionTile(
+      title: option,
+      groupValue: controller.selectedLicense.value,
+      onChanged: (val) => controller.updateLicense(val!),
+    )).toList(),
+  );
+}
+// --- Sub-step 2: Usage Options (Background / Live) ---
+Widget _buildUsagePicker(MusicUploadController controller) {
+  return Column(
+    children: controller.publicPlaceDetails.map((usage) => LicenseOptionTile(
+      title: usage,
+      groupValue: controller.selectedUsage.value, // Ensure 'selectedUsage' exists in your Controller
+      onChanged: (val) => controller.selectedUsage.value = val!,
+    )).toList(),
+  );
 }
