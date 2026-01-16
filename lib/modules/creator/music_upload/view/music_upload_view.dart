@@ -213,6 +213,7 @@ class MusicUploadView extends StatelessWidget {
     );
   }
 
+  // back and next button
   Widget _buildBottomActions(MusicUploadController controller) {
     return Container(
       padding: const EdgeInsets.all(16),

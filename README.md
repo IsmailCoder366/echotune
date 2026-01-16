@@ -5,12 +5,13 @@ A new Flutter project.
 ## Getting Started
 
 ![App Screenshot](assets/images/landing_page.png)
-![App Screenshot](assets/auth_images/password_changed.png)
-![App Screenshot](assets/auth_images/reset_password.png)
-![App Screenshot](assets/auth_images/verify_email.png)
-![App Screenshot](assets/auth_images/forgot_password.png)
-![App Screenshot](assets/auth_images/user_login.png)
-![App Screenshot](assets/auth_images/owner_login.png)
+![App Screenshot](assets/readme_images/password_changed.png)
+![App Screenshot](assets/readme_images/reset_password.png)
+![App Screenshot](assets/readme_images/verify_email.png)
+![App Screenshot](assets/readme_images/forgot_password.png)
+![App Screenshot](assets/readme_images/user_login.png)
+![App Screenshot](assets/readme_images/owner_login.png)
+![App Screenshot](assets/readme_images/admin_dashboard.png)
 
 This project is a starting point for a Flutter application.
 
