@@ -14,8 +14,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Access the global Auth Service
-    final authService = Get.find<AuthService>();
+
 
     return AppBar(
       automaticallyImplyLeading: true,
@@ -25,46 +24,13 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         _buildComplaintButton(),
         const SizedBox(width: 8),
+        _buildUserActions(),
 
-        // Use Obx to reactively change the button
-        Obx(() {
-          if (authService.isLoggedIn.value && !isLandingPage) {
-            // Show Profile/Cart/User icon if logged in on Home View
-            return _buildUserActions();
-          } else {
-            // Show Login button on Landing View
-            return _buildLoginButton();
-          }
-        }),
+
       ],
     );
   }
 
-  Widget _buildLogo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text("ECHOTUNE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 15)),
-        Text("YOUR SOUND YOUR WORLD", style: TextStyle(color: Colors.white, fontSize: 6)),
-      ],
-    );
-  }
-
-  Widget _buildLoginButton() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 16, top: 12, bottom: 12),
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        ),
-        child: const Text("Login", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-      ),
-    );
-  }
 
   Widget _buildUserActions() {
     return Row(
@@ -75,7 +41,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           onTap: () => showProfileBottomSheet(), // Function from previous step
           child: const CircleAvatar(
             radius: 15,
-            backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+            backgroundImage: NetworkImage('assets/images/profile.png'),
           ),
         ),
         const SizedBox(width: 16),
@@ -95,6 +61,26 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         child: const Text("Complaint Music Use", style: TextStyle(fontSize: 10)),
       ),
+    );
+  }
+
+  /// Logo
+  Widget _buildLogo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          "ECHOTUNE",
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.w900, fontSize: 15),
+        ),
+        Text(
+          "YOUR SOUND YOUR WORLD",
+          style:
+          TextStyle(color: Colors.white, fontSize: 6),
+        ),
+      ],
     );
   }
 }
