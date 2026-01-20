@@ -1,4 +1,5 @@
 import 'package:echotune/core/constants/app_colors.dart';
+import 'package:echotune/core/constants/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/upload_music_controller.dart';
@@ -53,8 +54,10 @@ class MusicUploadView extends StatelessWidget {
         return _buildSongLinksForm(controller);
       case 2:
         return _buildPricingForm(controller);
-      default:
-        return const Center(child: Text("Step not implemented"));
+      case 3:
+        return _buildAgreementForm(controller);
+      default: return const Center(child: Text("Step not implemented"));
+
     }
   }
 
@@ -273,5 +276,56 @@ Widget _buildUsagePicker(MusicUploadController controller) {
       groupValue: controller.selectedUsage.value, // Ensure 'selectedUsage' exists in your Controller
       onChanged: (val) => controller.selectedUsage.value = val!,
     )).toList(),
+  );
+}
+
+
+Widget _buildAgreementForm(MusicUploadController controller) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        "Agreement",
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: 20),
+
+      // Annexture Section
+      _buildAgreementSection("Annexture", controller.annextureText),
+
+      const SizedBox(height: 24),
+
+      // Agreement Details Section
+      _buildAgreementSection("Agreement", controller.termsOfServiceText),
+    ],
+  );
+}
+
+Widget _buildAgreementSection(String title, String content) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        title,
+        style: const TextStyle(fontSize: 14, color: Colors.grey),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black87),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          content,
+          style: const TextStyle(
+            fontSize: 14,
+            height: 1.5,
+            color: Colors.black87,
+          ),
+        ),
+      ),
+    ],
   );
 }

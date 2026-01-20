@@ -33,16 +33,13 @@ class AppPages {
     /// USER FLOW
     GetPage(name: Routes.userHome, page: () =>  UserHomeScreen()),
     GetPage(name: Routes.userPurchases, page: () => PurchasesView()),
-    //
+    /// CREATOR FLOW
     GetPage(
       name: Routes.explore,
       page: () =>  ExploreView(),
     ),
     //
-    // GetPage(
-    //   name: Routes.profile,
-    //   page: () => const ProfileView(),
-    // ),
+
     //
     // CREATOR FLOW
     GetPage(

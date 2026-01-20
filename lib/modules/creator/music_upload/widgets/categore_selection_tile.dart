@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CategorySelectionTile extends StatelessWidget {
   final String title;
@@ -53,11 +54,21 @@ class CategorySelectionTile extends StatelessWidget {
                   border: Border.all(color: isSelected ? Colors.green : Colors.blue),
                   borderRadius: BorderRadius.circular(4),
                 ),
-                child: Icon(
-                  isSelected ? Icons.check : Icons.edit_outlined,
-                  size: 16,
-                  color: isSelected ? Colors.green : Colors.blue,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(), // prevents large tap area
+                  icon: Icon(
+                    isSelected ? Icons.check : Icons.edit_outlined,
+                    size: 16,
+                    color: isSelected ? Colors.green : Colors.blue,
+                  ),
+                  onPressed: () {
+                    // Navigate ONLY when icon is tapped
+                    Get.toNamed('/pricingEdit');
+                  },
                 ),
+
+
               ),
             ),
           ],
