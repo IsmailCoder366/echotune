@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../creator_dashboard/view/creator_dashboard_view.dart';
 import '../../statement/view/statement_view.dart';
+import '../../upload/view/upload_list_view.dart';
 import '../controller/creator_main_controller.dart';
 
 
@@ -17,7 +18,7 @@ class CreatorMainScreen extends StatelessWidget {
       AdminDashboardView(),
       StatementView(),
 
-      const Center(child: Text("Upload List Screen")),
+      UploadListView(),
       const Center(child: Text("Complaint Screen")),
     ];
 
