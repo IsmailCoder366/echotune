@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../complain/view/complain_view.dart';
 import '../../creator_dashboard/view/creator_dashboard_view.dart';
 import '../../statement/view/statement_view.dart';
 import '../../upload/view/upload_list_view.dart';
@@ -17,9 +18,8 @@ class CreatorMainScreen extends StatelessWidget {
     final List<Widget> pages = [
       AdminDashboardView(),
       StatementView(),
-
       UploadListView(),
-      const Center(child: Text("Complaint Screen")),
+      ComplainView(),
     ];
 
     return Scaffold(
