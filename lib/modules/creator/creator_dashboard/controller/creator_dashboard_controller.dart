@@ -1,5 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../view/creator_dashboard_view.dart';
 
 class AdminDashboardController extends GetxController {
   // Statistics observables
@@ -26,4 +29,9 @@ class AdminDashboardController extends GetxController {
   ].obs;
 
   final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+
+
+
+
+
 }

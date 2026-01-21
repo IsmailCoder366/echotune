@@ -3,6 +3,7 @@ import 'package:echotune/modules/auth/create_account/view/create_account.dart';
 import 'package:echotune/modules/auth/forgot_password/view/forgot_password_screen.dart';
 import 'package:echotune/modules/auth/otp_verification/view/otp_verification_view.dart';
 import 'package:echotune/modules/auth_check/view/auth_check_view.dart';
+import 'package:echotune/modules/creator/Bottom_navigation_screen/view/creator_main_view.dart';
 import 'package:echotune/modules/user/purchases/view/purchases_view.dart';
 import 'package:get/get.dart';
 import '../../modules/auth/password_changed/view/password_changed_view.dart';
@@ -43,8 +44,8 @@ class AppPages {
     //
     // CREATOR FLOW
     GetPage(
-      name: Routes.creatorHome,
-      page: () =>  AdminDashboardView(),
+      name: Routes.creatorMainScreen,
+      page: () =>  CreatorMainScreen(),
     ),
     //
     // GetPage(

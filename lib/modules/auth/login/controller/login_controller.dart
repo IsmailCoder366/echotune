@@ -25,7 +25,7 @@ class LoginController extends GetxController {
       Get.offAllNamed(Routes.userHome);
     } else {
       // Ensure Routes.creatorHome is uncommented in your AppPages
-      Get.offAllNamed(Routes.creatorHome);
+      Get.offAllNamed(Routes.creatorMainScreen);
     }
 
     isLoggingIn.value = false;

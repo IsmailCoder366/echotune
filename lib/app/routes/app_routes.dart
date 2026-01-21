@@ -22,7 +22,7 @@ abstract class Routes {
 
 
   // Creator
-  static const creatorHome = '/creatorHome';
+  static const creatorMainScreen = '/creatorMainScreen';
   static const upload = '/upload';
   static const pricingEdit = '/pricingEdit';
 }

@@ -25,7 +25,7 @@ class CreateAccountController extends GetxController {
       Get.offAllNamed(Routes.userHome);
     }
     else{
-      Get.offAllNamed(Routes.creatorHome);
+      Get.offAllNamed(Routes.creatorMainScreen);
     }
 
     isSubmitting.value = false;
