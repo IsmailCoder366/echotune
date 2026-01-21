@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../music_upload/view/music_upload_view.dart';
+
 import '../controller/creator_dashboard_controller.dart';
 import '../widgets/build_action_card.dart';
 import '../widgets/build_analytic_section.dart';
@@ -51,7 +51,8 @@ class AdminDashboardView extends StatelessWidget {
                   bgColor: const Color(0xFFE7EEFF),
                   icon: Icons.music_note,
                   iconColor: Colors.blue,
-                  onUploadPressed: () => Get.to(() => const MusicUploadView()),
+                  onUploadPressed: () => Get.toNamed('/music_upload')
+
                 ),
               ),
               const SizedBox(width: 12),
@@ -61,7 +62,7 @@ class AdminDashboardView extends StatelessWidget {
                   bgColor: const Color(0xFFFFF4F2),
                   icon: Icons.videocam,
                   iconColor: Colors.orange,
-                  onUploadPressed: () {},
+                  onUploadPressed: () => Get.toNamed('/content_upload'),
                 ),
               ),
             ],

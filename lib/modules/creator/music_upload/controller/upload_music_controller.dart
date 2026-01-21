@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import '../widgets/custom_fields.dart';
 
 class MusicUploadController extends GetxController {
-  // --- Navigation & Stepper State ---
-  var currentStep = 0.obs;
-  var completedSteps = <int>[].obs; // Stores indexes of finished steps
+
 
   // --- Pricing Sub-Step Logic ---
   var pricingSubStep = 1.obs;
@@ -53,6 +51,10 @@ class MusicUploadController extends GetxController {
     selectedLicense.value = value;
   }
 
+  // --- Navigation & Stepper State ---
+  var currentStep = 0.obs;
+  var completedSteps = <int>[].obs; // Stores indexes of finished steps
+
   /// Helper to handle green completion status
   void _markStepAsComplete(int index) {
     if (!completedSteps.contains(index)) {
@@ -95,6 +97,8 @@ class MusicUploadController extends GetxController {
       completedSteps.remove(currentStep.value);
     }
   }
+
+
 
   void submitFinalData() {
     Get.snackbar("Success", "Music uploaded successfully!");

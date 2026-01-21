@@ -23,6 +23,7 @@ abstract class Routes {
 
   // Creator
   static const creatorMainScreen = '/creatorMainScreen';
-  static const upload = '/upload';
+  static const uploadMusic = '/music_upload';
+  static const uploadContent = '/content_upload';
   static const pricingEdit = '/pricingEdit';
 }

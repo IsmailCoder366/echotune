@@ -165,7 +165,7 @@ class MusicUploadView extends StatelessWidget {
   Widget _buildStepperHeader(MusicUploadController controller) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -198,7 +198,7 @@ class MusicUploadView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           isCompleted
-              ? const Icon(Icons.check_circle, color: Colors.green, size: 18)
+              ? const Icon(Icons.check_circle_outline, color: Colors.green, size: 18)
               : CircleAvatar(
             radius: 10,
             backgroundColor: isActive ? AppColors.primaryColor : Colors.grey,

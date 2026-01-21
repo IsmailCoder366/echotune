@@ -4,6 +4,8 @@ import 'package:echotune/modules/auth/forgot_password/view/forgot_password_scree
 import 'package:echotune/modules/auth/otp_verification/view/otp_verification_view.dart';
 import 'package:echotune/modules/auth_check/view/auth_check_view.dart';
 import 'package:echotune/modules/creator/Bottom_navigation_screen/view/creator_main_view.dart';
+import 'package:echotune/modules/creator/content_upload_view/view/content_upload_view.dart';
+import 'package:echotune/modules/creator/music_upload/view/music_upload_view.dart';
 import 'package:echotune/modules/user/purchases/view/purchases_view.dart';
 import 'package:get/get.dart';
 import '../../modules/auth/password_changed/view/password_changed_view.dart';
@@ -48,9 +50,13 @@ class AppPages {
       page: () =>  CreatorMainScreen(),
     ),
     //
-    // GetPage(
-    //   name: Routes.upload,
-    //   page: () => const UploadView(),
-    // ),
+    GetPage(
+      name: Routes.uploadMusic,
+      page: () => const MusicUploadView(),
+    ),
+    GetPage(
+      name: Routes.uploadContent,
+      page: () => const ContentUploadView(),
+    ),
   ];
 }
