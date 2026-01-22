@@ -9,11 +9,40 @@ Widget buildAnalyticsSection() {
     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
     child: Column(
       children: [
-        const Row(
+         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("Statements", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 2),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black26),
+                borderRadius: BorderRadius.circular(8)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('All'),
+                  Icon(Icons.arrow_drop_down)
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 2),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black26),
+                  borderRadius: BorderRadius.circular(8)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('2024'),
+                  Icon(Icons.arrow_drop_down)
+                ],
+              ),
+            ),
             Text("Explore", style: TextStyle(color: Colors.grey, fontSize: 12)),
+
           ],
         ),
         const SizedBox(height: 20),
