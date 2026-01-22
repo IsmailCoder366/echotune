@@ -1,7 +1,6 @@
 import 'package:echotune/modules/auth/create_account/widgets/auth_footer_link.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../app/routes/app_routes.dart';
 import '../controller/login_controller.dart';
 import '../widgets/auth_toggle_tab.dart';
@@ -23,7 +22,7 @@ class LoginScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           children: [
-            // Inside Column in LoginScreen body:
+
             Obx(
               () => Container(
                 padding: const EdgeInsets.all(4),
@@ -74,13 +73,11 @@ class LoginScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 30),
-            Obx(
-              () => PrimaryAuthButton(
+            PrimaryAuthButton(
                 text: "Login",
-                isLoading: controller.isLoggingIn.value,
+
                 onPressed: () => controller.handleLogin(),
               ),
-            ),
             const SizedBox(height: 30),
             SocialAuthButton(
               text: "Continue with Google",

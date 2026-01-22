@@ -82,11 +82,10 @@ class CreateAccountScreen extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            Obx(() => PrimaryAuthButton(
+            PrimaryAuthButton(
               text: "Submit",
-              isLoading: controller.isSubmitting.value,
               onPressed: () => controller.handleSubmit(),
-            )),
+            ),
 
             const SizedBox(height: 20),
             const Center(child: Text("Or", style: TextStyle(color: Colors.grey))),

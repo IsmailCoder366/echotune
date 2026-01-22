@@ -2,7 +2,7 @@ import 'package:echotune/modules/auth/reset_password/view/reset_password_view.da
 import 'package:echotune/modules/auth/create_account/view/create_account.dart';
 import 'package:echotune/modules/auth/forgot_password/view/forgot_password_screen.dart';
 import 'package:echotune/modules/auth/otp_verification/view/otp_verification_view.dart';
-import 'package:echotune/modules/auth_check/view/auth_check_view.dart';
+
 import 'package:echotune/modules/creator/Bottom_navigation_screen/view/creator_main_view.dart';
 import 'package:echotune/modules/creator/complain/view/complain_view.dart';
 import 'package:echotune/modules/creator/content_upload_view/view/content_upload_view.dart';
@@ -10,7 +10,7 @@ import 'package:echotune/modules/creator/music_upload/view/music_upload_view.dar
 import 'package:echotune/modules/user/purchases/view/purchases_view.dart';
 import 'package:get/get.dart';
 import '../../modules/auth/password_changed/view/password_changed_view.dart';
-import '../../modules/creator/creator_dashboard/view/creator_dashboard_view.dart';
+
 import '../../modules/user/explore/views/explore_view.dart';
 import '../../modules/user/home_screen/view/home_screen.dart';
 import 'app_routes.dart';
@@ -31,8 +31,6 @@ class AppPages {
     GetPage(name: Routes.resetPasswordScreen, page: () => const ResetPasswordView()),
     GetPage(name: Routes.passwordChanged, page: () => const PasswordChangedView()),
 
-    /// AUTH CHECK VIEW FLOW
-    GetPage(name: Routes.authCheck, page: () => const AuthCheckView()),
 
     /// USER FLOW
     GetPage(name: Routes.userHome, page: () =>  UserHomeScreen()),

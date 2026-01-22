@@ -13,8 +13,7 @@ void main() async{
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Register AuthService globally
-  Get.put(AuthService(), permanent: true);
+
   runApp(const MyApp());
 }
 

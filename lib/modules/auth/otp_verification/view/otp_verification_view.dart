@@ -31,14 +31,12 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 50),
-            Obx(
-                  () => Center(
+            Center(
                 child: Text(
                   "We've sent a code to ${controller.email.value}",
                   style: const TextStyle(fontSize: 14),
                 ),
               ),
-            ),
             const SizedBox(height: 24),
 
             /// PIN CODE FIELDS
@@ -49,14 +47,6 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
               keyboardType: TextInputType.number,
               autoFocus: true,
               enableActiveFill: true,
-              onChanged: (value) {
-                // store OTP digits if needed
-                controller.otp.value = value;
-              },
-              onCompleted: (value) {
-                // optional: automatically verify when complete
-                controller.otp.value = value;
-              },
               pinTheme: PinTheme(
                 shape: PinCodeFieldShape.box,
                 borderRadius: BorderRadius.circular(10),
@@ -74,26 +64,18 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
             const SizedBox(height: 24),
 
             /// VERIFY BUTTON
-            Obx(
-                  () => SizedBox(
+             SizedBox(
                 width: double.infinity,
                 height: 48,
                 child: TextButton(
-                  onPressed: controller.isVerifying.value
-                      ? null
-                      : controller.verifyCode,
+                  onPressed: controller.verifyCode,
                   style: TextButton.styleFrom(
                     backgroundColor: const Color(0xffE34D4D),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: controller.isVerifying.value
-                      ? const CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.white,
-                  )
-                      : const Text(
+                  child: const Text(
                     "Verify",
                     style: TextStyle(
                       color: Colors.white,
@@ -102,7 +84,7 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                   ),
                 ),
               ),
-            ),
+
 
             const SizedBox(height: 16),
             const Center(

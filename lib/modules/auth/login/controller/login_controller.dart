@@ -13,18 +13,9 @@ class LoginController extends GetxController {
   void setLoginType(String type) => selectedType.value = type;
 
   void handleLogin() async {
-    // 1. Show loading state to satisfy Obx requirement
-    isLoggingIn.value = true;
-
-    // Simulate a network delay
-    await Future.delayed(const Duration(milliseconds: 800));
-
-    // 2. Logic to navigate to the correct Home Screen
     if (selectedType.value == 'User') {
-
       Get.offAllNamed(Routes.userHome);
     } else {
-      // Ensure Routes.creatorHome is uncommented in your AppPages
       Get.offAllNamed(Routes.creatorMainScreen);
     }
 

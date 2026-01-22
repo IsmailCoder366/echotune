@@ -61,7 +61,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
 
               const SizedBox(height: 8),
 
-              /// 🔹 No Obx here (only writing value)
+
               TextField(
                 onChanged: (value) => controller.email.value = value,
                 decoration: InputDecoration(
@@ -78,13 +78,11 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
 
               const SizedBox(height: 24),
 
-              /// 🔹 Obx stays because it READS isLoading
-              Obx(
-                    () => SizedBox(
+               SizedBox(
                   width: double.infinity,
                   height: 48,
                   child: TextButton(
-                    onPressed: controller.isLoading.value ? null : controller.sendCode,
+                    onPressed: controller.sendCode,
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xffE34D4D),
                       minimumSize: const Size.fromHeight(48),
@@ -92,16 +90,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: controller.isLoading.value
-                        ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
-                    )
-                        : const Text(
+                    child : const Text(
                       "Send Code",
                       style: TextStyle(
                         color: Colors.white,
@@ -111,7 +100,6 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                   )
 
                     ),
-              ),
 
               const SizedBox(height: 160),
 

@@ -18,9 +18,6 @@ class CreateAccountController extends GetxController {
 
   void handleSubmit() async {
     isSubmitting.value = true;
-
-
-    // simple navigation logic (no validation)
     if (selectedType.value == 'User') {
       Get.offAllNamed(Routes.userHome);
     }

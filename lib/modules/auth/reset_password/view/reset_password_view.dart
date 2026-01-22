@@ -25,7 +25,6 @@ class ResetPasswordView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             const SizedBox(height: 10),
             const Text(
               "Reset Password",
@@ -43,34 +42,22 @@ class ResetPasswordView extends StatelessWidget {
             const Text("New Password"),
             const SizedBox(height: 6),
 
-            Obx(() => TextField(
-              obscureText: !controller.newPasswordVisible.value,
-              onChanged: (v) => controller.newPassword.value = v,
+            TextField(
               decoration: InputDecoration(
                 hintText: "Must be 8 characters",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    controller.newPasswordVisible.value
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                  ),
-                  onPressed: () {
-                    controller.newPasswordVisible.value =
-                    !controller.newPasswordVisible.value;
-                  },
-                ),
+                suffixIcon: Icon(Icons.visibility),
               ),
-            )),
+            ),
 
             const SizedBox(height: 20),
 
             const Text("Confirm New Password"),
             const SizedBox(height: 6),
 
-            Obx(() => TextField(
+            TextField(
               obscureText: !controller.confirmPasswordVisible.value,
               onChanged: (v) => controller.confirmPassword.value = v,
               decoration: InputDecoration(
@@ -78,28 +65,15 @@ class ResetPasswordView extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    controller.confirmPasswordVisible.value
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                  ),
-                  onPressed: () {
-                    controller.confirmPasswordVisible.value =
-                    !controller.confirmPasswordVisible.value;
-                  },
-                ),
+                suffixIcon: Icon(Icons.visibility),
               ),
-            )),
+            ),
 
             const SizedBox(height: 25),
-
-            Obx(() => SizedBox(
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: controller.isLoading.value
-                    ? null
-                    : () => controller.resetPassword(),
+                onPressed: controller.resetPassword,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.authColor,
                   padding: const EdgeInsets.symmetric(vertical: 22),
@@ -107,14 +81,12 @@ class ResetPasswordView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: controller.isLoading.value
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
+                child: const Text(
                   "Reset Password",
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
-            )),
+            ),
 
             const Spacer(),
 
@@ -131,7 +103,7 @@ class ResetPasswordView extends StatelessWidget {
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
