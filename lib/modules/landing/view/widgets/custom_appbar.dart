@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../core/services/auth_services.dart';
 import '../../../user/profile/bottom_view/bottom_sheet_view.dart';
 
@@ -15,7 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Get.find<AuthService>();
+    final authService = Get.find<AuthServices>();
 
     return AppBar(
       automaticallyImplyLeading: false,
@@ -108,7 +106,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: OutlinedButton(
-        onPressed: () => Get.toNamed('/complain_screen'),
+        onPressed: () {},
         style: OutlinedButton.styleFrom(
           foregroundColor: Colors.white,
           side: const BorderSide(color: Colors.white70),

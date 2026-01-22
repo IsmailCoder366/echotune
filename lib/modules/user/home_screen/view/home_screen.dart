@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../../../landing/view/widgets/custom_appbar.dart';
 import '../../../landing/view/widgets/features_section.dart';
 import '../../../landing/view/widgets/header_section.dart';
 import '../../profile/bottom_view/bottom_sheet_view.dart';

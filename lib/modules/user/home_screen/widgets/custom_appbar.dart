@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../../../core/services/auth_services.dart';
+
 import '../../profile/bottom_view/bottom_sheet_view.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {

@@ -67,27 +67,29 @@ class LineChartSample extends StatelessWidget {
                 interval: 1,
                 reservedSize: 32,
                 getTitlesWidget: (double value, TitleMeta meta) {
-                  // Check if the value is a whole number to avoid duplicate labels
                   if (value % 1 != 0) return const SizedBox();
 
                   int index = value.toInt();
 
                   if (index >= 0 && index < controller.months.length) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      // Using a Container with width helps prevent overlapping
-                      child: Text(
-                        controller.months[index],
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        width: 42, // ✅ SPACE BETWEEN MONTHS
+                        child: Text(
+                          controller.months[index],
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                     );
                   }
                   return const SizedBox();
                 },
+
               ),
             ),
           ),

@@ -1,7 +1,7 @@
 // lib/core/services/auth_service.dart
 import 'package:get/get.dart';
 
-class AuthService extends GetxService {
+class AuthServices extends GetxService {
   // Observable to track login status
   var isLoggedIn = false.obs;
 
