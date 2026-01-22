@@ -1,6 +1,10 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../creator/creator_dashboard/controller/creator_dashboard_controller.dart';
+import '../../../creator/creator_dashboard/widgets/build_analytic_section.dart';
 
 class ManagementFeatureSection extends StatefulWidget {
   const ManagementFeatureSection({super.key});
@@ -34,6 +38,7 @@ class _ManagementFeatureSectionState extends State<ManagementFeatureSection> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(AdminDashboardController());
     return Container(
       width: double.infinity,
       color: const Color(0xFF111111), // Deep dark theme
@@ -64,7 +69,8 @@ class _ManagementFeatureSectionState extends State<ManagementFeatureSection> {
 
           // 2. DYNAMIC ACCORDION LIST
           Column(
-            children: List.generate(_featureData.length, (index) {
+            children: List.generate(
+                _featureData.length, (index) {
               return _buildExpandableFeature(
                 index: index,
                 title: _featureData[index]['title']!,
@@ -169,7 +175,7 @@ class _ManagementFeatureSectionState extends State<ManagementFeatureSection> {
                     ),
                     const SizedBox(height: 16),
 
-                    // FUNCTIONAL DASHBOARD PREVIEW (The widget we built earlier)
+                    // FUNCTIONAL DASHBOARD PREVIEW
                     const DashboardPreview(),
                   ],
                 ],
@@ -196,73 +202,7 @@ class DashboardPreview extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // 1. TOP ACTION CARDS (Blue & Orange)
-          Row(
-            children: [
-              _buildUploadCard(
-                title: "Upload Your Music",
-                subtitle: "Lorem ipsum dolor sit amet consectetur.",
-                icon: Icons.music_note,
-                color: const Color(0xFFEEF2FF), // Light blue
-                iconColor: Colors.blue,
-              ),
-              const SizedBox(width: 12),
-              _buildUploadCard(
-                title: "Upload Your Content",
-                subtitle: "Lorem ipsum dolor sit amet consectetur.",
-                icon: Icons.videocam_outlined,
-                color: const Color(0xFFFFF7ED), // Light orange
-                iconColor: Colors.orange,
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          // 2. STATEMENTS HEADER WITH DROPDOWNS
-          Row(
-            children: [
-              const Text(
-                "Statements",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-
-              _buildFilterDropdown("All"),
-              const SizedBox(width: 8),
-              _buildFilterDropdown("2024"),
-              const SizedBox(width: 8),
-              const Text("Explore", style: TextStyle(fontSize: 10, color: Colors.blue)),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          // 3. GRAPH AND STATS SECTION
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Placeholder for the Line Chart
-              Expanded(
-                flex: 2,
-                child: SizedBox(
-                  height: 120,
-                  child: CustomPaint(
-                    painter: SimpleLineChartPainter(),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              // Side Statistics
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    _buildStatItem("Music & content", "24", Colors.black),
-                    _buildStatItem("Music", "14", Colors.blue),
-                    _buildStatItem("Content", "10", Colors.orange),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          buildAnalyticsSection()
         ],
       ),
     );
@@ -333,24 +273,3 @@ class DashboardPreview extends StatelessWidget {
   }
 }
 
-// Simple Painter to simulate the line graph in your screenshot
-class SimpleLineChartPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.black87
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke;
-
-    final path = Path();
-    path.moveTo(0, size.height * 0.8);
-    path.quadraticBezierTo(size.width * 0.2, size.height * 0.9, size.width * 0.4, size.height * 0.4);
-    path.quadraticBezierTo(size.width * 0.6, size.height * 0.1, size.width * 0.8, size.height * 0.6);
-    path.lineTo(size.width, size.height * 0.2);
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}

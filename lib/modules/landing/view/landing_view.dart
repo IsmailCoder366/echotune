@@ -7,6 +7,9 @@ import 'package:echotune/modules/landing/view/widgets/manage_feature_section.dar
 import 'package:echotune/modules/landing/view/widgets/testimonial_section.dart';
 import 'package:echotune/modules/landing/view/widgets/trusted_logo_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../creator/creator_dashboard/controller/creator_dashboard_controller.dart';
 
 
 class LandingView extends StatelessWidget {
@@ -14,6 +17,7 @@ class LandingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       extendBodyBehindAppBar: true, // Key property for hero backgrounds
       appBar: const CustomAppBar(),
