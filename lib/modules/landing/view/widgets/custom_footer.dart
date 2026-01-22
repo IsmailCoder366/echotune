@@ -9,7 +9,7 @@ class CustomFooter extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: const Color(0xFF121212),
-      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 15),
       child: Column(
         children: [
           // 1. BRAND HEADER & SOCIAL ICONS

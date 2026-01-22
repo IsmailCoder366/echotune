@@ -19,15 +19,16 @@ class TestimonialSection extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           SizedBox(
-            height: 250,
+            height: 220,
             child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical : 15, horizontal: 20),
               scrollDirection: Axis.horizontal,
               itemCount: 3,
               separatorBuilder: (context, index) => const SizedBox(width: 15),
               itemBuilder: (context, index) => const _TestimonialCard(),
             ),
           ),
+
         ],
       ),
     );
@@ -47,7 +48,7 @@ class _TestimonialCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade100),
         boxShadow: [
-          BoxShadow(color: Colors.black, blurRadius: 10, offset: const Offset(0, 5))
+          BoxShadow(color: Colors.black54, blurRadius: 1, offset: const Offset(0, 1))
         ],
       ),
       child: Column(
@@ -71,6 +72,7 @@ class _TestimonialCard extends StatelessWidget {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget sed aliquam orci viverra ut egestas.",
             style: TextStyle(color: Colors.black87, height: 1.5),
           ),
+
         ],
       ),
     );
