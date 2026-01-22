@@ -26,4 +26,5 @@ abstract class Routes {
   static const uploadMusic = '/music_upload';
   static const uploadContent = '/content_upload';
   static const pricingEdit = '/pricingEdit';
+  static const complainScreen = '/complain_screen';
 }
