@@ -1,4 +1,5 @@
 import 'package:echotune/modules/landing/view/landing_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,8 +8,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app/routes/app_pages.dart';
 import 'app/routes/app_routes.dart';
 import 'core/services/auth_services.dart';
+import 'firebase_options.dart';
 
 void main() async{
+
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform);
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
 

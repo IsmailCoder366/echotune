@@ -74,21 +74,22 @@ class MusicUploadController extends GetxController {
       pricingSubStep.value = 1;
     }
     else if (currentStep.value == 2) {
+      _markStepAsComplete(2);
+      currentStep.value = 3;
       // Internal Pricing Logic
       if (pricingSubStep.value == 1) {
         pricingSubStep.value = 2;
-      } else if (pricingSubStep.value == 2) {
-        pricingSubStep.value = 3;
-      } else {
-        // Only mark Pricing as Green when all sub-steps are done
-        _markStepAsComplete(2);
-        currentStep.value = 3;
       }
+    }
+    else if (currentStep.value == 3) {
+      _markStepAsComplete(3);
+      Get.snackbar("Success", "Content Submitted for Review");
+      Get.toNamed('/creatorMainScreen');
     }
   }
 
   void previousStep() {
-    if (currentStep.value == 2 && pricingSubStep.value > 1) {
+    if (currentStep.value == 3 && pricingSubStep.value > 1) {
       pricingSubStep.value--;
     }
     else if (currentStep.value > 0) {
@@ -123,11 +124,18 @@ class MusicUploadController extends GetxController {
   }
 
   // Text for the Agreement step (can be fetched from API)
-  final String annextureText = "The description of Work of the owner Played by ------------------------ Description of the Timeline that cannot be used by user.(i.e,sections of the video that are not owned by the owner)";
+  final String annextureText = "The description of Work of the owner Played by"
+      " ------------------------ Description of the Timeline that cannot be used"
+      " by user.(i.e,sections of the video that are not owned by the owner)";
 
-  final String termsOfServiceText = """THIS TERMS OF SERVICE AGREEMENT (“Agreement”) is made between the OWNER (which term shall mean an author as defined in the Copyright Act 1957), and any person or Association of persons or Partnership firm or Company or such other legal entity who complete the registration and payment process to use the copyrighted work of the Owner (Herein after called as “User”) and both the Owner and the User are collectively referred as “Parties.”
-
-The copyrighted works of the owner will collectively be referred to as “Work” which...""";
+  final String termsOfServiceText = """THIS TERMS OF SERVICE AGREEMENT
+   (“Agreement”) is made between the OWNER (which term shall mean an author
+    as defined in the Copyright Act 1957), and any person or Association of 
+    persons or Partnership firm or Company or such other legal entity who 
+    complete the registration and payment process to use the copyrighted work 
+    of the Owner (Herein after called as “User”) and both the Owner and the User
+    are collectively referred as “Parties.” The copyrighted works of the 
+    owner will collectively be referred to as “Work” which...""";
 
   void submitFinalAgreement() {
     // Final logic before closing the upload flow
