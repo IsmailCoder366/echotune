@@ -24,7 +24,7 @@ class CreateAccountController extends GetxController {
   }
 
   void handleSubmit() async {
-    // 1. Run Validations with your Toast package
+
     if (fullNameController.text.isEmpty) {
       AppValidators.showMessage("Full name is required");
       return;

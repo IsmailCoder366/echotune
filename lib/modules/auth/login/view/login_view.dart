@@ -1,7 +1,9 @@
-import 'package:echotune/modules/auth/create_account/widgets/auth_footer_link.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../../app/routes/app_routes.dart';
+import '../../../../core/utils/app_validators.dart';
+import '../../create_account/widgets/auth_footer_link.dart';
 import '../controller/login_controller.dart';
 import '../widgets/auth_toggle_tab.dart';
 import '../widgets/custom_text_field.dart';
@@ -13,18 +15,19 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Injecting the controller
     final LoginController controller = Get.put(LoginController());
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(backgroundColor: Colors.transparent),
+      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           children: [
-
+            const SizedBox(height: 20),
             Obx(
-              () => Container(
+                  () => Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: Colors.grey[100],
@@ -49,40 +52,53 @@ class LoginScreen extends StatelessWidget {
 
             const SizedBox(height: 32),
 
+            // Linked to emailController in the LoginController
             AuthTextField(
               hint: "Email",
-              onChanged: (val) => controller.email.value = val,
+              controller: controller.emailController,
             ),
             const SizedBox(height: 20),
 
+            // Linked to passwordController in the LoginController
             AuthTextField(
               hint: "Password",
               isPassword: true,
-              onChanged: (val) => controller.password.value = val,
+              controller: controller.passwordController,
             ),
+
             const SizedBox(height: 5),
             Row(
-              mainAxisAlignment: .end,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {
-                    Get.toNamed(Routes.forgotPassword);
-                  },
-                  child: Text('Forgot Password?', style: TextStyle(color: Colors.black, decoration: TextDecoration.underline),),
+                  onPressed: () => Get.toNamed(Routes.forgotPassword),
+                  child: const Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                        color: Colors.black,
+                        decoration: TextDecoration.underline
+                    ),
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 30),
-            PrimaryAuthButton(
-                text: "Login",
 
-                onPressed: () => controller.handleLogin(),
-              ),
+            // Button now observes the isLoggingIn state
+            Obx(() => PrimaryAuthButton(
+              text: "Login",
+              isLoading: controller.isLoggingIn.value, // Pass the loading state
+              onPressed: () => controller.handleLogin(),
+            )),
+
             const SizedBox(height: 30),
             SocialAuthButton(
               text: "Continue with Google",
               image: 'assets/icons/google.png',
-              onTap: () => controller.isLoggingIn(),
+              onTap: () {
+                // You can trigger your Google Auth logic here later
+                AppValidators.showMessage("Google Login coming soon!", isError: false);
+              },
             ),
 
             const SizedBox(height: 20),

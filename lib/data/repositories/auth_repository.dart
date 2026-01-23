@@ -8,23 +8,55 @@ class AuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // Handles Firebase Errors and shows the appropriate Toast
+
+  /// Firebase Exception
   void _handleAuthError(FirebaseAuthException e) {
     switch (e.code) {
-    case 'user-not-found':
-    AppValidators.showMessage("No user found with this email.");
-    break;
-    case 'wrong-password':
-    AppValidators.showMessage("Incorrect password.");
-    break;
-    case 'email-already-in-use':
-    AppValidators.showMessage("This email is already registered.");
-    break;
-    case 'weak-password':
-    AppValidators.showMessage("The password provided is too weak.");
-    break;
-    default:
-    AppValidators.showMessage(e.message ?? "An error occurred.");
+    // --- Login/Signup Errors ---
+      case 'user-not-found':
+        AppValidators.showMessage("No account exists with this email.");
+        break;
+      case 'wrong-password':
+        AppValidators.showMessage("Incorrect password. Please try again.");
+        break;
+      case 'email-already-in-use':
+        AppValidators.showMessage("This email is already registered. Please login.");
+        break;
+      case 'invalid-email':
+        AppValidators.showMessage("The email address is badly formatted.");
+        break;
+      case 'user-disabled':
+        AppValidators.showMessage("This user account has been disabled by admin.");
+        break;
+
+    // --- Password Errors ---
+      case 'weak-password':
+        AppValidators.showMessage("The password is too weak. Use a stronger one.");
+        break;
+
+    // --- Security/Rate Limiting ---
+      case 'too-many-requests':
+        AppValidators.showMessage("Too many failed attempts. Account temporarily locked.");
+        break;
+      case 'operation-not-allowed':
+        AppValidators.showMessage("Email/Password accounts are not enabled in Firebase.");
+        break;
+
+    // --- Network/System Errors ---
+      case 'network-request-failed':
+        AppValidators.showMessage("Check your internet connection and try again.");
+        break;
+      case 'internal-error':
+        AppValidators.showMessage("Internal server error. Please try again later.");
+        break;
+
+    // --- Credential Errors (Specific to modern Firebase versions) ---
+      case 'invalid-credential':
+        AppValidators.showMessage("Invalid credentials. The email or password may be wrong.");
+        break;
+
+      default:
+        AppValidators.showMessage(e.message ?? "Authentication failed. Please try again.");
     }
   }
 

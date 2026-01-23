@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../app/routes/app_routes.dart';
+import '../../login/widgets/custom_text_field.dart';
+import '../../login/widgets/primary_auth_button.dart'; // Ensure correct path
 import '../controller/forgot_password_controller.dart';
+
+
 
 class ForgotPasswordView extends GetView<ForgotPasswordController> {
   const ForgotPasswordView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Controller is initialized here
     final controller = Get.put(ForgotPasswordController());
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -19,89 +24,59 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Get.back(),
         ),
+        // Changed to match the screen's purpose
         title: const Text(
-          "Login",
-          style: TextStyle(color: Colors.black),
+          "Forgot Password",
+          style: TextStyle(color: Colors.black, fontSize: 18),
         ),
       ),
 
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(24), // Consistent padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
               const SizedBox(height: 8),
-
               const Text(
-                "Forget Password",
+                "Reset Password",
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 26,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               const SizedBox(height: 12),
-
               const Text(
                 "Don't worry! It happens. Please enter the email associated with your account.",
                 style: TextStyle(fontSize: 14, color: Colors.black54),
               ),
-
-              const SizedBox(height: 25),
+              const SizedBox(height: 32),
 
               const Text(
                 "Email Address",
                 style: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
+              const SizedBox(height: 10),
 
-              const SizedBox(height: 8),
-
-
-              TextField(
-                onChanged: (value) => controller.email.value = value,
-                decoration: InputDecoration(
-                  hintText: "Enter your Email address",
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+              // Using your custom AuthTextField linked to emailController
+              AuthTextField(
+                hint: "Enter your Email address",
+                controller: controller.emailController,
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
 
-               SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: TextButton(
-                    onPressed: controller.sendCode,
-                    style: TextButton.styleFrom(
-                      backgroundColor: const Color(0xffE34D4D),
-                      minimumSize: const Size.fromHeight(48),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child : const Text(
-                      "Send Code",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
+              // Using your PrimaryAuthButton to handle loading state
+              Obx(() => PrimaryAuthButton(
+                text: "Send Reset Link",
+                isLoading: controller.isSending.value,
+                onPressed: () => controller.handleResetPassword(),
+              )),
 
-                    ),
-
-              const SizedBox(height: 160),
+              const SizedBox(height: 140),
 
               Center(
                 child: Row(
@@ -109,19 +84,18 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                   children: [
                     const Text("Remember password? "),
                     GestureDetector(
-                      onTap: () => Get.toNamed(Routes.login),
+                      onTap: () => Get.offNamed(Routes.login),
                       child: const Text(
                         "Log in",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: Color(0xffE34D4D), // Matching your theme
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-
-              const SizedBox(height: 16),
             ],
           ),
         ),
