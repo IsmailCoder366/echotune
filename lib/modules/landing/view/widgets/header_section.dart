@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../core/constants/app_colors.dart';
+import '../../../../common/constants/app_colors.dart';
 import '../../controller/hero_indicator_controller.dart';
 
 class HeroHeader extends StatelessWidget {

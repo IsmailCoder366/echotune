@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../core/constants/app_colors.dart';
+import '../../../../common/constants/app_colors.dart';
 import '../../../creator/creator_dashboard/controller/creator_dashboard_controller.dart';
 import '../../../creator/creator_dashboard/widgets/build_analytic_section.dart';
 

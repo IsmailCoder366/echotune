@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../../core/constants/app_colors.dart';
+import '../../../../../common/constants/app_colors.dart';
 import '../../controllers/purchases_controller.dart';
 
 class PurchasesTab extends StatelessWidget {

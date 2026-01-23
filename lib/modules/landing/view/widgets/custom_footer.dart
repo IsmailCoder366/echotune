@@ -1,5 +1,7 @@
-import 'package:echotune/core/constants/app_colors.dart';
+
 import 'package:flutter/material.dart';
+
+import '../../../../common/constants/app_colors.dart';
 
 class CustomFooter extends StatelessWidget {
   const CustomFooter({super.key});

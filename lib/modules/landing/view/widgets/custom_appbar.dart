@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../core/services/auth_services.dart';
+
 import '../../../user/profile/bottom_view/bottom_sheet_view.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -13,7 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Get.find<AuthServices>();
+
 
     return AppBar(
       automaticallyImplyLeading: false,
@@ -25,20 +25,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         const SizedBox(width: 8),
 
         /// Reacts to login/logout state
-        Obx(() {
-          // If user is logged in → show profile actions everywhere
-          if (authService.isLoggedIn.value) {
-            return _buildUserActions();
-          }
 
-          // If user is NOT logged in but is on landing page → show login button
-          if (isLandingPage) {
-            return _buildLoginButton();
-          }
+        _buildLoginButton()
 
-          // If user is NOT logged in and on homepage → show nothing
-          return const SizedBox.shrink();
-        }),
       ],
     );
   }

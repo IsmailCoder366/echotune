@@ -1,7 +1,7 @@
-import 'package:echotune/core/constants/app_colors.dart';
-import 'package:echotune/core/constants/app_text.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../common/constants/app_colors.dart';
 import '../controller/upload_music_controller.dart';
 import '../widgets/categore_selection_tile.dart';
 import '../widgets/custom_fields.dart';
