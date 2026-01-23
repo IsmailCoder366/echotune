@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../app/routes/app_routes.dart';
+import '../../login/widgets/auth_footer_link.dart';
 import '../../login/widgets/auth_toggle_tab.dart';
-import '../../login/widgets/custom_text_field.dart';
 import '../../login/widgets/primary_auth_button.dart';
 import '../controller/create_account_controller.dart';
-import '../widgets/auth_footer_link.dart';
+import '../widgets/auth_text_field.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   const CreateAccountScreen({super.key});
@@ -45,7 +45,7 @@ class CreateAccountScreen extends StatelessWidget {
                     onTap: () => controller.setAccountType("User"),
                   ),
                   AuthToggleSwitch(
-                    title: "Owner",
+                    title: "Owner", // Representing the 'Creator' module logic
                     isActive: controller.selectedType.value == "Owner",
                     onTap: () => controller.setAccountType("Owner"),
                   ),
@@ -55,37 +55,39 @@ class CreateAccountScreen extends StatelessWidget {
 
             const SizedBox(height: 25),
 
-            AuthTextField(
-              hint: "Name",
-              onChanged: (v) => controller.fullName.value = v,
+            CreateAccountAuthTextField(
+              hint: 'Name',
+              controller: controller.fullNameController, // Linked
             ),
             const SizedBox(height: 16),
 
-            AuthTextField(
+            CreateAccountAuthTextField(
               hint: "Email",
-              onChanged: (v) => controller.email.value = v,
+              controller: controller.emailController, // Linked
             ),
             const SizedBox(height: 16),
 
-            AuthTextField(
+            CreateAccountAuthTextField(
               hint: "Password",
               isPassword: true,
-              onChanged: (v) => controller.password.value = v,
+              controller: controller.passwordController, // Linked
             ),
             const SizedBox(height: 16),
 
-            AuthTextField(
+            CreateAccountAuthTextField(
               hint: "Confirm password",
               isPassword: true,
-              onChanged: (v) => controller.confirmPassword.value = v,
+              controller: controller.confirmPasswordController, // Linked
             ),
 
             const SizedBox(height: 30),
 
-            PrimaryAuthButton(
+            // Submit Button with Loading Observation
+            Obx(() => PrimaryAuthButton(
               text: "Submit",
+              isLoading: controller.isSubmitting.value, // Reactive loading
               onPressed: () => controller.handleSubmit(),
-            ),
+            )),
 
             const SizedBox(height: 20),
             const Center(child: Text("Or", style: TextStyle(color: Colors.grey))),
@@ -96,7 +98,6 @@ class CreateAccountScreen extends StatelessWidget {
               linkText: "Login",
               onTap: () => Get.toNamed(Routes.login),
             ),
-
             const SizedBox(height: 20),
           ],
         ),

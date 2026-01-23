@@ -4,8 +4,8 @@ import '../../../../common/constants/app_colors.dart';
 
 class PrimaryAuthButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
-
+  final VoidCallback? onPressed; // Made nullable to handle disabled state
+  final bool isLoading; // Added this
   final Color? backgroundColor;
   final Color textColor;
 
@@ -13,6 +13,7 @@ class PrimaryAuthButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
+    this.isLoading = false, // Default to false
     this.backgroundColor,
     this.textColor = Colors.white,
   });
@@ -23,19 +24,22 @@ class PrimaryAuthButton extends StatelessWidget {
       width: double.infinity,
       height: 54,
       child: ElevatedButton(
-        onPressed : onPressed,
+        // If loading, onPressed is null which disables the button
+        onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor ?? AppColors.authColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 0,
         ),
-        child : Text(
+        child: isLoading
+            ? const SizedBox(
+          height: 20,
+          width: 20,
+          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+        )
+            : Text(
           text,
-          style: TextStyle(
-            color: textColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
+          style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 16),
         ),
       ),
     );
