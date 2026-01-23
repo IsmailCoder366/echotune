@@ -95,17 +95,14 @@ class AuthRepository {
   }
 
 
-  /// Reset Password
+  /// Reset Password (lib/data/repositories/auth_repository.dart)
   Future<void> resetPassword(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
-      AppValidators.showMessage("Reset link sent!", isError: false);
-      // Optionally navigate back to login after a delay
-      Future.delayed(const Duration(seconds: 2), () {
-        Get.back();
-      });
+      // Remove the showMessage from here to avoid the double popup
     } on FirebaseAuthException catch (e) {
       _handleAuthError(e);
+      rethrow; // Important: rethrow so the Controller knows an error happened
     }
   }
 
