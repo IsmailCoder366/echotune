@@ -22,16 +22,8 @@ class ForgotPasswordController extends GetxController {
       // 2. Call the repository to send the Firebase reset email
       await _authRepo.resetPassword(emailController.text.trim());
 
-      // Success message is handled inside the repository or here
-      AppValidators.showMessage(
-          "Password reset link sent to your email!",
-          isError: false
-      );
 
-      // Optionally navigate back to login after a delay
-      Future.delayed(const Duration(seconds: 2), () {
-        Get.back();
-      });
+
 
     } catch (e) {
       AppValidators.showMessage("Failed to send reset email. Please try again.");

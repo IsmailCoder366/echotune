@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:echotune/core/utils/app_validators.dart';
+import 'package:get/get.dart';
 
 import '../../core/models/user_model.dart';
 
@@ -99,6 +100,10 @@ class AuthRepository {
     try {
       await _auth.sendPasswordResetEmail(email: email);
       AppValidators.showMessage("Reset link sent!", isError: false);
+      // Optionally navigate back to login after a delay
+      Future.delayed(const Duration(seconds: 2), () {
+        Get.back();
+      });
     } on FirebaseAuthException catch (e) {
       _handleAuthError(e);
     }
