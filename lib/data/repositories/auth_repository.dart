@@ -111,4 +111,15 @@ class AuthRepository {
     DocumentSnapshot doc = await _db.collection('users').doc(uid).get();
     return doc['role'] ?? 'user';
   }
+
+  /// Logout
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
+      // Logic for redirection will be handled in the Controller
+    } catch (e) {
+      AppValidators.showMessage("Logout failed. Please try again.");
+      rethrow;
+    }
+  }
 }

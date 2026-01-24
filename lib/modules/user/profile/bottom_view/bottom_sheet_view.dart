@@ -5,7 +5,11 @@ import '../controller/profile_controller.dart';
 import '../widgets/profile_menu_tile.dart';
 
 void showProfileBottomSheet() {
-  final ProfileController controller = Get.put(ProfileController());
+  // Using find if the controller is already initialized in the view,
+  // otherwise put it.
+  final ProfileController controller = Get.isRegistered<ProfileController>()
+      ? Get.find<ProfileController>()
+      : Get.put(ProfileController());
 
   Get.bottomSheet(
     Container(
@@ -22,7 +26,7 @@ void showProfileBottomSheet() {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(width: 24), // Spacer for centering
+              const SizedBox(width: 48), // Adjusted for better centering
               const Text(
                 "Your Profile",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -40,10 +44,11 @@ void showProfileBottomSheet() {
             "Hello",
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
           ),
-          Text(
+          // Wrapped in Obx in case the name changes dynamically
+          Obx(() => Text(
             controller.userName.value,
             style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          ),
+          )),
           const SizedBox(height: 20),
 
           // Menu Items
@@ -54,19 +59,29 @@ void showProfileBottomSheet() {
 
           const SizedBox(height: 30),
 
-          // Log Out Button
+          // Log Out Button with Reactive Loading State
           SizedBox(
             width: double.infinity,
             height: 55,
-            child: OutlinedButton(
-              onPressed: controller.logout,
+            child: Obx(() => OutlinedButton(
+              // Disable button if logging out to prevent multiple calls
+              onPressed: controller.isLoggingOut.value ? null : () => controller.logout(),
               style: OutlinedButton.styleFrom(
                 side: const BorderSide(color: Colors.black),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              child: const Text(
+              child: controller.isLoggingOut.value
+                  ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.black,
+                ),
+              )
+                  : const Text(
                 "Log Out",
                 style: TextStyle(
                   color: Colors.black,
@@ -74,7 +89,7 @@ void showProfileBottomSheet() {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
+            )),
           ),
           const SizedBox(height: 20),
         ],
