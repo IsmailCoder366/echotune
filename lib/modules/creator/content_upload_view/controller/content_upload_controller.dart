@@ -80,6 +80,7 @@ class ContentUploadController extends GetxController {
       }
     } else if (currentStep.value == 3) {
       Get.snackbar("Success", "Content Submitted for Review");
+      Get.toNamed('/creatorMainScreen');
     }
   }
 

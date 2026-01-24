@@ -71,18 +71,17 @@ class MusicUploadController extends GetxController {
     else if (currentStep.value == 1) {
       _markStepAsComplete(1); // Mark Links as Green
       currentStep.value = 2;
-      pricingSubStep.value = 1;
     }
     else if (currentStep.value == 2) {
-      _markStepAsComplete(2);
-      currentStep.value = 3;
-      // Internal Pricing Logic
-      if (pricingSubStep.value == 1) {
-        pricingSubStep.value = 2;
+      if (pricingSubStep.value < 4) {
+        pricingSubStep.value++;
+      } else {
+        _markStepAsComplete(2);
+        currentStep.value = 3;
       }
     }
     else if (currentStep.value == 3) {
-      _markStepAsComplete(3);
+
       Get.snackbar("Success", "music Submitted for Review");
       Get.toNamed('/creatorMainScreen');
     }
