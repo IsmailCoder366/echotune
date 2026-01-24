@@ -35,8 +35,10 @@ class LoginController extends GetxController {
       );
 
       if (user != null) {
-        // Get role from Firestore
-        String actualRole = await _authRepo.getUserRole(user.uid);
+        // FIX: Add '?' to the type or provide a default value
+        // We use ?? 'user' to ensure it never stays null
+        String? roleFromDb = await _authRepo.getUserRole(user.uid);
+        String actualRole = roleFromDb ?? 'user';
 
         // UI uses 'Owner', DB uses 'creator'
         String selectedRole = selectedType.value == 'Owner' ? 'creator' : 'user';
@@ -51,13 +53,14 @@ class LoginController extends GetxController {
             Get.offAllNamed(Routes.creatorMainScreen);
           }
         } else {
-          // Just show message, don't logout yet since you haven't set it up
           AppValidators.showMessage(
               "This account is registered as a $actualRole. Please switch the toggle above."
           );
         }
       }
     } catch (e) {
+      // Log the actual error to your console to see what's happening
+      debugPrint("Login Error: $e");
       AppValidators.showMessage("Login failed. Please check your credentials.");
     } finally {
       isLoggingIn.value = false;

@@ -1,6 +1,6 @@
 abstract class Routes {
   // Core
-  static const splash = '/';
+  static const splash = '/splash';
   static const landing = '/landing';
 
   // Auth

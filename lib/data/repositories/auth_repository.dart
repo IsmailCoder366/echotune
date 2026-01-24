@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:echotune/core/utils/app_validators.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../core/models/user_model.dart';
@@ -8,7 +9,7 @@ import '../../core/models/user_model.dart';
 class AuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-
+  User? get currentUser => _auth.currentUser;
 
   /// Firebase Exception
   void _handleAuthError(FirebaseAuthException e) {
@@ -106,10 +107,19 @@ class AuthRepository {
     }
   }
 
+
+
   /// Decide Role
-  Future<String> getUserRole(String uid) async {
-    DocumentSnapshot doc = await _db.collection('users').doc(uid).get();
-    return doc['role'] ?? 'user';
+  Future<String?> getUserRole(String uid) async {
+    try {
+      DocumentSnapshot doc = await _db.collection('users').doc(uid).get();
+      if (doc.exists && doc.data() != null) {
+        return doc['role'] as String?;
+      }
+    } catch (e) {
+      debugPrint("Error fetching role: $e");
+    }
+    return null;
   }
 
   /// Logout
