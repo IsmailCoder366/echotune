@@ -33,7 +33,7 @@ class ContentUploadController extends GetxController {
     'Commercial / Business purpose',
     'Specific / Custom licences',
     'Metaverse',
-    'Specific / Custom licences'
+    'general / Custom licences'
   ];
 
   final List<String> permissionPlatforms = [
