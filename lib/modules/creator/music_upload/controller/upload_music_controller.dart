@@ -83,7 +83,7 @@ class MusicUploadController extends GetxController {
     }
     else if (currentStep.value == 3) {
       _markStepAsComplete(3);
-      Get.snackbar("Success", "Content Submitted for Review");
+      Get.snackbar("Success", "music Submitted for Review");
       Get.toNamed('/creatorMainScreen');
     }
   }
