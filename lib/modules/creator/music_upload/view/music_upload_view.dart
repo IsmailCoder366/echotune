@@ -226,7 +226,7 @@ class MusicUploadView extends StatelessWidget {
           if (controller.currentStep.value > 0)
             Expanded(
               child: OutlinedButton(
-                onPressed: () => controller.previousStep,
+                onPressed: () => controller.previousStep(),
                 style: OutlinedButton.styleFrom(
                   backgroundColor: Colors.grey.shade100,
                   side: BorderSide.none,
