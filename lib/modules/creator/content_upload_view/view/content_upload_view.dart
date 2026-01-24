@@ -499,6 +499,7 @@ class ContentUploadView extends StatelessWidget {
                   backgroundColor: Colors.grey.shade100,
                   side: BorderSide.none,
                   padding: const EdgeInsets.symmetric(vertical: 20),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
                 child: const Text("Back", style: TextStyle(color: Colors.grey)),
               ),
@@ -511,9 +512,10 @@ class ContentUploadView extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
                 padding: const EdgeInsets.symmetric(vertical: 20),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
               child: Text(
-                controller.currentStep.value == 3 ? "Submit" : "Next",
+                controller.currentStep.value == 3 ? "Finish" : "Next",
                 style: const TextStyle(color: Colors.white),
               ),
             ),
