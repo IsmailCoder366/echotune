@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart'; // Needed for TextEditingController
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -10,33 +10,50 @@ import '../../../../core/utils/app_validators.dart';
 class UserInfoController extends GetxController {
   final AuthRepository _authRepo = AuthRepository();
 
-  // 1. Loading states
   var isSaving = false.obs;
   var isUploadingImage = false.obs;
 
-  // 2. TEXT CONTROLLERS (The "Leashes" for your UI boxes)
   final nameController = TextEditingController();
-  final emailController = TextEditingController(); // Usually read-only
-
-  // Password Controllers
+  final emailController = TextEditingController();
   final oldPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-
-  // Bank Account Controllers
   final accountController = TextEditingController();
   final confirmAccountController = TextEditingController();
   final ifscController = TextEditingController();
 
-  // 3. Image Data
   var profileImageUrl = "".obs;
   File? selectedImage;
 
-  // --- CLOUDINARY CREDENTIALS ---
-  final String cloudName = "your_cloud_name";
-  final String uploadPreset = "your_unsigned_preset";
+  final String cloudName = "dezkkfpex";
+  final String uploadPreset = "profile_image";
 
-  /// JOB 1: Pick & Upload Image (Same as before)
+  @override
+  void onInit() {
+    super.onInit();
+    // 1. FETCH DATA AUTOMATICALLY WHEN OPENED
+    fetchUserData();
+  }
+
+  /// JOB 0: Pull existing data from Firestore
+  Future<void> fetchUserData() async {
+    try {
+      String uid = _authRepo.currentUser!.uid;
+      var data = await _authRepo.getUserData(uid);
+
+      if (data != null) {
+        nameController.text = data['name'] ?? '';
+        emailController.text = data['email'] ?? '';
+        accountController.text = data['accountNumber'] ?? '';
+        confirmAccountController.text = data['accountNumber'] ?? '';
+        ifscController.text = data['ifscCode'] ?? '';
+        profileImageUrl.value = data['profileImage'] ?? '';
+      }
+    } catch (e) {
+      debugPrint("Error fetching profile: $e");
+    }
+  }
+
   Future<void> pickImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -53,6 +70,8 @@ class UserInfoController extends GetxController {
     try {
       final url = Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/upload");
       var request = http.MultipartRequest("POST", url);
+
+      // FIXED BUG 1: Must be exactly 'upload_preset'
       request.fields['upload_preset'] = uploadPreset;
       request.files.add(await http.MultipartFile.fromPath('file', selectedImage!.path));
 
@@ -62,8 +81,11 @@ class UserInfoController extends GetxController {
       var jsonResponse = jsonDecode(responseString);
 
       if (response.statusCode == 200) {
+        // FIXED BUG 2: Key name is 'secure_url'
         profileImageUrl.value = jsonResponse['secure_url'];
         AppValidators.showMessage("Image uploaded!", isError: false);
+      } else {
+        AppValidators.showMessage("Upload failed: ${jsonResponse['error']['message']}");
       }
     } catch (e) {
       AppValidators.showMessage("Image upload failed.");
@@ -72,15 +94,12 @@ class UserInfoController extends GetxController {
     }
   }
 
-  /// JOB 2: SAVE FULL PROFILE (The Mega Function)
   Future<void> saveFullProfile() async {
-    // Basic Validation
     if (nameController.text.isEmpty) {
       AppValidators.showMessage("Name cannot be empty");
       return;
     }
 
-    // Bank Account Validation
     if (accountController.text != confirmAccountController.text) {
       AppValidators.showMessage("Account numbers do not match!");
       return;
@@ -90,7 +109,6 @@ class UserInfoController extends GetxController {
     try {
       String uid = _authRepo.currentUser!.uid;
 
-      // 1. Update Firestore (Name, Image, Bank Info)
       await _authRepo.updateUserProfile(
         uid: uid,
         newName: nameController.text,
@@ -99,13 +117,13 @@ class UserInfoController extends GetxController {
         ifscCode: ifscController.text,
       );
 
-      // 2. Handle Password Change (If user typed something in New Password)
       if (newPasswordController.text.isNotEmpty) {
         if (newPasswordController.text == confirmPasswordController.text) {
           await _authRepo.changePassword(newPasswordController.text);
           AppValidators.showMessage("Password updated!", isError: false);
         } else {
           AppValidators.showMessage("Passwords do not match!");
+          return;
         }
       }
 
@@ -119,7 +137,6 @@ class UserInfoController extends GetxController {
 
   @override
   void onClose() {
-    // Clean up controllers when screen is closed
     nameController.dispose();
     emailController.dispose();
     oldPasswordController.dispose();

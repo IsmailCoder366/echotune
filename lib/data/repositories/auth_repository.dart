@@ -166,4 +166,19 @@ class AuthRepository {
       rethrow;
     }
   }
+
+
+  /// --- NEW: Get Complete User Data ---
+  /// This fetches the full document so we can fill the text boxes in the UI
+  Future<Map<String, dynamic>?> getUserData(String uid) async {
+    try {
+      DocumentSnapshot doc = await _db.collection('users').doc(uid).get();
+      if (doc.exists) {
+        return doc.data() as Map<String, dynamic>?;
+      }
+    } catch (e) {
+      debugPrint("Error fetching user data: $e");
+    }
+    return null;
+  }
 }
