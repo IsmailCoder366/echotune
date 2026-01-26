@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/purchases_controller.dart';
 import 'widgets/purchases_tab.dart';
-import 'widgets/user_info_tab.dart';
+import 'user_info_tab.dart';
 
 class PurchasesView extends StatelessWidget {
   final PurchasesController controller = Get.put(PurchasesController());

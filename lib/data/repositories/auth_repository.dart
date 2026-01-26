@@ -132,4 +132,38 @@ class AuthRepository {
       rethrow;
     }
   }
+
+
+  /// --- NEW: Update User Profile ---
+  /// This function updates the user's name and their profile image link in Firestore
+  /// Updated Update Profile to include Bank Info
+  Future<void> updateUserProfile({
+    required String uid,
+    required String newName,
+    required String imageUrl,
+    required String accountNumber,
+    required String ifscCode,
+  }) async {
+    try {
+      await _db.collection('users').doc(uid).update({
+        'name': newName,
+        'profileImage': imageUrl,
+        'accountNumber': accountNumber,
+        'ifscCode': ifscCode,
+      });
+    } catch (e) {
+      AppValidators.showMessage("Could not update profile details.");
+      rethrow;
+    }
+  }
+
+  /// Change Password Function
+  Future<void> changePassword(String newPassword) async {
+    try {
+      await _auth.currentUser?.updatePassword(newPassword);
+    } on FirebaseAuthException catch (e) {
+      _handleAuthError(e);
+      rethrow;
+    }
+  }
 }
