@@ -21,10 +21,7 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -51,6 +48,14 @@ class DefaultFirebaseOptions {
     authDomain: 'echotune-cb662.firebaseapp.com',
     storageBucket: 'echotune-cb662.firebasestorage.app',
     measurementId: 'G-SYDG9MT424',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyAWreNZF_Z-VAndbEByM6X6ANtKNyfGjAE',
+    appId: '1:534781193499:android:fadaee40078ae88c7a77be',
+    messagingSenderId: '534781193499',
+    projectId: 'echotune-cb662',
+    storageBucket: 'echotune-cb662.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(

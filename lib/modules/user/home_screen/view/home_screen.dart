@@ -7,9 +7,6 @@ import '../widgets/header_section.dart';
 
 class UserHomeScreen extends StatelessWidget {
   const UserHomeScreen({super.key});
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,5 +34,4 @@ class UserHomeScreen extends StatelessWidget {
       ),
     );
   }
-
 }
