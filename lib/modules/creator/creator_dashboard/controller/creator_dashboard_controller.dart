@@ -34,7 +34,7 @@ class AdminDashboardController extends GetxController {
 
   // 5. GETTERS: These give the View only the "Slice" it needs
   // This gives the 6 months to show on the screen
-  List<String> get months => allMonths.sublist(startIndex.value, startIndex.value + 6);
+  List<String> get months => allMonths.sublist(startIndex.value, startIndex.value + 4);
 
   // This gives the 6 dots to show on the chart
   List<FlSpot> get chartSpots {
