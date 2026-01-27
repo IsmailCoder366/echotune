@@ -6,12 +6,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import '../../../../data/repositories/auth_repository.dart';
 import '../../../../core/utils/app_validators.dart';
+import '../../profile_display_result.dart';
 
 class UserInfoController extends GetxController {
   final AuthRepository _authRepo = AuthRepository();
 
   var isSaving = false.obs;
   var isUploadingImage = false.obs;
+  final role = "".obs;
+  String get currentCollection => (role.value.toLowerCase() == "owner") ? "creators" : "users";
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -39,6 +42,8 @@ class UserInfoController extends GetxController {
   Future<void> fetchUserData() async {
     try {
       String uid = _authRepo.currentUser!.uid;
+
+      // The Repository should check both collections or have the logic to find the user
       var data = await _authRepo.getUserData(uid);
 
       if (data != null) {
@@ -48,6 +53,11 @@ class UserInfoController extends GetxController {
         confirmAccountController.text = data['accountNumber'] ?? '';
         ifscController.text = data['ifscCode'] ?? '';
         profileImageUrl.value = data['profileImage'] ?? '';
+
+        // FIX: Store the role in the controller's observable variable
+        role.value = data['role'] ?? 'user';
+
+        debugPrint("User Role Loaded: ${role.value}");
       }
     } catch (e) {
       debugPrint("Error fetching profile: $e");
@@ -112,6 +122,8 @@ class UserInfoController extends GetxController {
   }
 
   Future<void> saveFullProfile() async {
+    isSaving.value = true;
+
     // 1. Check if we are still waiting on Cloudinary
     if (isUploadingImage.value) {
       AppValidators.showMessage("Please wait for the image to finish uploading.");
@@ -126,6 +138,18 @@ class UserInfoController extends GetxController {
     isSaving.value = true;
     try {
       String uid = _authRepo.currentUser!.uid;
+
+      // Create a map of the data to show on the next screen
+      Map<String, dynamic> updatedData = {
+        'name': nameController.text,
+        'email': emailController.text,
+        'role': role.value, // Ensure your controller tracks the user's role
+        'accountNumber': accountController.text,
+        'ifscCode': ifscController.text,
+        'profileImage': profileImageUrl.value,
+      };
+      // Navigate to the new display screen and pass the data
+      Get.to(() => const ProfileDisplayScreen(), arguments: updatedData);
 
       // 2. Call the Repo
       await _authRepo.updateUserProfile(

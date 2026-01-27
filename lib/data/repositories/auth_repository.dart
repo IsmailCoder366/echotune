@@ -145,16 +145,26 @@ class AuthRepository {
     }
   }
 
-  /// Decide Role
+  /// Decide Role by checking both collections
   Future<String?> getUserRole(String uid) async {
     try {
-      DocumentSnapshot doc = await _db.collection('users').doc(uid).get();
-      if (doc.exists && doc.data() != null) {
-        return doc['role'] as String?;
+      // 1. Check the 'users' collection first
+      DocumentSnapshot userDoc = await _db.collection('users').doc(uid).get();
+      if (userDoc.exists && userDoc.data() != null) {
+        return userDoc['role'] as String?;
       }
+
+      // 2. If not found in users, check the 'creators' collection
+      DocumentSnapshot creatorDoc = await _db.collection('creators').doc(uid).get();
+      if (creatorDoc.exists && creatorDoc.data() != null) {
+        return creatorDoc['role'] as String?;
+      }
+
     } catch (e) {
       debugPrint("Error fetching role: $e");
     }
+
+    // Return null if the user doesn't exist in either collection
     return null;
   }
 
