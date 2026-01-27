@@ -35,7 +35,7 @@ class ExploreView extends StatelessWidget {
                 ),
               ),
               // Persistent Bottom Bar shown in Music/Content tabs
-              _buildbottomPlayerBar(),
+              //
             ],
           ),
 
@@ -115,9 +115,12 @@ class ExploreView extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        const Text(
-          "Explore All",
-          style: TextStyle(color: Colors.black, fontSize: 12),
+        InkWell(
+          onTap: () => Get.to(() =>  MusicTabBody()),
+          child: const Text(
+            "Explore All",
+            style: TextStyle(color: Colors.black, fontSize: 12),
+          ),
         ),
       ],
     );
@@ -188,84 +191,7 @@ class ExploreView extends StatelessWidget {
     );
   }
 
-  Widget _buildbottomPlayerBar() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      decoration: const BoxDecoration(
-        color: Color(0xFF1A1A1A), // Dark background from your screenshot
-        border: Border(top: BorderSide(color: Colors.white10, width: 0.5)),
-      ),
-      child: SafeArea(
-        top: false, // Prevents extra padding at the top if inside a Column
-        child: Row(
-          children: [
-            // Play Button
-            const Icon(
-              Icons.play_circle_outline,
-              color: Colors.white,
-              size: 40,
-            ),
-            const SizedBox(width: 12),
 
-            // Song Info
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Lorem Ipsum Dolor Sit",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    "by Lorem",
-                    style: TextStyle(color: Colors.grey.shade400, fontSize: 12),
-                  ),
-                ],
-              ),
-            ),
 
-            // Action Icons
-            Row(
-              children: [
-                _buildPlayerAction(Icons.volume_up_outlined),
-                _buildPlayerAction(Icons.link),
-                _buildPlayerAction(Icons.favorite_border),
-                _buildPlayerAction(Icons.file_download_outlined),
-                const SizedBox(width: 8),
-                // Cart icon often has a circular gold border in this UI
-                Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0xFFE5B25D),
-                      width: 1,
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Color(0xFFE5B25D),
-                    size: 18,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Widget _buildPlayerAction(IconData icon) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Icon(icon, color: Colors.white, size: 22),
-    );
-  }
 }
