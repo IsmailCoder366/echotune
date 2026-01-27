@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../landing/view/widgets/features_section.dart';
-import '../../../landing/view/widgets/header_section.dart';
 import '../../profile/bottom_view/bottom_sheet_view.dart';
 import '../widgets/custom_appbar.dart';
+import '../widgets/features_section.dart';
+import '../widgets/header_section.dart';
 
 
 class UserHomeScreen extends StatelessWidget {

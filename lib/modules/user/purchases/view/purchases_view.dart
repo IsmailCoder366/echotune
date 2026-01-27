@@ -8,7 +8,7 @@ import 'user_info_tab.dart';
 class PurchasesView extends StatelessWidget {
   final PurchasesController controller = Get.put(PurchasesController());
 
-   PurchasesView({super.key});
+  PurchasesView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class PurchasesView extends StatelessWidget {
               children: [
                 PurchasesTab(controller: controller), // Tab 0
                 FavouritesTab(controller: controller), // Tab 1
-                UserInfoTab(),                        // Tab 2
+                UserInfoTab(), // Tab 2
               ],
             ),
           ),
@@ -44,8 +44,18 @@ class PurchasesView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
-            Text("ECHOTUNE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
-            Text("YOUR SOUND, YOUR WORLD", style: TextStyle(color: Colors.white, fontSize: 8)),
+            Text(
+              "ECHOTUNE",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+            Text(
+              "YOUR SOUND, YOUR WORLD",
+              style: TextStyle(color: Colors.white, fontSize: 8),
+            ),
           ],
         ),
       ),
@@ -56,12 +66,18 @@ class PurchasesView extends StatelessWidget {
             side: const BorderSide(color: Colors.white),
             padding: const EdgeInsets.symmetric(horizontal: 12),
           ),
-          child: const Text("Report Content Privacy", style: TextStyle(color: Colors.white, fontSize: 10)),
+          child: const Text(
+            "Report Content Privacy",
+            style: TextStyle(color: Colors.white, fontSize: 10),
+          ),
         ),
         const SizedBox(width: 10),
         const Icon(Icons.shopping_cart_outlined, color: Colors.white),
         const SizedBox(width: 10),
-        const CircleAvatar(radius: 15, backgroundImage: AssetImage('assets/images/profile.png')),
+        const CircleAvatar(
+          radius: 15,
+          backgroundImage: AssetImage('assets/images/profile.png'),
+        ),
         const SizedBox(width: 16),
       ],
     );
@@ -70,10 +86,13 @@ class PurchasesView extends StatelessWidget {
   Widget _buildTabBarHeader() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade200))),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+      ),
       child: TabBar(
         controller: controller.tabController,
-        indicatorColor: const Color(0xFFE5B25D), // Gold
+        indicatorColor: const Color(0xFFE5B25D),
+        // Gold
         labelColor: const Color(0xFFE5B25D),
         unselectedLabelColor: Colors.grey,
         indicatorWeight: 3,

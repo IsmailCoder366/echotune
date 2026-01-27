@@ -10,7 +10,7 @@ import '../controllers/explore_controller.dart';
 class ExploreView extends StatelessWidget {
   final ExploreController controller = Get.put(ExploreController());
 
-   ExploreView({super.key});
+  ExploreView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +49,13 @@ class ExploreView extends StatelessWidget {
   Widget _buildExploreTabBar() {
     return Container(
       decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.grey.shade200))
+        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
       ),
       child: TabBar(
         controller: controller.exploreTabController,
         isScrollable: false,
-        indicatorColor: const Color(0xFFE5B25D), // Gold
+        indicatorColor: const Color(0xFFE5B25D),
+        // Gold
         labelColor: const Color(0xFFE5B25D),
         unselectedLabelColor: Colors.grey,
         tabs: const [
@@ -76,14 +77,17 @@ class ExploreView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Explore", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              const Text(
+                "Explore",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
               Row(
                 children: [
                   const Icon(Icons.tune), // Filter
                   const SizedBox(width: 15),
                   const Icon(Icons.search),
                 ],
-              )
+              ),
             ],
           ),
           const SizedBox(height: 30),
@@ -103,8 +107,18 @@ class ExploreView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
-        const Text("Explore All", style: TextStyle(color: Colors.black, fontSize: 12)),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        const Text(
+          "Explore All",
+          style: TextStyle(color: Colors.black, fontSize: 12),
+        ),
       ],
     );
   }
@@ -135,8 +149,18 @@ class ExploreView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
-            Text("ECHOTUNE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
-            Text("YOUR SOUND, YOUR WORLD", style: TextStyle(color: Colors.white, fontSize: 8)),
+            Text(
+              "ECHOTUNE",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+            Text(
+              "YOUR SOUND, YOUR WORLD",
+              style: TextStyle(color: Colors.white, fontSize: 8),
+            ),
           ],
         ),
       ),
@@ -147,12 +171,18 @@ class ExploreView extends StatelessWidget {
             side: const BorderSide(color: Colors.white),
             padding: const EdgeInsets.symmetric(horizontal: 12),
           ),
-          child: const Text("Report Content Privacy", style: TextStyle(color: Colors.white, fontSize: 10)),
+          child: const Text(
+            "Report Content Privacy",
+            style: TextStyle(color: Colors.white, fontSize: 10),
+          ),
         ),
         const SizedBox(width: 10),
         const Icon(Icons.shopping_cart_outlined, color: Colors.white),
         const SizedBox(width: 10),
-        const CircleAvatar(radius: 15, backgroundImage: AssetImage('assets/images/profile.png')),
+        const CircleAvatar(
+          radius: 15,
+          backgroundImage: AssetImage('assets/images/profile.png'),
+        ),
         const SizedBox(width: 16),
       ],
     );
@@ -163,16 +193,18 @@ class ExploreView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: const BoxDecoration(
         color: Color(0xFF1A1A1A), // Dark background from your screenshot
-        border: Border(
-          top: BorderSide(color: Colors.white10, width: 0.5),
-        ),
+        border: Border(top: BorderSide(color: Colors.white10, width: 0.5)),
       ),
       child: SafeArea(
         top: false, // Prevents extra padding at the top if inside a Column
         child: Row(
           children: [
             // Play Button
-            const Icon(Icons.play_circle_outline, color: Colors.white, size: 40),
+            const Icon(
+              Icons.play_circle_outline,
+              color: Colors.white,
+              size: 40,
+            ),
             const SizedBox(width: 12),
 
             // Song Info
@@ -183,7 +215,11 @@ class ExploreView extends StatelessWidget {
                 children: [
                   const Text(
                     "Lorem Ipsum Dolor Sit",
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
@@ -207,9 +243,16 @@ class ExploreView extends StatelessWidget {
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFFE5B25D), width: 1),
+                    border: Border.all(
+                      color: const Color(0xFFE5B25D),
+                      width: 1,
+                    ),
                   ),
-                  child: const Icon(Icons.shopping_cart_outlined, color: Color(0xFFE5B25D), size: 18),
+                  child: const Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Color(0xFFE5B25D),
+                    size: 18,
+                  ),
                 ),
               ],
             ),

@@ -68,12 +68,16 @@ class UserInfoController extends GetxController {
     if (selectedImage == null) return;
     isUploadingImage.value = true;
     try {
-      final url = Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/upload");
+      final url = Uri.parse(
+        "https://api.cloudinary.com/v1_1/$cloudName/upload",
+      );
       var request = http.MultipartRequest("POST", url);
 
       // FIXED BUG 1: Must be exactly 'upload_preset'
       request.fields['upload_preset'] = uploadPreset;
-      request.files.add(await http.MultipartFile.fromPath('file', selectedImage!.path));
+      request.files.add(
+        await http.MultipartFile.fromPath('file', selectedImage!.path),
+      );
 
       var response = await request.send();
       var responseData = await response.stream.toBytes();
@@ -85,7 +89,9 @@ class UserInfoController extends GetxController {
         profileImageUrl.value = jsonResponse['secure_url'];
         AppValidators.showMessage("Image uploaded!", isError: false);
       } else {
-        AppValidators.showMessage("Upload failed: ${jsonResponse['error']['message']}");
+        AppValidators.showMessage(
+          "Upload failed: ${jsonResponse['error']['message']}",
+        );
       }
     } catch (e) {
       AppValidators.showMessage("Image upload failed.");
@@ -127,7 +133,10 @@ class UserInfoController extends GetxController {
         }
       }
 
-      AppValidators.showMessage("Profile updated successfully!", isError: false);
+      AppValidators.showMessage(
+        "Profile updated successfully!",
+        isError: false,
+      );
     } catch (e) {
       AppValidators.showMessage("Update failed.");
     } finally {

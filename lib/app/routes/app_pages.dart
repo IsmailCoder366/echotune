@@ -13,16 +13,12 @@ import '../../modules/auth/password_changed/view/password_changed_view.dart';
 import '../../modules/user/explore/views/explore_view.dart';
 import '../../modules/user/home_screen/view/home_screen.dart';
 import 'app_routes.dart';
-import '../../modules/landing/view/landing_view.dart';
 import '../../modules/auth/login/view/login_view.dart';
 
 class AppPages {
   static final pages = [
     /// SPLASH SCREEN
     GetPage(name: Routes.splash, page: () => const SplashScreen()),
-
-    /// LANDING PAGE FLOW
-    GetPage(name: Routes.landing, page: () => const LandingView()),
 
     /// AUTH FLOW
     GetPage(name: Routes.login, page: () => const LoginScreen()),

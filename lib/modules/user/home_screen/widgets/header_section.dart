@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../common/constants/app_colors.dart';
-import '../../../landing/controller/hero_indicator_controller.dart';
+import '../controller/hero_indicator_controller.dart';
+
 
 class HeroHeader extends StatelessWidget {
   const HeroHeader({super.key});

@@ -20,7 +20,7 @@ class AuthWrapperController extends GetxController {
 
     if (user == null) {
       // 2. No user? Go to Landing
-      Get.offAllNamed(Routes.landing);
+      Get.offAllNamed(Routes.login);
     } else {
       // 3. User exists? Get their role from Firestore
       String? role = await _authRepo.getUserRole(user.uid);
