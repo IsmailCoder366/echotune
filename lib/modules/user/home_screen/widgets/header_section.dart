@@ -193,9 +193,10 @@ class _UserTypeCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black,
-            blurRadius: 10,
-            offset: const Offset(0, 5),
+            color: Colors.grey,
+            blurRadius: 3,
+
+            offset: const Offset(0, 1),
           ),
         ],
       ),

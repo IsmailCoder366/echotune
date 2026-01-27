@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../common/constants/app_colors.dart';
+import '../../explore/views/explore_view.dart';
 
 
 class FeaturedSection extends StatelessWidget {
@@ -57,11 +59,7 @@ class FeaturedSection extends StatelessWidget {
               height: 48,
               child: ElevatedButton(
                 onPressed: () {
-                  // Replace 'AnotherScreen()' with your actual target class
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const AllMusicScreen()),
-                  // );
+                  Get.to(() => ExploreView());
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor, // Primary Gold
