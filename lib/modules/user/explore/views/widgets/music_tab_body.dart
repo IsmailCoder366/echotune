@@ -77,52 +77,87 @@ class MusicTabBody extends StatelessWidget {
   }
 
   Widget _buildbottomPlayerBar() {
-    final currentSong = musicController.selectedMusic.value;
-    if (currentSong == null) return const SizedBox.shrink();
+    return Obx(() {
+      final currentSong = musicController.selectedMusic.value;
+      if (currentSong == null) return const SizedBox.shrink();
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      decoration: const BoxDecoration(
-        color: Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Row(
-          children: [
-            GestureDetector(
-              onTap: () => musicController.togglePlayPause(),
-              child: Obx(() => Icon(
-                musicController.isPlaying.value ? Icons.pause_circle_filled : Icons.play_circle_filled,
-                color: Colors.white,
-                size: 45,
-              )),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: const BoxDecoration(
+          color: Color(0xFF1A1A1A),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+          boxShadow: [BoxShadow(color: Colors.black54, blurRadius: 10)],
+        ),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
                 children: [
-                  Text(
-                    currentSong.title,
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
-                    overflow: TextOverflow.ellipsis,
+                  // 1. PROJECT ICON / THUMBNAIL
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(currentSong.imageUrl, height: 45, width: 45, fit: BoxFit.cover),
                   ),
-                  Text(
-                    currentSong.artist,
-                    style: TextStyle(color: Colors.grey.shade400, fontSize: 12),
+                  const SizedBox(width: 12),
+
+                  // 2. SONG INFO
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          currentSong.title,
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          currentSong.artist,
+                          style: TextStyle(color: Colors.grey.shade400, fontSize: 11),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // 3. PLAYBACK CONTROLS
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.skip_previous, color: Colors.white, size: 28),
+                        onPressed: () => musicController.playPrevious(),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          musicController.isPlaying.value ? Icons.pause_circle_filled : Icons.play_circle_filled,
+                          color: const Color(0xFFE5B25D), // Gold Theme
+                          size: 40,
+                        ),
+                        onPressed: () => musicController.togglePlayPause(),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.skip_next, color: Colors.white, size: 28),
+                        onPressed: () => musicController.playNext(),
+                      ),
+                    ],
+                  ),
+
+                  // 4. CLOSE BUTTON
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white54, size: 20),
+                    onPressed: () => musicController.closeMusicPlayer(),
                   ),
                 ],
               ),
-            ),
-            // Actions
-            _buildPlayerAction(Icons.favorite_border),
-            _buildPlayerAction(Icons.file_download_outlined),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
   Widget _buildMusicList() {
     return ListView.separated(
