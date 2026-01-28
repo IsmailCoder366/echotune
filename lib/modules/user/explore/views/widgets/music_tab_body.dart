@@ -13,13 +13,7 @@ class MusicTabBody extends StatelessWidget {
     // Scaffold provides the Material context to fix the Red/Yellow text error
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        // Shows back button only if we navigated here via Get.to()
-        automaticallyImplyLeading: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,16 +36,16 @@ class MusicTabBody extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 20),
                 separatorBuilder: (context, index) => const Divider(height: 1, color: Colors.black12),
                 itemBuilder: (context, index) {
-                  return MusicListTile(
-                    title: "Lorem Ipsum Dolor Sit",
-                    artist: "by Lorem",
-                    onPlayTap: () {
-                      controller.playTrack(
-                          "Lorem Ipsum Dolor Sit",
-                          "by Lorem"
-                      );
-                    },
-                  );
+                  // return MusicListTile(
+                  //   title: "Lorem Ipsum Dolor Sit",
+                  //   artist: "by Lorem",
+                  //   // onPlayTap: () {
+                  //   //   controller.playTrack(
+                  //   //       "Lorem Ipsum Dolor Sit",
+                  //   //       "by Lorem"
+                  //   //   );
+                  //   // },
+                  // );
                 },
               ),
             ),

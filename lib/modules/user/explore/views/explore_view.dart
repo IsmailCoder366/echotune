@@ -2,7 +2,6 @@ import 'package:echotune/modules/user/explore/views/widgets/artist_tab_body.dart
 import 'package:echotune/modules/user/explore/views/widgets/content_tab_body.dart';
 import 'package:echotune/modules/user/explore/views/widgets/explore_grid_items.dart';
 import 'package:echotune/modules/user/explore/views/widgets/music_tab_body.dart';
-import 'package:echotune/modules/user/explore/views/widgets/playing_overlay.dart'; // New Overlay
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/explore_controller.dart';
@@ -39,8 +38,7 @@ class ExploreView extends StatelessWidget {
             ],
           ),
 
-          // Video Player Overlay that appears when a track is selected
-          PlayingOverlay(),
+
         ],
       ),
     );
@@ -212,8 +210,5 @@ class ExploreView extends StatelessWidget {
       ],
     );
   }
-
-
-
 
 }
