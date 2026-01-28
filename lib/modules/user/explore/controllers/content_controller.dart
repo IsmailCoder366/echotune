@@ -131,5 +131,23 @@ class ContentController extends GetxController {
       imageUrl: "https://picsum.photos/id/30/200/200",
       videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     ),
+    ContentModel(
+      title: "Nature Melodies",
+      artist: "by Forest Echo",
+      imageUrl: "https://picsum.photos/id/10/200/200",
+      videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    ),
+    ContentModel(
+      title: "Urban Beats",
+      artist: "by City Lights",
+      imageUrl: "https://picsum.photos/id/20/200/200",
+      videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    ),
+    ContentModel(
+      title: "Ocean Waves",
+      artist: "by Deep Blue",
+      imageUrl: "https://picsum.photos/id/30/200/200",
+      videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    ),
   ];
 }
