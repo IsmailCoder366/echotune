@@ -3,20 +3,25 @@ import 'package:flutter/material.dart';
 class CreateAccountAuthTextField extends StatelessWidget {
   final String hint;
   final bool isPassword;
-  final TextEditingController? controller; // Added this
+  final bool obscureText; // Added
+  final VoidCallback? onSuffixIconTap; // Added
+  final TextEditingController? controller;
 
   const CreateAccountAuthTextField({
     super.key,
     required this.hint,
     this.isPassword = false,
-    this.controller, // Added this
+    this.obscureText = false, // Added
+    this.onSuffixIconTap, // Added
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: controller, // Linked here
-      obscureText: isPassword,
+      controller: controller,
+      // If it's a password, use the obscureText value, otherwise false
+      obscureText: isPassword ? obscureText : false,
       style: const TextStyle(fontSize: 14),
       decoration: InputDecoration(
         hintText: hint,
@@ -24,6 +29,19 @@ class CreateAccountAuthTextField extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         filled: true,
         fillColor: Colors.white,
+
+        // Suffix icon logic
+        suffixIcon: isPassword
+            ? IconButton(
+          icon: Icon(
+            obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+            color: const Color(0XFF9D9C9C),
+            size: 20,
+          ),
+          onPressed: onSuffixIconTap,
+        )
+            : null,
+
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: Colors.grey[200]!),

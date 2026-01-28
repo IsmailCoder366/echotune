@@ -5,15 +5,15 @@ import '../../../../core/utils/app_validators.dart';
 import '../../../../data/repositories/auth_repository.dart';
 
 class CreateAccountController extends GetxController {
-
-  // Inject the Repository
   final AuthRepository _authRepo = AuthRepository();
 
-  // Observables for state management
   var selectedType = 'User'.obs;
   var isSubmitting = false.obs;
 
-  // Form fields - using TextEditingControllers for better form handling
+  // NEW: Observable for password visibility
+  var isPasswordVisible = false.obs;
+  var isConfirmPasswordVisible = false.obs;
+
   final fullNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -23,8 +23,15 @@ class CreateAccountController extends GetxController {
     selectedType.value = type;
   }
 
-  void handleSubmit() async {
+  // NEW: Toggle function
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
+  }
 
+  void toggleConfirmPasswordVisibility() { // NEW
+    isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
+  }
+  void handleSubmit() async {
     if (fullNameController.text.isEmpty) {
       AppValidators.showMessage("Full name is required");
       return;
@@ -34,20 +41,16 @@ class CreateAccountController extends GetxController {
     if (!AppValidators.validateConfirmPassword(
         passwordController.text, confirmPasswordController.text)) return;
 
-    // 2. Start Submission
     isSubmitting.value = true;
 
     try {
-      // 3. Call Repository with role (selectedType.value: 'User' or 'Creator')
       bool success = await _authRepo.signUp(
         emailController.text.trim(),
         passwordController.text.trim(),
-        selectedType.value.toLowerCase(), // Save as 'user' or 'creator'
+        selectedType.value.toLowerCase(),
       );
       if (success) {
         AppValidators.showMessage("Account created successfully!", isError: false);
-
-        // 4. Role-based Navigation
         if (selectedType.value == 'User') {
           Get.offAllNamed(Routes.userHome);
         } else {
@@ -60,7 +63,6 @@ class CreateAccountController extends GetxController {
       isSubmitting.value = false;
     }
   }
-
 
   @override
   void onClose() {

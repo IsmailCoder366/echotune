@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../app/routes/app_routes.dart';
 import '../../login/widgets/auth_footer_link.dart';
 import '../../login/widgets/auth_toggle_tab.dart';
@@ -45,7 +44,7 @@ class CreateAccountScreen extends StatelessWidget {
                     onTap: () => controller.setAccountType("User"),
                   ),
                   AuthToggleSwitch(
-                    title: "Owner", // Representing the 'Creator' module logic
+                    title: "Owner",
                     isActive: controller.selectedType.value == "Owner",
                     onTap: () => controller.setAccountType("Owner"),
                   ),
@@ -57,35 +56,41 @@ class CreateAccountScreen extends StatelessWidget {
 
             CreateAccountAuthTextField(
               hint: 'Name',
-              controller: controller.fullNameController, // Linked
+              controller: controller.fullNameController,
             ),
             const SizedBox(height: 16),
 
             CreateAccountAuthTextField(
               hint: "Email",
-              controller: controller.emailController, // Linked
+              controller: controller.emailController,
             ),
             const SizedBox(height: 16),
 
-            CreateAccountAuthTextField(
+            // --- Password Field ---
+            Obx(() => CreateAccountAuthTextField(
               hint: "Password",
               isPassword: true,
-              controller: controller.passwordController, // Linked
-            ),
+              obscureText: !controller.isPasswordVisible.value,
+              onSuffixIconTap: () => controller.togglePasswordVisibility(),
+              controller: controller.passwordController,
+            )),
+
             const SizedBox(height: 16),
 
-            CreateAccountAuthTextField(
+            Obx(() => CreateAccountAuthTextField(
               hint: "Confirm password",
               isPassword: true,
-              controller: controller.confirmPasswordController, // Linked
-            ),
+              obscureText: !controller.isConfirmPasswordVisible.value,
+              // Fix: Use the confirm-specific toggle function here
+              onSuffixIconTap: () => controller.toggleConfirmPasswordVisibility(),
+              controller: controller.confirmPasswordController,
+            )),
 
             const SizedBox(height: 30),
 
-            // Submit Button with Loading Observation
             Obx(() => PrimaryAuthButton(
               text: "Submit",
-              isLoading: controller.isSubmitting.value, // Reactive loading
+              isLoading: controller.isSubmitting.value,
               onPressed: () => controller.handleSubmit(),
             )),
 
