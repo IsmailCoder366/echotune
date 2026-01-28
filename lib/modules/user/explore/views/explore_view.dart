@@ -91,7 +91,7 @@ class ExploreView extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 30),
-          _buildSectionHeader("Music"),
+          _buildMusicSectionHeader("Music"),
           const SizedBox(height: 10),
           _buildExploreGrid(),
           const SizedBox(height: 30),
@@ -103,7 +103,7 @@ class ExploreView extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildMusicSectionHeader(String title) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -117,6 +117,28 @@ class ExploreView extends StatelessWidget {
         ),
         InkWell(
           onTap: () => Get.to(() =>  MusicTabBody()),
+          child: const Text(
+            "Explore All",
+            style: TextStyle(color: Colors.black, fontSize: 12),
+          ),
+        ),
+      ],
+    );
+  }
+  Widget _buildSectionHeader(String title) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        InkWell(
+          onTap: () => Get.to(() =>  ContentTabBody()),
           child: const Text(
             "Explore All",
             style: TextStyle(color: Colors.black, fontSize: 12),

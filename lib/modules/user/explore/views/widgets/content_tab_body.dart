@@ -12,36 +12,46 @@ class ContentTabBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 20),
-          // Explore Header with Filter and Search
-          _buildHeader(),
-          const SizedBox(height: 10),
-          // List of Content Items
-          Expanded(
-            child: ListView.separated(
-              itemCount: 5, // Replace with controller.contentList.length
-              padding: const EdgeInsets.only(bottom: 100), // Space for bottom player
-              separatorBuilder: (context, index) => const Divider(height: 1, color: Colors.black12),
-              itemBuilder: (context, index) {
-                return  ContentTile(
-                  title: "Lorem Ipsum Dolor Sit",
-                  artist: "by Lorem",
-                  // 1. Change 'onTap' to 'onPlayTap'
-                  // 2. Remove the extra inner 'onPlayTap: () {}'
-                  onPlayTap: () {
-                    // This logic triggers when the thumbnail/play button is clicked
-                    controller.playTrack("Lorem Ipsum Dolor Sit", "by Lorem");
-                  },
-                );
-              },
+    return Scaffold(
+        backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        // Shows back button only if we navigated here via Get.to()
+        automaticallyImplyLeading: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      body:  Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            // Explore Header with Filter and Search
+            _buildHeader(),
+            const SizedBox(height: 10),
+            // List of Content Items
+            Expanded(
+              child: ListView.separated(
+                itemCount: 5, // Replace with controller.contentList.length
+                padding: const EdgeInsets.only(bottom: 100), // Space for bottom player
+                separatorBuilder: (context, index) => const Divider(height: 1, color: Colors.black12),
+                itemBuilder: (context, index) {
+                  return  ContentTile(
+                    title: "Lorem Ipsum Dolor Sit",
+                    artist: "by Lorem",
+                    // 1. Change 'onTap' to 'onPlayTap'
+                    // 2. Remove the extra inner 'onPlayTap: () {}'
+                    onPlayTap: () {
+                      // This logic triggers when the thumbnail/play button is clicked
+                      controller.playTrack("Lorem Ipsum Dolor Sit", "by Lorem");
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

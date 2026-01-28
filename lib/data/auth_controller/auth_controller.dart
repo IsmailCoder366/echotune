@@ -13,7 +13,7 @@ class AuthWrapperController extends GetxController {
   }
 
   void _checkAuthentication() async {
-    // 1. Give the splash screen a moment to breathe (optional 2s delay)
+
     await Future.delayed(const Duration(seconds: 2));
 
     User? user = FirebaseAuth.instance.currentUser;
