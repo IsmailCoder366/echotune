@@ -163,6 +163,7 @@ class MusicTabBody extends StatelessWidget {
     return ListView.separated(
       itemCount: musicController.musicList.length,
       physics: const BouncingScrollPhysics(),
+      // Adding bottom padding so the list doesn't get hidden behind the player
       padding: const EdgeInsets.only(bottom: 100, left: 20, right: 20),
       separatorBuilder: (context, index) => const Divider(height: 1, color: Colors.black12),
       itemBuilder: (context, index) {
@@ -170,15 +171,10 @@ class MusicTabBody extends StatelessWidget {
         return MusicListTile(
           title: song.title,
           artist: song.artist,
+          imageUrl: song.imageUrl, // PASSING THE UNIQUE IMAGE HERE
           onPlayTap: () => musicController.playMusic(song),
         );
       },
-    );
-  }
-  Widget _buildPlayerAction(IconData icon) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Icon(icon, color: Colors.white, size: 22),
     );
   }
 }
