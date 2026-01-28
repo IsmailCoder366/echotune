@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:video_player/video_player.dart';
 import '../../controllers/content_controller.dart';
 import 'content_tile.dart';
@@ -25,7 +23,7 @@ class ContentTabBody extends StatelessWidget {
             GestureDetector(
               onTap: () => contentController.closePlayer(),
               child: Container(
-                color: Colors.black.withOpacity(0.5), // Makes background look inactive
+                color: Colors.black.withOpacity(0.6), // Dimmed background
               ),
             ),
 
@@ -38,11 +36,15 @@ class ContentTabBody extends StatelessWidget {
                 ),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  // If full screen, take whole height; else take 250
                   height: contentController.isFullScreen.value
                       ? MediaQuery.of(context).size.height
                       : 250,
                   width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(
+                        contentController.isFullScreen.value ? 0 : 12),
+                  ),
                   child: _buildVideoPreview(context),
                 ),
               ),
@@ -52,7 +54,6 @@ class ContentTabBody extends StatelessWidget {
     );
   }
 
-  // Extracted List logic to keep the build method clean
   Widget _buildMainContentList() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -65,7 +66,8 @@ class ContentTabBody extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemCount: contentController.contentList.length,
-              separatorBuilder: (context, index) => const Divider(height: 1, color: Colors.black12),
+              separatorBuilder: (context, index) =>
+              const Divider(height: 1, color: Colors.black12),
               itemBuilder: (context, index) {
                 final item = contentController.contentList[index];
                 return ContentTile(
@@ -82,44 +84,61 @@ class ContentTabBody extends StatelessWidget {
     );
   }
 
-  // Modified Preview to handle play/pause on tap and full screen button
   Widget _buildVideoPreview(BuildContext context) {
     return Stack(
       children: [
-        // 1. THE VIDEO AREA (Tap here to Stop/Play)
+        // 1. THE VIDEO AREA (Tap to wake up controls or toggle play/pause)
         GestureDetector(
-          onTap: () => contentController.togglePlayPause(),
+          onTap: () {
+            // Logic: If playing, wake up the UI. If paused, icons stay visible.
+            if (contentController.isPlaying.value) {
+              contentController.triggerCenterControl();
+            } else {
+              contentController.togglePlayPause();
+            }
+          },
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(contentController.isFullScreen.value ? 0 : 12),
-            child: Obx(() => contentController.isVideoInitialized.value
-                ? AspectRatio(
-              aspectRatio: contentController.videoController!.value.aspectRatio,
-              child: VideoPlayer(contentController.videoController!),
-            )
-                : const Center(child: CircularProgressIndicator(color: Colors.white)),
+            borderRadius: BorderRadius.circular(
+                contentController.isFullScreen.value ? 0 : 12),
+            child: Center(
+              child: contentController.isVideoInitialized.value
+                  ? AspectRatio(
+                aspectRatio:
+                contentController.videoController!.value.aspectRatio,
+                child: VideoPlayer(contentController.videoController!),
+              )
+                  : const CircularProgressIndicator(color: Colors.white),
             ),
           ),
         ),
 
-        // 2. OVERLAY AND BUTTONS
+        // 2. OVERLAY CONTROLS (Center Play/Pause & Dark Tint)
         Obx(() => AnimatedOpacity(
           opacity: contentController.showCenterControl.value ? 1.0 : 0.0,
-          duration: const Duration(milliseconds: 500),
-          child: Stack(
-            children: [
-              Container(color: Colors.black.withOpacity(0.3)),
-              Center(
-                child: Icon(
-                  contentController.isPlaying.value ? Icons.pause_circle : Icons.play_circle,
-                  color: Colors.white,
-                  size: 70,
+          duration: const Duration(milliseconds: 400),
+          child: IgnorePointer(
+            ignoring: !contentController.showCenterControl.value,
+            child: Stack(
+              children: [
+                Container(color: Colors.black26), // Slight tint
+                Center(
+                  child: IconButton(
+                    iconSize: 70,
+                    icon: Icon(
+                      contentController.isPlaying.value
+                          ? Icons.pause_circle_filled
+                          : Icons.play_circle_filled,
+                      color: Colors.white,
+                    ),
+                    onPressed: () => contentController.togglePlayPause(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         )),
 
-        // 3. CLOSE BUTTON
+        // 3. CLOSE BUTTON (Always clickable if visible)
         Positioned(
           top: 10,
           right: 10,
@@ -129,15 +148,18 @@ class ContentTabBody extends StatelessWidget {
           ),
         ),
 
-        // 4. BOTTOM CONTROLS (Includes Full Screen Icon)
+        // 4. BOTTOM CONTROLS (Slider + Player Bar)
         Positioned(
           bottom: 0,
           left: 0,
           right: 0,
           child: Obx(() => AnimatedOpacity(
             opacity: contentController.showCenterControl.value ? 1.0 : 0.0,
-            duration: const Duration(milliseconds: 500),
-            child: _buildPlayerControls(),
+            duration: const Duration(milliseconds: 400),
+            child: IgnorePointer(
+              ignoring: !contentController.showCenterControl.value,
+              child: _buildPlayerControls(),
+            ),
           )),
         ),
       ],
@@ -146,78 +168,96 @@ class ContentTabBody extends StatelessWidget {
 
   Widget _buildPlayerControls() {
     return Container(
-      padding: const EdgeInsets.all(10),
-      color: Colors.black45,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [Colors.black.withOpacity(0.8), Colors.transparent],
+        ),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Slider(
-            value: contentController.videoPosition.value.inSeconds.toDouble(),
-            max: contentController.videoDuration.value.inSeconds.toDouble(),
-            onChanged: (v) => contentController.seekTo(v),
-            activeColor: Colors.blue,
-            inactiveColor: Colors.grey,
-          ),
+          // Slider wrapped in its own Obx for smooth movement
+          Obx(() => SliderTheme(
+            data: SliderTheme.of(Get.context!).copyWith(
+              trackHeight: 2,
+              thumbShape:
+              const RoundSliderThumbShape(enabledThumbRadius: 6),
+              overlayShape:
+              const RoundSliderOverlayShape(overlayRadius: 14),
+            ),
+            child: Slider(
+              value: contentController.videoPosition.value.inSeconds
+                  .toDouble(),
+              max: contentController.videoDuration.value.inSeconds
+                  .toDouble(),
+              onChanged: (v) => contentController.seekTo(v),
+              activeColor: Colors.blue,
+              inactiveColor: Colors.white30,
+            ),
+          )),
           Row(
             children: [
-              // Play/Pause Bottom Left
+              // Bottom Left Actions
               IconButton(
-                icon: Icon(contentController.isPlaying.value ? Icons.pause : Icons.play_arrow, color: Colors.white),
+                icon: Icon(
+                    contentController.isPlaying.value
+                        ? Icons.pause
+                        : Icons.play_arrow,
+                    color: Colors.white),
                 onPressed: () => contentController.togglePlayPause(),
               ),
               IconButton(
-                icon: const Icon(Icons.replay_10, color: Colors.white, size: 20),
+                icon: const Icon(Icons.replay_10, color: Colors.white, size: 22),
                 onPressed: () => contentController.seekBackward(),
               ),
               IconButton(
-                icon: const Icon(Icons.forward_10, color: Colors.white, size: 20),
+                icon:
+                const Icon(Icons.forward_10, color: Colors.white, size: 22),
                 onPressed: () => contentController.seekForward(),
               ),
               const Spacer(),
-              Text(
+              // Time Labels
+              Obx(() => Text(
                 "${contentController.formatDuration(contentController.videoPosition.value)} / ${contentController.formatDuration(contentController.videoDuration.value)}",
-                style: const TextStyle(color: Colors.white, fontSize: 12),
-              ),
-              // Full Screen Toggle Bottom Right
+                style: const TextStyle(color: Colors.white, fontSize: 11),
+              )),
+              // Full Screen Toggle
               IconButton(
                 icon: Icon(
-                  contentController.isFullScreen.value ? Icons.fullscreen_exit : Icons.fullscreen,
+                  contentController.isFullScreen.value
+                      ? Icons.fullscreen_exit
+                      : Icons.fullscreen,
                   color: Colors.white,
                 ),
                 onPressed: () => contentController.toggleFullScreen(),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
   }
 
   Widget _buildHeader() {
-
     return Row(
-
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
       children: [
-
-        const Text("Explore", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-
+        const Text("Explore",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         Row(
-
           children: [
-
-            IconButton(onPressed: () {}, icon: const Icon(Icons.tune, color: Colors.black)),
-
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search, color: Colors.black)),
-
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.tune, color: Colors.black)),
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.search, color: Colors.black)),
           ],
-
         )
-
       ],
-
     );
-
   }
 }
