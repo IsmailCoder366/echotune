@@ -19,8 +19,7 @@ class ContentController extends GetxController {
 
   VideoPlayerController? videoController;
 
-  // --- Functions ---
-
+  /// FUNCTIONS
   // NEW: Add this function to fix the View error!
   void toggleFullScreen() {
     isFullScreen.value = !isFullScreen.value;

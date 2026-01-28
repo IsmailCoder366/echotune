@@ -66,7 +66,7 @@ class ExploreView extends StatelessWidget {
     );
   }
 
-  Widget _buildAllTabContent() {
+  Widget _buildAllTabContent(){
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -94,7 +94,7 @@ class ExploreView extends StatelessWidget {
           _buildExploreGrid(),
           const SizedBox(height: 30),
           _buildSectionHeader("Content"),
-
+          const SizedBox(height: 10),
           _buildExploreGrid(),
         ],
       ),
