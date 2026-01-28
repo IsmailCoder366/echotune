@@ -2,10 +2,11 @@ import 'package:echotune/modules/user/explore/views/widgets/content_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
+import '../../controllers/content_controller.dart';
 import '../../controllers/explore_controller.dart';
 
 class ContentTabBody extends StatelessWidget {
-  final ExploreController controller = Get.find<ExploreController>();
+  final ContentController contentController = Get.put(ContentController());
 
   ContentTabBody({super.key});
 
@@ -27,15 +28,15 @@ class ContentTabBody extends StatelessWidget {
                 const SizedBox(height: 10),
                 Expanded(
                   child: ListView.separated(
-                    itemCount: controller.contentList.length,
+                    itemCount: contentController.contentList.length,
                     separatorBuilder: (context, index) => const Divider(height: 1, color: Colors.black12),
                     itemBuilder: (context, index) {
-                      final item = controller.contentList[index]; // Get the specific item
+                      final item = contentController.contentList[index]; // Get the specific item
                       return ContentTile(
                         title: item.title,
                         artist: item.artist,
                         imageUrl: item.imageUrl, // Pass the unique image
-                        onPlayTap: () => controller.playTrack(item),
+                        onPlayTap: () => contentController.playTrack(item),
                       );
                     },
                   ),
@@ -46,7 +47,7 @@ class ContentTabBody extends StatelessWidget {
 
           // LAYER 2: The Video Preview (The top layer)
           // Only show this "sticker" if the controller says a track is actually playing
-          if (controller.isPlayerVisible.value)
+          if (contentController.isPlayerVisible.value)
             Positioned(
               bottom: 20, // Keep it near the bottom like the image
               left: 10,
@@ -59,7 +60,7 @@ class ContentTabBody extends StatelessWidget {
   }
 
   Widget _buildVideoPreview(BuildContext context) {
-    final selectedData = controller.selectedContent.value;
+    final selectedData = contentController.selectedContent.value;
 
     return Container(
       height: 250,
@@ -71,13 +72,13 @@ class ContentTabBody extends StatelessWidget {
         children: [
           // 1. THE VIDEO AREA + TAP TO WAKE UP
           GestureDetector(
-            onTap: () => controller.triggerCenterControl(), // Tapping video shows the button
+            onTap: () => contentController.triggerCenterControl(), // Tapping video shows the button
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Obx(() => controller.isVideoInitialized.value
+              child: Obx(() => contentController.isVideoInitialized.value
                   ? AspectRatio(
-                aspectRatio: controller.videoController!.value.aspectRatio,
-                child: VideoPlayer(controller.videoController!),
+                aspectRatio: contentController.videoController!.value.aspectRatio,
+                child: VideoPlayer(contentController.videoController!),
               )
                   : const Center(child: CircularProgressIndicator(color: Colors.white)),
               ),
@@ -86,7 +87,7 @@ class ContentTabBody extends StatelessWidget {
 
           // 2. CINEMATIC OVERLAY (Now reactive - fades with the button)
           Obx(() => AnimatedOpacity(
-            opacity: controller.showCenterControl.value ? 1.0 : 0.0,
+            opacity: contentController.showCenterControl.value ? 1.0 : 0.0,
             duration: const Duration(milliseconds: 500),
             child: Container(color: Colors.black.withOpacity(0.3)),
           )),
@@ -96,7 +97,7 @@ class ContentTabBody extends StatelessWidget {
             top: 10,
             right: 10,
             child: GestureDetector(
-              onTap: () => controller.closePlayer(),
+              onTap: () => contentController.closePlayer(),
               child: const Icon(Icons.close, color: Colors.white, size: 28),
             ),
           ),
@@ -104,15 +105,15 @@ class ContentTabBody extends StatelessWidget {
           // 4. THE CENTER PLAY/PAUSE BUTTON (The "Magic" fading button)
           Center(
             child: Obx(() => AnimatedOpacity(
-              opacity: controller.showCenterControl.value ? 1.0 : 0.0,
+              opacity: contentController.showCenterControl.value ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 500),
               child: GestureDetector(
-                onTap: () => controller.togglePlayPause(),
+                onTap: () => contentController.togglePlayPause(),
                 child: CircleAvatar(
                   radius: 35,
                   backgroundColor: Colors.black45,
                   child: Icon(
-                    controller.isPlaying.value ? Icons.pause : Icons.play_arrow,
+                    contentController.isPlaying.value ? Icons.pause : Icons.play_arrow,
                     color: Colors.white,
                     size: 50,
                   ),
@@ -127,7 +128,7 @@ class ContentTabBody extends StatelessWidget {
             left: 0,
             right: 0,
             child: Obx(() => AnimatedOpacity(
-              opacity: controller.showCenterControl.value ? 1.0 : 0.0,
+              opacity: contentController.showCenterControl.value ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 500),
               child: _buildPlayerControls(),
             )),
@@ -151,9 +152,9 @@ class ContentTabBody extends StatelessWidget {
         children: [
           // THE SLIDER: Moves as the video plays
           Slider(
-            value: controller.videoPosition.value.inSeconds.toDouble(),
-            max: controller.videoDuration.value.inSeconds.toDouble(),
-            onChanged: (v) => controller.seekTo(v),
+            value: contentController.videoPosition.value.inSeconds.toDouble(),
+            max: contentController.videoDuration.value.inSeconds.toDouble(),
+            onChanged: (v) => contentController.seekTo(v),
             activeColor: Colors.blue,
             inactiveColor: Colors.grey,
           ),
@@ -163,26 +164,26 @@ class ContentTabBody extends StatelessWidget {
               // BACKWARD 10s
               IconButton(
                 icon: const Icon(Icons.replay_10, color: Colors.white),
-                onPressed: () => controller.seekBackward(),
+                onPressed: () => contentController.seekBackward(),
               ),
               // PLAY / PAUSE
               IconButton(
                 icon: Icon(
-                  controller.isPlayerVisible.value ? Icons.pause_circle_filled : Icons.play_circle_filled,
+                  contentController.isPlayerVisible.value ? Icons.pause_circle_filled : Icons.play_circle_filled,
                   color: Colors.white,
                   size: 40,
                 ),
-                onPressed: () => controller.togglePlayPause(),
+                onPressed: () => contentController.togglePlayPause(),
               ),
               // FORWARD 10s
               IconButton(
                 icon: const Icon(Icons.forward_10, color: Colors.white),
-                onPressed: () => controller.seekForward(),
+                onPressed: () => contentController.seekForward(),
               ),
               const Spacer(),
               // TIME TEXT
               Text(
-                "${controller.formatDuration(controller.videoPosition.value)} / ${controller.formatDuration(controller.videoDuration.value)}",
+                "${contentController.formatDuration(contentController.videoPosition.value)} / ${contentController.formatDuration(contentController.videoDuration.value)}",
                 style: const TextStyle(color: Colors.white, fontSize: 12),
               ),
             ],
