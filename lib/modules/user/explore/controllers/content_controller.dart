@@ -10,33 +10,34 @@ class ContentController extends GetxController {
   var isPlaying = false.obs;
   var showCenterControl = true.obs;
 
+  // NEW: Add this to fix the View error!
+  var isFullScreen = false.obs;
+
   var selectedContent = Rxn<ContentModel>();
   var videoPosition = Duration.zero.obs;
   var videoDuration = Duration.zero.obs;
 
   VideoPlayerController? videoController;
 
-  // Dummy Data
-  final List<ContentModel> contentList = [
-    ContentModel(
-      title: "Nature Melodies",
-      artist: "by Forest Echo",
-      imageUrl: "https://picsum.photos/id/10/200/200",
-      videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    ),
-    ContentModel(
-      title: "Urban Beats",
-      artist: "by City Lights",
-      imageUrl: "https://picsum.photos/id/20/200/200",
-      videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-    ),
-    ContentModel(
-      title: "Ocean Waves",
-      artist: "by Deep Blue",
-      imageUrl: "https://picsum.photos/id/30/200/200",
-      videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    ),
-  ];
+  // --- Functions ---
+
+  // NEW: Add this function to fix the View error!
+  void toggleFullScreen() {
+    isFullScreen.value = !isFullScreen.value;
+  }
+
+  void togglePlayPause() {
+    if (videoController == null) return;
+
+    if (videoController!.value.isPlaying) {
+      videoController!.pause();
+      showCenterControl.value = true;
+    } else {
+      videoController!.play();
+      triggerCenterControl();
+    }
+    isPlaying.value = videoController!.value.isPlaying;
+  }
 
   void playTrack(ContentModel content) async {
     selectedContent.value = content;
@@ -79,17 +80,6 @@ class ContentController extends GetxController {
     });
   }
 
-  void togglePlayPause() {
-    if (videoController == null) return;
-    if (videoController!.value.isPlaying) {
-      videoController!.pause();
-      showCenterControl.value = true;
-    } else {
-      videoController!.play();
-      triggerCenterControl();
-    }
-  }
-
   void seekForward() {
     videoController?.seekTo(videoPosition.value + const Duration(seconds: 10));
     triggerCenterControl();
@@ -106,6 +96,7 @@ class ContentController extends GetxController {
 
   void closePlayer() {
     isPlayerVisible.value = false;
+    isFullScreen.value = false; // Reset full screen when closing
     videoController?.pause();
   }
 
@@ -119,4 +110,26 @@ class ContentController extends GetxController {
     videoController?.dispose();
     super.onClose();
   }
+
+  // Dummy Data (ensure this is here so the View can find it)
+  final List<ContentModel> contentList = [
+    ContentModel(
+      title: "Nature Melodies",
+      artist: "by Forest Echo",
+      imageUrl: "https://picsum.photos/id/10/200/200",
+      videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    ),
+    ContentModel(
+      title: "Urban Beats",
+      artist: "by City Lights",
+      imageUrl: "https://picsum.photos/id/20/200/200",
+      videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    ),
+    ContentModel(
+      title: "Ocean Waves",
+      artist: "by Deep Blue",
+      imageUrl: "https://picsum.photos/id/30/200/200",
+      videoUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    ),
+  ];
 }
