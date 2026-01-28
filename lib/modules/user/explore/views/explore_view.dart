@@ -81,9 +81,9 @@ class ExploreView extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const Icon(Icons.tune), // Filter
+                  IconButton(onPressed: (){}, icon: Icon(Icons.tune)),
                   const SizedBox(width: 15),
-                  const Icon(Icons.search),
+                  IconButton(onPressed: (){}, icon: Icon(Icons.search))
                 ],
               ),
             ],
