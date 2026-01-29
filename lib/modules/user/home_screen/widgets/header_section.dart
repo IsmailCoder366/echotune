@@ -27,7 +27,7 @@ class HeroHeader extends StatelessWidget {
             padding: const EdgeInsets.only(
                 left: 20,
                 right: 20,
-                top: 80,
+                top: 90,
                 bottom: overlapOffset + 20
             ),
             decoration: const BoxDecoration(
