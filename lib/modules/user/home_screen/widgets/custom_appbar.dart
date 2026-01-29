@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../profile/bottom_view/bottom_sheet_view.dart';
+import '../../purchases/controllers/user_info_controller.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+
+  final UserInfoController userInfoController = Get.find<UserInfoController>();
+
   // Adding a boolean flag is the simplest way to override behavior per screen
   final bool isLandingPage;
 
-  const CustomHomeAppBar({super.key, this.isLandingPage = true});
+  CustomHomeAppBar({super.key, this.isLandingPage = true});
 
   @override
   Size get preferredSize => const Size.fromHeight(70);
 
   @override
   Widget build(BuildContext context) {
-
-
     return AppBar(
       automaticallyImplyLeading: true,
       backgroundColor: Colors.transparent,
@@ -34,14 +37,27 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget _buildUserActions() {
     return Row(
       children: [
-         IconButton(onPressed: (){}, icon: Icon(Icons.shopping_cart_outlined, color: Colors.white)),
+        IconButton(onPressed: () {},
+            icon: Icon(Icons.shopping_cart_outlined, color: Colors.white)),
         const SizedBox(width: 10),
         GestureDetector(
-          onTap: () => showProfileBottomSheet(), // Function from previous step
-          child: const CircleAvatar(
-            radius: 15,
-            backgroundImage: NetworkImage('assets/images/profile.png'),
-          ),
+            onTap: () => showProfileBottomSheet(),
+
+            child: Obx(() {
+              final imageUrl = userInfoController.profileImageUrl.value;
+              return CircleAvatar(
+                  radius: 15,
+                  backgroundColor: Colors.grey[300],
+                  backgroundImage: imageUrl.isNotEmpty
+                      ? NetworkImage(imageUrl)
+                      : null,
+                  child: imageUrl.isEmpty
+                      ? const Icon(Icons.person, size: 20, color: Colors.white)
+                      : null
+              );
+            })
+
+
         ),
         const SizedBox(width: 16),
       ],
@@ -58,7 +74,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           side: const BorderSide(color: Colors.white70),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
-        child: const Text("Complaint Music Use", style: TextStyle(fontSize: 10)),
+        child: const Text(
+            "Complaint Music Use", style: TextStyle(fontSize: 10)),
       ),
     );
   }

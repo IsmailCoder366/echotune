@@ -15,6 +15,7 @@ class UserInfoController extends GetxController {
   var isUploadingImage = false.obs;
   final role = "".obs;
   String get currentCollection => (role.value.toLowerCase() == "owner") ? "creators" : "users";
+  var profileImageUrl = "".obs;
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -25,7 +26,7 @@ class UserInfoController extends GetxController {
   final confirmAccountController = TextEditingController();
   final ifscController = TextEditingController();
 
-  var profileImageUrl = "".obs;
+
   File? selectedImage;
 
   final String cloudName = "dezkkfpex";
@@ -171,6 +172,10 @@ class UserInfoController extends GetxController {
     } finally {
       isSaving.value = false;
     }
+  }
+
+  void updateProfileImage(String newPath) {
+    profileImageUrl.value = newPath;
   }
 
   @override

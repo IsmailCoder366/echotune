@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../profile/bottom_view/bottom_sheet_view.dart';
+import '../../purchases/controllers/user_info_controller.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/features_section.dart';
 import '../widgets/header_section.dart';
 
 
 class UserHomeScreen extends StatelessWidget {
-  const UserHomeScreen({super.key});
+
+  final UserInfoController userInfoController = Get.put(UserInfoController());
+
+
+   UserHomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true, // Key property for hero backgrounds
-      appBar: const CustomHomeAppBar(),
+      appBar:  CustomHomeAppBar(),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
