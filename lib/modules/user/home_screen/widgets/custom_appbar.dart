@@ -34,7 +34,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget _buildUserActions() {
     return Row(
       children: [
-        const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+         IconButton(onPressed: (){}, icon: Icon(Icons.shopping_cart_outlined, color: Colors.white)),
         const SizedBox(width: 10),
         GestureDetector(
           onTap: () => showProfileBottomSheet(), // Function from previous step
