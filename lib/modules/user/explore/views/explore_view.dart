@@ -4,10 +4,13 @@ import 'package:echotune/modules/user/explore/views/widgets/explore_grid_items.d
 import 'package:echotune/modules/user/explore/views/widgets/music_tab_body.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../purchases/controllers/user_info_controller.dart';
 import '../controllers/explore_controller.dart';
 
 class ExploreView extends StatelessWidget {
   final ExploreController controller = Get.put(ExploreController());
+  final UserInfoController userInfoController = Get.find<UserInfoController>();
+
 
   ExploreView({super.key});
 
@@ -15,7 +18,7 @@ class ExploreView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: _buildExploreApp(),
+      appBar: _buildAppBar(),
       // Use Stack to layer the PlayingOverlay over the main content
       body: Stack(
         children: [
@@ -210,5 +213,62 @@ class ExploreView extends StatelessWidget {
       ],
     );
   }
-
+  PreferredSizeWidget _buildAppBar() {
+    return AppBar(
+      backgroundColor: const Color(0xFF1A1A1A),
+      elevation: 0,
+      leadingWidth: 140,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              "ECHOTUNE",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+            Text(
+              "YOUR SOUND, YOUR WORLD",
+              style: TextStyle(color: Colors.white, fontSize: 8),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        OutlinedButton(
+          onPressed: () {},
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(color: Colors.white),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+          ),
+          child: const Text(
+            "Report Content Privacy",
+            style: TextStyle(color: Colors.white, fontSize: 10),
+          ),
+        ),
+        const SizedBox(width: 10),
+        const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+        const SizedBox(width: 10),
+        Obx(() {
+          final imageUrl = userInfoController.profileImageUrl.value;
+          return CircleAvatar(
+            radius: 15,
+            backgroundColor: Colors.grey[300],
+            backgroundImage: imageUrl.isNotEmpty
+                ? NetworkImage(imageUrl)
+                : null,
+            child: imageUrl.isEmpty
+                ? const Icon(Icons.person, size: 20, color: Colors.white)
+                : null,
+          );
+        }),
+        const SizedBox(width: 16),
+      ],
+    );
+  }
 }
