@@ -6,12 +6,10 @@ import '../../purchases/controllers/user_info_controller.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-  final UserInfoController userInfoController = Get.find<UserInfoController>();
+  // In your screen/tab where you call the controller:
+  final UserInfoController userInfoController = Get.put(UserInfoController(), permanent: true);
 
-  // Adding a boolean flag is the simplest way to override behavior per screen
-  final bool isLandingPage;
-
-  CustomHomeAppBar({super.key, this.isLandingPage = true});
+  CustomHomeAppBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(70);

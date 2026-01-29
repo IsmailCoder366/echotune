@@ -8,7 +8,7 @@ class UserInfoTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 1. Initialize the Controller
-    final UserInfoController controller = Get.put(UserInfoController());
+    final UserInfoController controller = Get.put(UserInfoController(), permanent: true);
 
     return Scaffold(
       backgroundColor: Colors.white,

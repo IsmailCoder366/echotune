@@ -165,14 +165,14 @@ class UserInfoController extends GetxController {
   @override
   void onClose() {
     // Only dispose if they are not being used by an active listener
-    nameController.dispose();
-    emailController.dispose();
-    oldPasswordController.dispose();
-    newPasswordController.dispose();
-    confirmPasswordController.dispose();
-    accountController.dispose();
-    confirmAccountController.dispose();
-    ifscController.dispose();
+    // nameController.dispose();
+    // emailController.dispose();
+    // oldPasswordController.dispose();
+    // newPasswordController.dispose();
+    // confirmPasswordController.dispose();
+    // accountController.dispose();
+    // confirmAccountController.dispose();
+    // ifscController.dispose();
     super.onClose();
   }
 }

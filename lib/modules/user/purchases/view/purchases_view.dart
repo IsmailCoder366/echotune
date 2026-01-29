@@ -2,10 +2,12 @@ import 'package:echotune/modules/user/purchases/view/widgets/favourite_tab.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/purchases_controller.dart';
+import '../controllers/user_info_controller.dart';
 import 'widgets/purchases_tab.dart';
 import 'user_info_tab.dart';
 
 class PurchasesView extends StatelessWidget {
+  final UserInfoController userInfoController = Get.find<UserInfoController>();
   final PurchasesController controller = Get.put(PurchasesController());
 
   PurchasesView({super.key});
@@ -74,10 +76,19 @@ class PurchasesView extends StatelessWidget {
         const SizedBox(width: 10),
         const Icon(Icons.shopping_cart_outlined, color: Colors.white),
         const SizedBox(width: 10),
-        const CircleAvatar(
-          radius: 15,
-          backgroundImage: AssetImage('assets/images/profile.png'),
-        ),
+        Obx(() {
+          final imageUrl = userInfoController.profileImageUrl.value;
+          return CircleAvatar(
+            radius: 15,
+            backgroundColor: Colors.grey[300],
+            backgroundImage: imageUrl.isNotEmpty
+                ? NetworkImage(imageUrl)
+                : null,
+            child: imageUrl.isEmpty
+                ? const Icon(Icons.person, size: 20, color: Colors.white)
+                : null,
+          );
+        }),
         const SizedBox(width: 16),
       ],
     );
