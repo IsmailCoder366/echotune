@@ -10,7 +10,7 @@ class ProfileController extends GetxController {
   // Inject the Auth Repository
   final AuthRepository _authRepo = AuthRepository();
 
-  final RxString userName = "Michael Jordan".obs;
+
   var isLoggingOut = false.obs;
 
   /// Navigates to the PurchasesView and sets the active tab

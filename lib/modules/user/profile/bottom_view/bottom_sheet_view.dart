@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../purchases/controllers/user_info_controller.dart';
 import '../controller/profile_controller.dart';
 import '../widgets/profile_menu_tile.dart';
 
@@ -10,6 +11,7 @@ void showProfileBottomSheet() {
   final ProfileController controller = Get.isRegistered<ProfileController>()
       ? Get.find<ProfileController>()
       : Get.put(ProfileController());
+  final UserInfoController userInfocontroller = Get.put(UserInfoController(), permanent: true);
 
   Get.bottomSheet(
     Container(
@@ -45,10 +47,12 @@ void showProfileBottomSheet() {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
           ),
           // Wrapped in Obx in case the name changes dynamically
-          Obx(() => Text(
-            controller.userName.value,
+          Text(
+            userInfocontroller.nameController.text.isEmpty
+              ? 'No Name Set'
+            : userInfocontroller.nameController.text,
             style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          )),
+          ),
           const SizedBox(height: 20),
 
           // Menu Items

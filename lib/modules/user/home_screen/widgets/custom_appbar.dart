@@ -6,7 +6,7 @@ import '../../purchases/controllers/user_info_controller.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-  // In your screen/tab where you call the controller:
+
   final UserInfoController userInfoController = Get.put(UserInfoController(), permanent: true);
 
   CustomHomeAppBar({super.key});
@@ -24,9 +24,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         _buildComplaintButton(),
         const SizedBox(width: 8),
-        _buildUserActions(),
-
-
+        _buildUserActions()
       ],
     );
   }

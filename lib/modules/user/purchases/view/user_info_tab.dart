@@ -12,7 +12,7 @@ class UserInfoTab extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      // Added a Refresh Action just in case
+        /// Added a Refresh Action just in case
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
