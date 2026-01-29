@@ -66,15 +66,19 @@ class UserInfoTab extends StatelessWidget {
   }
 
   Widget _buildProfileUploadSection(UserInfoController controller) {
-    return Row(
+    return Obx(() => Row(
       children: [
-        // The CircleAvatar now listens to the profileImageUrl variable
         CircleAvatar(
-          radius: 35, // Made slightly bigger
+          radius: 35,
           backgroundColor: Colors.grey[200],
+          // Dynamically switch between the new URL and the default asset
           backgroundImage: controller.profileImageUrl.value.isNotEmpty
               ? NetworkImage(controller.profileImageUrl.value)
               : const AssetImage('assets/images/image.png') as ImageProvider,
+          // Optional: show a loading spinner over the avatar while uploading
+          child: controller.isUploadingImage.value
+              ? const CircularProgressIndicator(color: Colors.black, strokeWidth: 2)
+              : null,
         ),
         const SizedBox(width: 15),
         Expanded(
@@ -99,7 +103,7 @@ class UserInfoTab extends StatelessWidget {
           ),
         )
       ],
-    );
+    ));
   }
 
   Widget _buildInputField(String label, String hint, TextEditingController txtController, {bool enabled = true, bool isPassword = false}) {

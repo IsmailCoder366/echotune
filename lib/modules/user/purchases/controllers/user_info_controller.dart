@@ -1,22 +1,25 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart'; // REQUIRED for MediaType on Web
 import '../../../../data/repositories/auth_repository.dart';
 import '../../../../core/utils/app_validators.dart';
 import '../../profile_display_result.dart';
 
 class UserInfoController extends GetxController {
   final AuthRepository _authRepo = AuthRepository();
+  final ImagePicker _picker = ImagePicker();
 
   var isSaving = false.obs;
   var isUploadingImage = false.obs;
-  final role = "".obs;
-  String get currentCollection => (role.value.toLowerCase() == "owner") ? "creators" : "users";
+  final role = "user".obs; // Default to user
+
   var profileImageUrl = "".obs;
 
+  // Text Controllers
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final oldPasswordController = TextEditingController();
@@ -26,25 +29,19 @@ class UserInfoController extends GetxController {
   final confirmAccountController = TextEditingController();
   final ifscController = TextEditingController();
 
-
-  File? selectedImage;
-
   final String cloudName = "dezkkfpex";
   final String uploadPreset = "profile_image";
 
   @override
   void onInit() {
     super.onInit();
-    // 1. FETCH DATA AUTOMATICALLY WHEN OPENED
     fetchUserData();
   }
 
-  /// JOB 0: Pull existing data from Firestore
   Future<void> fetchUserData() async {
     try {
+      if (_authRepo.currentUser == null) return;
       String uid = _authRepo.currentUser!.uid;
-
-      // The Repository should check both collections or have the logic to find the user
       var data = await _authRepo.getUserData(uid);
 
       if (data != null) {
@@ -54,11 +51,7 @@ class UserInfoController extends GetxController {
         confirmAccountController.text = data['accountNumber'] ?? '';
         ifscController.text = data['ifscCode'] ?? '';
         profileImageUrl.value = data['profileImage'] ?? '';
-
-        // FIX: Store the role in the controller's observable variable
         role.value = data['role'] ?? 'user';
-
-        debugPrint("User Role Loaded: ${role.value}");
       }
     } catch (e) {
       debugPrint("Error fetching profile: $e");
@@ -66,73 +59,72 @@ class UserInfoController extends GetxController {
   }
 
   Future<void> pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    try {
+      final XFile? image = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 50,
+      );
 
-    if (pickedFile != null) {
-      selectedImage = File(pickedFile.path);
-      uploadToCloudinary();
+      if (image != null) {
+        // Use bytes immediately to avoid loss of reference on Web
+        Uint8List fileBytes = await image.readAsBytes();
+        await uploadToCloudinary(fileBytes, image.name);
+      }
+    } catch (e) {
+      AppValidators.showMessage("Failed to pick image");
     }
   }
 
-  Future<void> uploadToCloudinary() async {
-    if (selectedImage == null) return;
+  Future<void> uploadToCloudinary(Uint8List fileBytes, String fileName) async {
+    if (fileBytes.isEmpty) return;
+    FocusManager.instance.primaryFocus?.unfocus();
     isUploadingImage.value = true;
 
     try {
-      final url = Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/upload");
+      final url = Uri.parse("https://api.cloudinary.com/v1_1/$cloudName/image/upload");
       var request = http.MultipartRequest("POST", url);
 
       request.fields['upload_preset'] = uploadPreset;
 
-      // Use readAsBytes to ensure it works on both Android and Web
-      final bytes = await selectedImage!.readAsBytes();
       request.files.add(http.MultipartFile.fromBytes(
         'file',
-        bytes,
-        filename: 'upload.jpg',
+        fileBytes,
+        filename: fileName,
+        contentType: MediaType('image', 'jpeg'), // Corrected: use MediaType from http_parser
       ));
 
       var response = await request.send();
+      var responseData = await http.Response.fromStream(response);
 
-      // Convert the response stream to a string
-      final responseData = await response.stream.bytesToString();
-      final Map<String, dynamic> jsonResponse = jsonDecode(responseData);
+      final Map<String, dynamic> jsonResponse = jsonDecode(responseData.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // 1. Get the URL (Try secure_url first, then url)
         String? uploadedUrl = jsonResponse['secure_url'] ?? jsonResponse['url'];
-
-        if (uploadedUrl != null && uploadedUrl.isNotEmpty) {
+        if (uploadedUrl != null) {
           profileImageUrl.value = uploadedUrl;
-          debugPrint("SUCCESS! REAL CLOUDINARY URL: ${profileImageUrl.value}");
           AppValidators.showMessage("Image uploaded!", isError: false);
-        } else {
-          debugPrint("Cloudinary success but URL was empty. Response: $jsonResponse");
         }
       } else {
-        debugPrint("Cloudinary Error Response: $jsonResponse");
-        AppValidators.showMessage("Upload failed: ${jsonResponse['error']?['message']}");
+        throw Exception(jsonResponse['error']?['message'] ?? "Upload failed");
       }
     } catch (e) {
-      debugPrint("CRITICAL UPLOAD ERROR: $e");
-      AppValidators.showMessage("Connection error during upload.");
+      debugPrint("Upload Error: $e");
+      AppValidators.showMessage("Check your internet or Cloudinary settings.");
     } finally {
       isUploadingImage.value = false;
     }
   }
 
   Future<void> saveFullProfile() async {
-    isSaving.value = true;
-
-    // 1. Check if we are still waiting on Cloudinary
-    if (isUploadingImage.value) {
-      AppValidators.showMessage("Please wait for the image to finish uploading.");
-      return;
-    }
+    if (isSaving.value) return;
 
     if (nameController.text.isEmpty) {
       AppValidators.showMessage("Name cannot be empty");
+      return;
+    }
+
+    if (isUploadingImage.value) {
+      AppValidators.showMessage("Still uploading image. Please wait.");
       return;
     }
 
@@ -140,46 +132,39 @@ class UserInfoController extends GetxController {
     try {
       String uid = _authRepo.currentUser!.uid;
 
-      // Create a map of the data to show on the next screen
-      Map<String, dynamic> updatedData = {
-        'name': nameController.text,
-        'email': emailController.text,
-        'role': role.value, // Ensure your controller tracks the user's role
-        'accountNumber': accountController.text,
-        'ifscCode': ifscController.text,
-        'profileImage': profileImageUrl.value,
-      };
-      // Navigate to the new display screen and pass the data
-      Get.to(() => const ProfileDisplayScreen(), arguments: updatedData);
-
-      // 2. Call the Repo
+      // 1. UPDATE FIRESTORE FIRST (Wait for success before moving screen)
       await _authRepo.updateUserProfile(
         uid: uid,
         newName: nameController.text,
-        // If upload failed, this might be empty, which Firestore might reject
         imageUrl: profileImageUrl.value,
         accountNumber: accountController.text,
         ifscCode: ifscController.text,
       );
 
-      // ... password logic ...
+      // 2. ONLY NAVIGATE AFTER SUCCESSFUL DB SAVE
+      Map<String, dynamic> updatedData = {
+        'name': nameController.text,
+        'email': emailController.text,
+        'role': role.value,
+        'accountNumber': accountController.text,
+        'ifscCode': ifscController.text,
+        'profileImage': profileImageUrl.value,
+      };
 
-      AppValidators.showMessage("Profile updated successfully!", isError: false);
+      Get.to(() => const ProfileDisplayScreen(), arguments: updatedData);
+      AppValidators.showMessage("Profile saved!", isError: false);
+
     } catch (e) {
-      // If updateUserProfile fails, it 'rethrows' and ends up here.
-      // We don't need a separate message here if the Repo already showed one.
-      debugPrint("Firestore Save Error: $e");
+      debugPrint("Save Error: $e");
+      AppValidators.showMessage("Error saving data to database.");
     } finally {
       isSaving.value = false;
     }
   }
 
-  void updateProfileImage(String newPath) {
-    profileImageUrl.value = newPath;
-  }
-
   @override
   void onClose() {
+    // Only dispose if they are not being used by an active listener
     nameController.dispose();
     emailController.dispose();
     oldPasswordController.dispose();
