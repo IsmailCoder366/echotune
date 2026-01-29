@@ -52,19 +52,20 @@ class LoginScreen extends StatelessWidget {
 
             const SizedBox(height: 32),
 
-            // Linked to emailController in the LoginController
             AuthTextField(
               hint: "Email",
               controller: controller.emailController,
             ),
             const SizedBox(height: 20),
 
-            // Linked to passwordController in the LoginController
-            AuthTextField(
+            // FIXED: Password Field with Visibility Toggle
+            Obx(() => AuthTextField(
               hint: "Password",
               isPassword: true,
+              obscureText: !controller.isPasswordVisible.value, // Bind to controller
+              onSuffixIconTap: () => controller.togglePasswordVisibility(), // Bind to function
               controller: controller.passwordController,
-            ),
+            )),
 
             const SizedBox(height: 5),
             Row(

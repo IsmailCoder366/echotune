@@ -7,6 +7,9 @@ import '../../../../data/repositories/auth_repository.dart';
 class LoginController extends GetxController {
   final AuthRepository _authRepo = AuthRepository();
 
+
+
+
   // Observables
   var selectedType = 'User'.obs; // 'User' or 'Owner' (Creator)
   var isLoggingIn = false.obs;
